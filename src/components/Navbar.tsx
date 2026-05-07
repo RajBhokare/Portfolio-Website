@@ -12,7 +12,21 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive]     = useState('');
   const [open, setOpen]         = useState(false);
+  const [theme, setTheme]       = useState('dark');
   const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,7 +61,7 @@ export default function Navbar() {
   return (
     <nav ref={navRef} style={{
       position:'fixed',inset:'0 0 auto',zIndex:100,
-      background: scrolled ? 'rgba(7,7,16,.92)' : 'transparent',
+      background: scrolled ? (theme === 'dark' ? 'rgba(7,7,16,.92)' : 'rgba(248,249,250,.92)') : 'transparent',
       backdropFilter: scrolled ? 'blur(24px)' : 'none',
       WebkitBackdropFilter: scrolled ? 'blur(24px)' : 'none',
       borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
@@ -69,6 +83,15 @@ export default function Navbar() {
             </li>
           ))}
           <li>
+            <button onClick={toggleTheme} style={{
+              background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)',
+              padding: '.38rem', cursor: 'none', color: 'var(--text)', fontSize: '.75rem',
+              transition: 'all .25s', marginRight: '.5rem'
+            }} aria-label="Toggle theme">
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+          </li>
+          <li>
             <a href="#contact" onClick={e=>{e.preventDefault();go('#contact');}}
               style={{fontFamily:'var(--mono)',fontSize:'.75rem',cursor:'none',color:'var(--cyan)',
                 border:'1px solid rgba(0,229,255,.28)',padding:'.38rem 1.1rem',borderRadius:'var(--r-sm)',
@@ -84,8 +107,17 @@ export default function Navbar() {
         </button>
       </div>
       {open&&(
-        <div style={{position:'fixed',inset:'68px 0 0',background:'rgba(7,7,16,.97)',backdropFilter:'blur(24px)',
+        <div style={{position:'fixed',inset:'68px 0 0',background: theme === 'dark' ? 'rgba(7,7,16,.97)' : 'rgba(248,249,250,.97)',backdropFilter:'blur(24px)',
           display:'flex',flexDirection:'column',padding:'2rem',gap:'.2rem',zIndex:99,overflowY:'auto'}}>
+          <div style={{display:'flex',justifyContent:'center',marginBottom:'1rem'}}>
+            <button onClick={toggleTheme} style={{
+              background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)',
+              padding: '.5rem', cursor: 'none', color: 'var(--text)', fontSize: '1rem',
+              transition: 'all .25s'
+            }} aria-label="Toggle theme">
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+          </div>
           {[...links,{href:'#contact',label:'Contact',num:''}].map(l=>(
             <a key={l.href} href={l.href} onClick={e=>{e.preventDefault();go(l.href);}}
               style={{fontFamily:'var(--mono)',fontSize:'1.1rem',color:'var(--text)',padding:'.8rem 0',borderBottom:'1px solid var(--border)'}}>

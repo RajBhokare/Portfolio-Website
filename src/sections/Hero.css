@@ -4,6 +4,7 @@
   align-items: center; justify-content: center;
   padding: 7rem 2rem 5rem;
   position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
 /* Grid background */
@@ -81,6 +82,19 @@
   max-width: 1160px; width: 100%;
   display: grid; grid-template-columns: 1fr 480px;
   gap: 4rem; align-items: center; position: relative; z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  .hero-left {
+    order: 2;
+  }
+  .hero-orb { display: none; }
+  .hero-corner-deco { display: none; }
 }
 
 /* Badge */

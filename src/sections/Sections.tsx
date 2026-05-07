@@ -99,10 +99,11 @@ export function Skills() {
           <h2 className="section-title">Skills & Tools</h2>
         </div>
         <div className="skills-layout">
-          {skillGroups.map(g => (
+          {skillGroups.map((g, i) => (
             <div
               key={g.title}
               className={`skill-group reveal${g.iot ? ' skill-group-iot' : ''}${g.span ? ' skill-group-span' : ''}`}
+              style={{ '--d': `${i * 100}ms` } as React.CSSProperties}
             >
               <div className="skill-group-header">
                 <span className={`skill-icon-wrap${g.iot ? ' skill-icon-iot' : ''}`}>{g.icon}</span>
