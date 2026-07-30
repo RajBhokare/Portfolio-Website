@@ -1,3 +1,4 @@
+import { MagneticButton } from '../components/MagneticButton/MagneticButton'
 import './Sections.css'
 
 /* ── ABOUT ── */
@@ -12,18 +13,17 @@ export function About() {
         <div className="about-layout">
           <div className="about-text reveal">
             <p className="about-lead">
-              I'm a <mark>Frontend Developer</mark> who loves turning ideas into polished
-              digital experiences — from pixel-perfect UIs to hardware-integrated tools.
+              I'm a <mark>Frontend & Full Stack Developer</mark> who loves turning ideas into polished
+              digital experiences — from pixel-perfect UIs to hardware-integrated systems.
             </p>
             <p>
               Currently in my second year at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>,
-              I specialise in building clean, responsive web interfaces while also exploring IoT and
-              embedded systems. I believe great engineering starts with curiosity, discipline, and a
+              I specialise in building clean, responsive web interfaces while also exploring AI integration,
+              Data Structures & Algorithms, and IoT embedded systems. I believe great engineering starts with curiosity, discipline, and a
               deep love for the craft.
             </p>
             <p>
-              When I'm not coding, I'm probably debugging something I didn't need to build —
-              but learned a ton from anyway.
+              When I'm not coding, I'm probably debugging hardware sensor modules or exploring new web technologies.
             </p>
           </div>
           <div className="about-cards reveal">
@@ -57,35 +57,88 @@ export function About() {
 }
 
 /* ── SKILLS ── */
+const marqueeSkillsRow1 = [
+  { name: 'React.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { name: 'Express.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
+  { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+  { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+  { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+  { name: 'Bootstrap', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+  { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+]
+
+const marqueeSkillsRow2 = [
+  { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
+  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+  { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
+  { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' },
+  { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg' },
+  { name: 'Arduino', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg' },
+  { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
+  { name: 'Photoshop', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg' },
+]
+
 const skillGroups = [
   {
     icon: <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 8l3 3-3 3M11 14h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
-    title: 'Frontend',
-    pills: ['HTML5','CSS3','JavaScript ES6+','Flexbox & Grid','Bootstrap','Tailwind CSS'],
+    title: 'Frontend Development',
+    pills: [
+      { name: 'React.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+      { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+      { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+      { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+      { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+      { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+      { name: 'Bootstrap', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+    ],
     span: false, iot: false,
   },
   {
     icon: <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
-    title: 'Programming',
-    pills: ['Java','Python','C','C++'],
+    title: 'Programming & Backend',
+    pills: [
+      { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+      { name: 'Express.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
+      { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+      { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+      { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+      { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
+    ],
     span: false, iot: false,
   },
   {
     icon: <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
     title: 'Tools & Platforms',
-    pills: ['Git & GitHub','Linux','VS Code','Figma'],
+    pills: [
+      { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+      { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
+      { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' },
+      { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg' },
+    ],
     span: false, iot: false,
   },
   {
-    icon: <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M5.5 5.5a6.5 6.5 0 0 0 0 9M14.5 5.5a6.5 6.5 0 0 1 0 9M3 3a9.9 9.9 0 0 0 0 14M17 3a9.9 9.9 0 0 1 0 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+    icon: <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M5.5 5.5a6.5 6.5 0 0 0 0 9M14.5 5.5a6.5 6.5 0 0 1 0 9M3 3a9.9 9.9 0 0 0 0 14M17 3a9.9 9.9 0 0 0 0 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
     title: 'Hardware & IoT',
-    pills: ['Arduino','ESP8266/32','Sensors','Embedded C'],
+    pills: [
+      { name: 'Arduino', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg' },
+      { name: 'ESP8266/32', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg' },
+      { name: 'MQTT', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
+    ],
     span: false, iot: true,
   },
   {
     icon: <svg viewBox="0 0 20 20" fill="none"><path d="M10 2l2.4 5 5.6.7-4 3.9.9 5.4L10 14.5l-4.9 2.5.9-5.4-4-3.9 5.6-.7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>,
-    title: 'Creative & Design',
-    pills: ['Photoshop','Graphic Editing','UI Design'],
+    title: 'Creative & UI Design',
+    pills: [
+      { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
+      { name: 'Photoshop', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg' },
+    ],
     span: true, iot: false,
   },
 ]
@@ -98,6 +151,29 @@ export function Skills() {
           <span className="section-eyebrow">what I work with</span>
           <h2 className="section-title">Skills & Tools</h2>
         </div>
+
+        {/* Infinite Continuous Marquee Carousel */}
+        <div className="skills-marquee-container reveal">
+          <div className="skills-marquee-track">
+            {[...marqueeSkillsRow1, ...marqueeSkillsRow1, ...marqueeSkillsRow1].map((item, idx) => (
+              <div className="skill-logo-card" key={`r1-${idx}`}>
+                <img src={item.icon} alt={item.name} className="skill-logo-icon" />
+                <span>{item.name}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="skills-marquee-track-reverse">
+            {[...marqueeSkillsRow2, ...marqueeSkillsRow2, ...marqueeSkillsRow2].map((item, idx) => (
+              <div className="skill-logo-card" key={`r2-${idx}`}>
+                <img src={item.icon} alt={item.name} className="skill-logo-icon" />
+                <span>{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Categorized Skill Groups with Icons */}
         <div className="skills-layout">
           {skillGroups.map((g, i) => (
             <div
@@ -110,7 +186,12 @@ export function Skills() {
                 <h3 className="skill-group-title">{g.title}</h3>
               </div>
               <div className="skill-pills">
-                {g.pills.map(p => <span key={p} className={`pill${g.iot ? ' pill-iot' : ''}`}>{p}</span>)}
+                {g.pills.map((p) => (
+                  <span key={p.name} className={`pill pill-with-icon${g.iot ? ' pill-iot' : ''}`}>
+                    <img src={p.icon} alt={p.name} className="pill-icon" />
+                    <span>{p.name}</span>
+                  </span>
+                ))}
               </div>
             </div>
           ))}
@@ -124,21 +205,21 @@ export function Skills() {
 const experiences = [
   {
     period: '2024 — Present', badge: 'Current', active: true,
-    role: 'Frontend Developer', org: 'Self-Initiated Projects & Open Source',
-    desc: 'Building production-ready frontend interfaces and contributing to open-source projects. Focused on React, vanilla JS, and responsive design principles while integrating IoT dashboards with live data streams.',
-    stack: ['HTML/CSS','JavaScript','React','Tailwind','Git'],
+    role: 'Frontend & Full Stack Developer', org: 'Self-Initiated Projects & Open Source',
+    desc: 'Building production-ready frontend and full-stack interfaces. Focused on React, Node.js, Express, and AI APIs while integrating hardware dashboards with live telemetry streams.',
+    stack: ['HTML/CSS','JavaScript','React','Node.js','Express','Git'],
   },
   {
     period: '2023 — 2024', badge: 'Academic', active: false,
     role: 'IoT & Hardware Developer', org: 'Dr. D. Y. Patil Institute of Technology, Pune',
-    desc: 'Designed and built IoT systems using ESP8266 & Arduino — including DustSense, a real-time PM2.5 air quality monitor transmitting data over MQTT. Implemented live dashboards to visualise sensor readings.',
-    stack: ['Arduino/C','ESP8266','MQTT','Sensors','Dashboard'],
+    desc: 'Designed and built IoT systems using ESP8266 & Arduino — including DustSense, a real-time PM2.5 air quality monitor transmitting data over MQTT. Implemented live web dashboards to visualize sensor metrics.',
+    stack: ['Embedded C','ESP8266','MQTT','Sensors','Dashboard'],
   },
   {
     period: '2023', badge: 'EdTech', active: false,
-    role: 'AI/ML Web App Developer', org: 'Academic Project — Quizzer & AssignAI',
-    desc: 'Built AI-powered educational platforms — Quizzer converts video lectures to MCQ quizzes via NLP, and AssignAI enables automated code grading for educators with role-based dashboards and real-time feedback.',
-    stack: ['Python','Flask','NLP','AI/LLM','Full Stack'],
+    role: 'AI/ML Web App Developer', org: 'Academic & AI Projects — Quizzer & Briefly',
+    desc: 'Built AI-powered application platforms — Quizzer converts educational videos to MCQ quizzes via AssemblyAI, and Briefly automates meeting transcription and summary extraction using OpenAI Whisper API.',
+    stack: ['Node.js','Express','Whisper API','AssemblyAI','Bootstrap'],
   },
 ]
 
@@ -237,12 +318,14 @@ export function Projects() {
               <span>HTML</span><span>CSS</span><span>Bootstrap</span><span>JavaScript</span><span>EJS</span><span>Node.js</span><span>Express.js</span><span>Whisper API</span>
             </div>
             <div className="ps-actions">
-              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                GitHub
-              </a>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
@@ -294,12 +377,14 @@ export function Projects() {
               <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span><span>EJS</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span>
             </div>
             <div className="ps-actions">
-              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                GitHub
-              </a>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
@@ -346,12 +431,14 @@ export function Projects() {
               <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>EJS</span><span>HTML</span><span>CSS</span><span>Bootstrap</span>
             </div>
             <div className="ps-actions">
-              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                GitHub
-              </a>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
@@ -410,12 +497,14 @@ export function Projects() {
               <span>ESP8266</span><span>MQTT</span><span>Embedded C</span><span>Arduino IDE</span><span>HTML</span><span>JavaScript</span><span>Dashboard</span>
             </div>
             <div className="ps-actions">
-              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                GitHub
-              </a>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
@@ -485,19 +574,21 @@ export function Contact() {
           <div className="footer-links">
             {[
               { href: 'https://github.com/RajBhokare', label: 'GitHub', path: 'M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z' },
-              { href: 'https://linkedin.com/in/rajbhokare1', label: 'LinkedIn', path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' },
+              { href: 'https://linkedin.com/in/rajbhokare1', label: 'LinkedIn', path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' },
               { href: 'https://leetcode.com/u/RajBhokare/', label: 'LeetCode', path: 'M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z' },
             ].map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener" className="footer-social-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d={s.path}/></svg>
-                <span>{s.label}</span><span className="link-arrow">↗</span>
-              </a>
+              <MagneticButton key={s.label}>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d={s.path}/></svg>
+                  <span>{s.label}</span><span className="link-arrow">↗</span>
+                </a>
+              </MagneticButton>
             ))}
           </div>
         </div>
         <div className="footer-bottom">
           <p className="footer-copy">© 2026 Raj Bhokare</p>
-          <p className="footer-built">Frontend Developer · Built with React, Vite & Three.js</p>
+          <p className="footer-built">Frontend & Full Stack Developer · Built with React, Vite, Three.js & Lenis</p>
         </div>
       </div>
     </footer>

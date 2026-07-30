@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { fetchGitHubData, GitHubProfile, GitHubEvent, ContributionDay } from '../../services/github';
-import { fetchLeetCodeData, LeetCodeProfile, LeetCodeSubmission } from '../../services/leetcode';
+import { fetchGitHubData, GitHubProfile, ContributionDay } from '../../services/github';
+import { fetchLeetCodeData, LeetCodeProfile } from '../../services/leetcode';
 import { GitHubCard } from './GitHubCard';
 import { LeetCodeCard } from './LeetCodeCard';
 import { GitHubContributionHeatmap } from './GitHubContributionHeatmap';
 import { LeetCodeHeatmap } from './LeetCodeHeatmap';
-import { GitHubActivityFeed } from './GitHubActivityFeed';
-import { LeetCodeSubmissions } from './LeetCodeSubmissions';
 import { CodingActivitySkeleton } from './CodingActivitySkeleton';
 import { CodingActivityError } from './CodingActivityError';
 import './CodingActivity.css';
@@ -17,12 +15,10 @@ export default function CodingActivitySection() {
   const [error, setError] = useState<string | null>(null);
 
   const [githubProfile, setGithubProfile] = useState<GitHubProfile | null>(null);
-  const [githubEvents, setGithubEvents] = useState<GitHubEvent[]>([]);
   const [githubContribs, setGithubContribs] = useState<ContributionDay[]>([]);
   const [githubTotalContribs, setGithubTotalContribs] = useState(0);
 
   const [leetcodeProfile, setLeetcodeProfile] = useState<LeetCodeProfile | null>(null);
-  const [leetcodeSubmissions, setLeetcodeSubmissions] = useState<LeetCodeSubmission[]>([]);
 
   const loadData = async () => {
     setLoading(true);
@@ -38,7 +34,6 @@ export default function CodingActivitySection() {
 
       if (ghResult.status === 'fulfilled') {
         setGithubProfile(ghResult.value.profile);
-        setGithubEvents(ghResult.value.events);
         setGithubContribs(ghResult.value.contributions.contributions);
         setGithubTotalContribs(ghResult.value.contributions.totalContributions);
         hasSuccess = true;
@@ -48,7 +43,6 @@ export default function CodingActivitySection() {
 
       if (lcResult.status === 'fulfilled') {
         setLeetcodeProfile(lcResult.value.profile);
-        setLeetcodeSubmissions(lcResult.value.recentSubmissions);
         hasSuccess = true;
       } else {
         console.error('LeetCode fetch error:', lcResult.reason);
@@ -122,14 +116,10 @@ export default function CodingActivitySection() {
                       totalContributions={githubTotalContribs}
                     />
                   </div>
-                </div>
-
-                <div className="activity-grid">
-                  <div className="col-span-6">
-                    <GitHubActivityFeed events={githubEvents} />
-                  </div>
-                  <div className="col-span-6">
-                    <LeetCodeSubmissions submissions={leetcodeSubmissions} />
+                  <div className="col-span-12">
+                    {leetcodeProfile && (
+                      <LeetCodeHeatmap submissionCalendar={leetcodeProfile.submissionCalendar} />
+                    )}
                   </div>
                 </div>
               </>
@@ -148,9 +138,6 @@ export default function CodingActivitySection() {
                       totalContributions={githubTotalContribs}
                     />
                   </div>
-                  <div className="col-span-12">
-                    <GitHubActivityFeed events={githubEvents} />
-                  </div>
                 </div>
               </>
             )}
@@ -166,9 +153,6 @@ export default function CodingActivitySection() {
                     {leetcodeProfile && (
                       <LeetCodeHeatmap submissionCalendar={leetcodeProfile.submissionCalendar} />
                     )}
-                  </div>
-                  <div className="col-span-12">
-                    <LeetCodeSubmissions submissions={leetcodeSubmissions} />
                   </div>
                 </div>
               </>
