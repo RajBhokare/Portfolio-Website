@@ -34,6 +34,44 @@ export interface GitHubContributionData {
   contributions: ContributionDay[];
 }
 
+function parseGitHubHTML(html: string): GitHubContributionData {
+  const totalMatch = html.match(/([\d,]+)\s+contributions/i);
+  const totalContributions = totalMatch ? parseInt(totalMatch[1].replace(/,/g, ''), 10) : 0;
+
+  const days: ContributionDay[] = [];
+  const regex1 = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d+)"/g;
+  let match;
+  while ((match = regex1.exec(html)) !== null) {
+    const level = parseInt(match[2], 10);
+    days.push({
+      date: match[1],
+      intensity: level,
+      count: level > 0 ? (level === 1 ? 1 : level === 2 ? 3 : level === 3 ? 5 : 8) : 0,
+      color: '',
+    });
+  }
+
+  const regex2 = /data-level="(\d+)"[^>]*data-date="(\d{4}-\d{2}-\d{2})"/g;
+  while ((match = regex2.exec(html)) !== null) {
+    if (!days.some((d) => d.date === match[2])) {
+      const level = parseInt(match[1], 10);
+      days.push({
+        date: match[2],
+        intensity: level,
+        count: level > 0 ? (level === 1 ? 1 : level === 2 ? 3 : level === 3 ? 5 : 8) : 0,
+        color: '',
+      });
+    }
+  }
+
+  days.sort((a, b) => a.date.localeCompare(b.date));
+
+  return {
+    totalContributions: totalContributions || days.reduce((sum, d) => sum + d.count, 0),
+    contributions: days,
+  };
+}
+
 export async function fetchGitHubData(): Promise<{
   profile: GitHubProfile;
   events: GitHubEvent[];
@@ -41,13 +79,13 @@ export async function fetchGitHubData(): Promise<{
 }> {
   const username = config.githubUsername;
 
-  return fetchWithCache(`github_${username}`, async () => {
-    // 1. Fetch User Profile & Repos in parallel
+  return fetchWithCache(`github_${username}_v2`, async () => {
+    // 1. Fetch User Profile, Repos, Events, and Contributions in parallel
     const [profileRes, reposRes, eventsRes, contribRes] = await Promise.all([
       fetch(`https://api.github.com/users/${username}`),
       fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`),
       fetch(`https://api.github.com/users/${username}/events/public?per_page=10`),
-      fetch(`https://github-contributions.vercel.app/api/v1/${username}`).catch(() => null),
+      fetch(`/api/github-contributions?username=${username}`).catch(() => null),
     ]);
 
     if (!profileRes.ok) {
@@ -115,15 +153,59 @@ export async function fetchGitHubData(): Promise<{
     };
 
     if (contribRes && contribRes.ok) {
-      const contribJson = await contribRes.json();
-      const rawDays: ContributionDay[] = contribJson.contributions || [];
-      const total = (contribJson.years || []).reduce((acc: number, y: any) => acc + (y.total || 0), 0) ||
-        rawDays.reduce((acc: number, d: any) => acc + (d.count || 0), 0);
+      const contentType = contribRes.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const contribJson = await contribRes.json();
+        if (Array.isArray(contribJson.contributions) && contribJson.contributions.length > 0) {
+          contributionData = {
+            totalContributions: contribJson.totalContributions || 0,
+            contributions: contribJson.contributions,
+          };
+        }
+      } else {
+        const text = await contribRes.text();
+        contributionData = parseGitHubHTML(text);
+      }
+    }
 
-      contributionData = {
-        totalContributions: total,
-        contributions: rawDays,
-      };
+    // Fallback if contributionData is empty: fetch from github-contributions.vercel.app with normalization
+    if (!contributionData.contributions || contributionData.contributions.length === 0) {
+      try {
+        const fallbackRes = await fetch(`https://github-contributions.vercel.app/api/v1/${username}`);
+        if (fallbackRes.ok) {
+          const fbJson = await fallbackRes.json();
+          const rawDays: ContributionDay[] = fbJson.contributions || [];
+          rawDays.sort((a, b) => a.date.localeCompare(b.date));
+
+          const normalized = rawDays.map((d) => {
+            const count = d.count || 0;
+            let intensity = parseInt(String(d.intensity), 10) || 0;
+            if (count > 0 && intensity === 0) {
+              if (count >= 10) intensity = 4;
+              else if (count >= 5) intensity = 3;
+              else if (count >= 3) intensity = 2;
+              else intensity = 1;
+            }
+            return {
+              date: d.date,
+              count,
+              color: d.color || '',
+              intensity,
+            };
+          });
+
+          const total =
+            (fbJson.years || []).reduce((acc: number, y: any) => acc + (y.total || 0), 0) ||
+            normalized.reduce((acc: number, d: any) => acc + (d.count || 0), 0);
+
+          contributionData = {
+            totalContributions: total,
+            contributions: normalized,
+          };
+        }
+      } catch (fbErr) {
+        console.warn('Fallback contribution API failed:', fbErr);
+      }
     }
 
     return { profile, events, contributions: contributionData };

@@ -6,20 +6,18 @@ interface Props {
 }
 
 export function GitHubContributionHeatmap({ contributions, totalContributions }: Props) {
-  // Take last 52 weeks (364 days) of contributions if available
-  const displayDays = contributions.slice(-364);
+  // Ensure array is sorted ascending by date
+  const sorted = [...contributions].sort((a, b) => a.date.localeCompare(b.date));
 
-  // Group into weeks (arrays of 7 days)
-  const weeks: ContributionDay[][] = [];
-  for (let i = 0; i < displayDays.length; i += 7) {
-    weeks.push(displayDays.slice(i, i + 7));
-  }
+  // Take the most recent 364 days (52 full weeks)
+  const displayDays = sorted.slice(-364);
 
   const getCellClass = (intensity: number, count: number) => {
-    if (count === 0 || intensity === 0) return 'cell cell-l0';
-    if (intensity === 1 || count <= 2) return 'cell cell-l1';
-    if (intensity === 2 || count <= 5) return 'cell cell-l2';
-    if (intensity === 3 || count <= 9) return 'cell cell-l3';
+    if (count === 0 && intensity === 0) return 'cell cell-l0';
+    const level = intensity > 0 ? intensity : (count >= 10 ? 4 : count >= 5 ? 3 : count >= 3 ? 2 : 1);
+    if (level === 1) return 'cell cell-l1';
+    if (level === 2) return 'cell cell-l2';
+    if (level === 3) return 'cell cell-l3';
     return 'cell cell-l4';
   };
 
@@ -32,7 +30,7 @@ export function GitHubContributionHeatmap({ contributions, totalContributions }:
           <span>💚</span> GitHub Contributions
         </div>
         <span className="card-badge">
-          {totalContributions > 0 ? `${totalContributions} contributions in recent year` : 'Live Calendar'}
+          {totalContributions > 0 ? `${totalContributions} contributions in the last year` : 'Live Calendar'}
         </span>
       </div>
 
@@ -56,7 +54,7 @@ export function GitHubContributionHeatmap({ contributions, totalContributions }:
                 <div
                   key={day.date || idx}
                   className={getCellClass(day.intensity, day.count)}
-                  title={`${day.count} contributions on ${day.date}`}
+                  title={`${day.count > 0 ? `${day.count} contribution${day.count === 1 ? '' : 's'}` : 'No contributions'} on ${day.date}`}
                 />
               ))}
             </div>

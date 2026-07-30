@@ -17,6 +17,19 @@ export default defineConfig({
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         },
       },
+      '/api/github-contributions': {
+        target: 'https://github.com/users',
+        changeOrigin: true,
+        rewrite: (path) => {
+          const url = new URL(path, 'http://localhost');
+          const username = url.searchParams.get('username') || 'RajBhokare';
+          return `/${username}/contributions`;
+        },
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+      },
     },
   },
 })

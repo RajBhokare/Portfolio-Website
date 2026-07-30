@@ -187,30 +187,32 @@ export function Projects() {
           <h2 className="section-title">Featured Projects</h2>
         </div>
 
-        {/* Project 1 */}
+        {/* Project 1: Briefly */}
         <div className="project-showcase reveal" data-accent="violet">
           <div className="ps-visual">
-            <div className="ps-mockup ps-mockup-iot">
-              <div className="iot-dashboard">
-                <div className="iot-header"><span className="iot-status-dot"/><span>DustSense · LIVE</span></div>
-                <div className="iot-reading">
-                  <div className="iot-metric"><span className="iot-val">247</span><span className="iot-unit">µg/m³</span></div>
-                  <div className="iot-bar-label">Air Quality Index</div>
-                  <div className="iot-bar-track">
-                    <div className="iot-bar-fill" style={{width:'62%'}}/>
+            <div className="ps-mockup ps-mockup-briefly">
+              <div className="briefly-ui">
+                <div className="briefly-header">
+                  <span className="briefly-logo">Briefly AI</span>
+                  <span className="briefly-status">● Live Assistant</span>
+                </div>
+                <div className="briefly-audio">
+                  <div className="briefly-title">🎙️ Meeting_Recording.mp3</div>
+                  <div className="briefly-wave">
+                    <div className="briefly-bar" style={{ height: '40%' }} />
+                    <div className="briefly-bar" style={{ height: '85%' }} />
+                    <div className="briefly-bar" style={{ height: '60%' }} />
+                    <div className="briefly-bar" style={{ height: '100%' }} />
+                    <div className="briefly-bar" style={{ height: '45%' }} />
+                    <div className="briefly-bar" style={{ height: '75%' }} />
+                    <div className="briefly-bar" style={{ height: '30%' }} />
                   </div>
-                  <div className="iot-bar-labels"><span>Good</span><span>Moderate</span><span>Poor</span><span>Bad</span></div>
                 </div>
-                <div className="iot-sparkline">
-                  <svg viewBox="0 0 200 50" preserveAspectRatio="none">
-                    <polyline points="0,40 25,35 50,38 75,20 100,28 125,15 150,22 175,10 200,18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <polyline points="0,40 25,35 50,38 75,20 100,28 125,15 150,22 175,10 200,18 200,50 0,50" fill="currentColor" opacity="0.08"/>
-                  </svg>
-                </div>
-                <div className="iot-chips">
-                  <span className="iot-chip"><span>●</span> GP2Y1010AU0F</span>
-                  <span className="iot-chip"><span>●</span> ESP8266</span>
-                  <span className="iot-chip"><span>●</span> MQTT</span>
+                <div className="briefly-summary">
+                  <div className="briefly-label">AI Key Insights</div>
+                  <div className="briefly-item"><span>✓</span> Whisper speech-to-text transcribed</div>
+                  <div className="briefly-item"><span>✓</span> 4 action items extracted</div>
+                  <div className="briefly-item"><span>✓</span> Executive summary ready</div>
                 </div>
               </div>
             </div>
@@ -218,25 +220,40 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">01</span>
-              <span className="ps-badge ps-badge-iot">Hardware · IoT</span>
+              <span className="ps-badge ps-badge-iot" style={{ background: 'var(--violet-dim)', color: 'var(--violet)', borderColor: 'rgba(176,105,255,.2)' }}>AI · Full Stack</span>
               <span className="ps-badge ps-badge-new">Featured</span>
             </div>
-            <h3 className="ps-title">DustSense</h3>
-            <p className="ps-tagline">Real-Time Air Quality Monitoring System</p>
-            <p className="ps-desc">An IoT-integrated hardware system using a Sharp GP2Y1010AU0F optical dust sensor to measure PM2.5 particulate density in real time. Data is processed on an ESP8266 microcontroller, transmitted over Wi-Fi via MQTT protocol, and visualized on a live dashboard.</p>
+            <h3 className="ps-title">Briefly</h3>
+            <p className="ps-tagline">AI Powered Meeting Assistant</p>
+            <p className="ps-desc">Built an AI-powered meeting assistant that converts meeting recordings into structured summaries and actionable tasks. The application automates speech transcription and summarization using OpenAI Whisper, enabling users to quickly review important discussion points.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Real-time PM2.5 density readings with analog signal processing</li>
-              <li><span className="ps-hi-dot"/>ESP8266 Wi-Fi module for wireless data transmission</li>
-              <li><span className="ps-hi-dot"/>MQTT protocol for lightweight IoT messaging</li>
-              <li><span className="ps-hi-dot"/>Live web dashboard with historical trend charts</li>
+              <li><span className="ps-hi-dot"/>Upload audio recordings for instant processing</li>
+              <li><span className="ps-hi-dot"/>Automatic speech-to-text transcription via Whisper API</li>
+              <li><span className="ps-hi-dot"/>AI-generated meeting summaries & executive digests</li>
+              <li><span className="ps-hi-dot"/>Action item extraction with task assignment</li>
+              <li><span className="ps-hi-dot"/>Fast and responsive user interface</li>
             </ul>
             <div className="ps-stack">
-              <span>Arduino/C</span><span>ESP8266</span><span>MQTT</span><span>IoT</span><span>Sensors</span>
+              <span>HTML</span><span>CSS</span><span>Bootstrap</span><span>JavaScript</span><span>EJS</span><span>Node.js</span><span>Express.js</span><span>Whisper API</span>
+            </div>
+            <div className="ps-actions">
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+                Live Demo
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Project 2 */}
+        {/* Project 2: Quizzer */}
         <div className="project-showcase project-showcase-flip reveal" data-accent="cyan">
           <div className="ps-visual">
             <div className="ps-mockup ps-mockup-app">
@@ -262,85 +279,150 @@ export function Projects() {
             </div>
           </div>
           <div className="ps-content">
-            <div className="ps-meta"><span className="ps-num">02</span><span className="ps-badge ps-badge-ai">EdTech · AI</span></div>
+            <div className="ps-meta"><span className="ps-num">02</span><span className="ps-badge ps-badge-ai">AI · EdTech</span></div>
             <h3 className="ps-title">Quizzer</h3>
-            <p className="ps-tagline">Video Summarizer & Auto Quiz Generator</p>
-            <p className="ps-desc">Converts educational video lectures into concise text summaries and automatically generates multiple-choice quizzes using NLP techniques. Students upload a video, get a digest, and test their comprehension — all in one workflow.</p>
+            <p className="ps-tagline">Video Summarizer & Quiz Generator</p>
+            <p className="ps-desc">Developed a web application that extracts transcripts from uploaded videos, generates concise summaries, and creates quizzes automatically using AI-powered speech recognition and content analysis.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Automatic transcript extraction from video files</li>
-              <li><span className="ps-hi-dot"/>NLP-powered summarization pipeline</li>
-              <li><span className="ps-hi-dot"/>AI-generated MCQ quiz from summary context</li>
-              <li><span className="ps-hi-dot"/>Score tracking and comprehension feedback</li>
+              <li><span className="ps-hi-dot"/>Upload educational videos seamlessly</li>
+              <li><span className="ps-hi-dot"/>Automatic transcript generation via AssemblyAI API</li>
+              <li><span className="ps-hi-dot"/>AI-generated summaries & key concept digests</li>
+              <li><span className="ps-hi-dot"/>Interactive quiz generation for self-assessment</li>
+              <li><span className="ps-hi-dot"/>Responsive user interface</li>
             </ul>
-            <div className="ps-stack"><span>Python</span><span>NLP</span><span>Flask</span><span>SpeechRecognition</span></div>
+            <div className="ps-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span><span>EJS</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span>
+            </div>
+            <div className="ps-actions">
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+                Live Demo
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Project 3 */}
+        {/* Project 3: EduQuest */}
         <div className="project-showcase reveal" data-accent="coral">
           <div className="ps-visual">
             <div className="ps-mockup ps-mockup-edu">
               <div className="edu-ui">
-                <div className="edu-nav">EduQuest <span>🌐 Rural Access</span></div>
+                <div className="edu-nav">EduQuest <span>🎓 LMS Platform</span></div>
                 <div className="edu-hero-text">Learn. Grow. Succeed.</div>
                 <div className="edu-cards">
-                  <div className="edu-card"><span>📹</span><span>Video Lessons</span></div>
+                  <div className="edu-card"><span>📚</span><span>Courses</span></div>
                   <div className="edu-card edu-card-active"><span>📝</span><span>Quizzes</span></div>
-                  <div className="edu-card"><span>📊</span><span>Progress</span></div>
+                  <div className="edu-card"><span>📊</span><span>Analytics</span></div>
                 </div>
                 <div className="edu-stat-row">
-                  <div className="edu-stat"><span className="edu-stat-n">1.2k</span><span className="edu-stat-l">Students</span></div>
-                  <div className="edu-stat"><span className="edu-stat-n">48</span><span className="edu-stat-l">Lessons</span></div>
-                  <div className="edu-stat"><span className="edu-stat-n">Low</span><span className="edu-stat-l">Bandwidth</span></div>
+                  <div className="edu-stat"><span className="edu-stat-n">MySQL</span><span className="edu-stat-l">Database</span></div>
+                  <div className="edu-stat"><span className="edu-stat-n">REST</span><span className="edu-stat-l">APIs</span></div>
+                  <div className="edu-stat"><span className="edu-stat-n">Auth</span><span className="edu-stat-l">Role-based</span></div>
                 </div>
               </div>
             </div>
           </div>
           <div className="ps-content">
-            <div className="ps-meta"><span className="ps-num">03</span><span className="ps-badge ps-badge-web">Education · Web</span></div>
+            <div className="ps-meta"><span className="ps-num">03</span><span className="ps-badge ps-badge-web">Full Stack · Education</span></div>
             <h3 className="ps-title">EduQuest</h3>
-            <p className="ps-tagline">Digital Learning for Rural Students</p>
-            <p className="ps-desc">A lightweight, bandwidth-optimized web platform designed for rural students with limited internet access. Features offline-first content delivery, interactive quizzes, and progress tracking.</p>
+            <p className="ps-tagline">Digital Learning Platform</p>
+            <p className="ps-desc">Built a full-stack Learning Management System supporting students and educators. Designed relational database schemas, developed RESTful APIs, and implemented quiz management and progress tracking.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Offline-first design for low-connectivity regions</li>
-              <li><span className="ps-hi-dot"/>Lightweight video lesson summaries</li>
-              <li><span className="ps-hi-dot"/>Interactive quiz module with score analytics</li>
-              <li><span className="ps-hi-dot"/>Accessible UI for diverse literacy levels</li>
+              <li><span className="ps-hi-dot"/>Student & educator authentication system</li>
+              <li><span className="ps-hi-dot"/>Comprehensive course & curriculum management</li>
+              <li><span className="ps-hi-dot"/>Interactive quiz management module</li>
+              <li><span className="ps-hi-dot"/>Student progress tracking & performance analytics</li>
+              <li><span className="ps-hi-dot"/>RESTful CRUD API architecture</li>
             </ul>
-            <div className="ps-stack"><span>HTML/CSS</span><span>JavaScript</span><span>PWA</span><span>LocalStorage</span></div>
+            <div className="ps-stack">
+              <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>EJS</span><span>HTML</span><span>CSS</span><span>Bootstrap</span>
+            </div>
+            <div className="ps-actions">
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+                Live Demo
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Project 4 */}
+        {/* Project 4: DustSense */}
         <div className="project-showcase project-showcase-flip reveal" data-accent="gold">
           <div className="ps-visual">
-            <div className="ps-mockup ps-mockup-ai">
-              <div className="ai-ui">
-                <div className="ai-header"><span className="ai-logo">AssignAI</span><span className="ai-role">Educator View</span></div>
-                <div className="ai-assignment"><div className="ai-assign-title">Assignment: Dijkstra's Algorithm</div><div className="ai-assign-sub">Submitted by: student_42</div></div>
-                <div className="ai-feedback">
-                  <div className="ai-feedback-label">AI Feedback</div>
-                  <div className="ai-feedback-item good">✓ Correct time complexity analysis</div>
-                  <div className="ai-feedback-item good">✓ Proper edge case handling</div>
-                  <div className="ai-feedback-item warn">⚠ Optimize priority queue usage</div>
-                  <div className="ai-feedback-item bad">✗ Missing base case for disconnected graph</div>
+            <div className="ps-mockup ps-mockup-iot">
+              <div className="iot-dashboard">
+                <div className="iot-header"><span className="iot-status-dot"/><span>DustSense · LIVE</span></div>
+                <div className="iot-reading">
+                  <div className="iot-metric"><span className="iot-val">247</span><span className="iot-unit">µg/m³</span></div>
+                  <div className="iot-bar-label">Air Quality Index (PM2.5)</div>
+                  <div className="iot-bar-track">
+                    <div className="iot-bar-fill" style={{width:'62%'}}/>
+                  </div>
+                  <div className="iot-bar-labels"><span>Good</span><span>Moderate</span><span>Poor</span><span>Bad</span></div>
                 </div>
-                <div className="ai-score-row"><span className="ai-score-label">Auto Grade</span><span className="ai-score-val">78 / 100</span></div>
+                <div className="iot-sparkline">
+                  <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+                    <polyline points="0,40 25,35 50,38 75,20 100,28 125,15 150,22 175,10 200,18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <polyline points="0,40 25,35 50,38 75,20 100,28 125,15 150,22 175,10 200,18 200,50 0,50" fill="currentColor" opacity="0.08"/>
+                  </svg>
+                </div>
+                <div className="iot-chips">
+                  <span className="iot-chip"><span>●</span> GP2Y1010AU0F</span>
+                  <span className="iot-chip"><span>●</span> ESP8266</span>
+                  <span className="iot-chip"><span>●</span> MQTT</span>
+                </div>
               </div>
             </div>
           </div>
           <div className="ps-content">
-            <div className="ps-meta"><span className="ps-num">04</span><span className="ps-badge ps-badge-ai">AI · Full Stack</span></div>
-            <h3 className="ps-title">AssignAI</h3>
-            <p className="ps-tagline">Smarter Assignment Management Platform</p>
-            <p className="ps-desc">An AI-powered full-stack platform where educators create and distribute programming assignments, while students receive instant, structured feedback generated by AI. Replaces slow manual grading with intelligent auto-evaluation.</p>
+            <div className="ps-meta">
+              <span className="ps-num">04</span>
+              <span className="ps-badge ps-badge-iot">Hardware · IoT</span>
+              <span className="ps-badge ps-badge-new">Featured</span>
+            </div>
+            <h3 className="ps-title">DustSense</h3>
+            <p className="ps-tagline">Real-Time Air Quality Monitoring System</p>
+            <p className="ps-desc">Designed an IoT-based air quality monitoring system using a Sharp GP2Y1010AU0F optical dust sensor and ESP8266 microcontroller. The system measures PM2.5 concentration in real time, transmits data over MQTT, and displays live analytics through a web dashboard.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>AI-driven code feedback and auto-grading engine</li>
-              <li><span className="ps-hi-dot"/>Role-based dashboards for educators and students</li>
-              <li><span className="ps-hi-dot"/>Real-time submission and feedback loop</li>
-              <li><span className="ps-hi-dot"/>Analytics dashboard for class-wide performance</li>
+              <li><span className="ps-hi-dot"/>Real-time PM2.5 particulate monitoring</li>
+              <li><span className="ps-hi-dot"/>Optical dust sensing with signal processing</li>
+              <li><span className="ps-hi-dot"/>MQTT messaging for lightweight IoT telemetry</li>
+              <li><span className="ps-hi-dot"/>Wi-Fi enabled ESP8266 microcontroller integration</li>
+              <li><span className="ps-hi-dot"/>Live web dashboard & historical trend visualization</li>
             </ul>
-            <div className="ps-stack"><span>AI/LLM</span><span>Full Stack</span><span>REST API</span><span>EdTech</span></div>
+            <div className="ps-stack">
+              <span>ESP8266</span><span>MQTT</span><span>Embedded C</span><span>Arduino IDE</span><span>HTML</span><span>JavaScript</span><span>Dashboard</span>
+            </div>
+            <div className="ps-actions">
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+                Live Demo
+              </span>
+            </div>
           </div>
         </div>
       </div>
