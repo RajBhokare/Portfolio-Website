@@ -1,0 +1,41 @@
+interface CacheEntry<T> {
+  timestamp: number;
+  data: T;
+}
+
+const DEFAULT_TTL_MS = 15 * 60 * 1000; // 15 minutes cache
+
+export async function fetchWithCache<T>(
+  key: string,
+  fetcher: () => Promise<T>,
+  ttlMs: number = DEFAULT_TTL_MS
+): Promise<T> {
+  const cacheKey = `portfolio_cache_${key}`;
+
+  try {
+    const cachedItem = localStorage.getItem(cacheKey);
+    if (cachedItem) {
+      const parsed: CacheEntry<T> = JSON.parse(cachedItem);
+      const isExpired = Date.now() - parsed.timestamp > ttlMs;
+      if (!isExpired && parsed.data) {
+        return parsed.data;
+      }
+    }
+  } catch (e) {
+    console.warn(`Cache read warning for ${key}:`, e);
+  }
+
+  const freshData = await fetcher();
+
+  try {
+    const entry: CacheEntry<T> = {
+      timestamp: Date.now(),
+      data: freshData,
+    };
+    localStorage.setItem(cacheKey, JSON.stringify(entry));
+  } catch (e) {
+    console.warn(`Cache write warning for ${key}:`, e);
+  }
+
+  return freshData;
+}
