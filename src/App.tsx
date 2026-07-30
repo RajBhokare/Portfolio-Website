@@ -5,6 +5,7 @@ import Hero from './sections/Hero';
 import { About, Skills, Experience, Projects, Philosophy, Contact } from './sections/Sections';
 import { Preloader } from './components/Preloader/Preloader';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
+import { BackgroundVideo } from './components/BackgroundVideo/BackgroundVideo';
 
 const CodingActivitySection = lazy(() => import('./components/CodingActivity/CodingActivitySection'));
 
@@ -130,6 +131,7 @@ export default function App() {
 
   return (
     <>
+      <BackgroundVideo />
       <Preloader />
       <ScrollProgress />
       <div className="noise" aria-hidden="true" />

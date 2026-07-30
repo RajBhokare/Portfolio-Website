@@ -134,7 +134,7 @@
 }
 
 /* ── EXPERIENCE ── */
-#experience { background: var(--bg); position: relative; }
+#experience { background: transparent; position: relative; }
 #experience::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(176,105,255,.03) 1px, transparent 1px); background-size: 36px 36px; mask-image: radial-gradient(ellipse 80% 100% at 50% 50%, black 20%, transparent 100%); pointer-events: none; z-index: 0; }
 #experience .container { position: relative; z-index: 1; }
 .exp-title::after { background: linear-gradient(90deg, var(--violet), transparent) !important; }
@@ -157,7 +157,7 @@
 .exp-item:hover .exp-stack span { color: var(--text-2); border-color: rgba(255,255,255,.08); }
 
 /* ── PROJECTS ── */
-#projects { background: var(--bg); position: relative; }
+#projects { background: transparent; position: relative; }
 #projects::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,229,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.025) 1px,transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 100%); pointer-events: none; z-index: 0; }
 #projects .container { position: relative; z-index: 1; }
 
@@ -321,7 +321,7 @@
 .ai-score-val { font-family: var(--display); font-size: 1rem; font-weight: 800; color: var(--gold); text-shadow: 0 0 16px rgba(255,209,102,.3); }
 
 /* ── PHILOSOPHY ── */
-#philosophy { background: var(--bg-2); position: relative; }
+#philosophy { background: rgba(5, 5, 13, 0.35); position: relative; }
 #philosophy::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(176,105,255,.04) 1px, transparent 1px); background-size: 40px 40px; background-position: 20px 20px; pointer-events: none; z-index: 0; }
 #philosophy .container { position: relative; z-index: 1; }
 .philosophy-layout { display: grid; grid-template-columns: 1fr 300px; gap: 4rem; align-items: start; }
@@ -341,7 +341,7 @@
 .quote-block cite { font-family: var(--mono); font-size: .72rem; color: var(--text-3); letter-spacing: .08em; }
 
 /* ── FOOTER ── */
-.footer { background: linear-gradient(180deg, var(--bg) 0%, #050510 100%); padding: 7.5rem 0 3rem; position: relative; }
+.footer { background: transparent; padding: 7.5rem 0 3rem; position: relative; }
 .footer::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(0,229,255,.03) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; }
 .footer .container { position: relative; z-index: 1; }
 .footer-main { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border); }

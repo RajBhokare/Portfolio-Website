@@ -74,7 +74,7 @@ html.lenis, html.lenis body {
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: var(--font);
   line-height: 1.7;
@@ -110,8 +110,8 @@ em { font-style: normal; color: var(--cyan); }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
 /* section layout */
-.section { padding: 8.5rem 0; position: relative; }
-.section-dark { background: var(--bg-2); }
+.section { padding: 8.5rem 0; position: relative; background: transparent; }
+.section-dark { background: rgba(5, 5, 13, 0.4); }
 .section-dark::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
