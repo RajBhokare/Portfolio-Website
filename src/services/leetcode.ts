@@ -95,47 +95,50 @@ function calculateStreak(submissionCalendar: Record<string, number>): number {
 }
 
 export function getFallbackLeetCodeData(username: string): LeetCodeData {
-  const now = new Date();
-  const calendar: Record<string, number> = {};
+  const calendar: Record<string, number> = {
+    "1770163200": 1, "1771545600": 8, "1771632000": 1, "1771718400": 2, "1771804800": 2,
+    "1771891200": 4, "1771977600": 1, "1772236800": 1, "1772323200": 12, "1772409600": 1,
+    "1772496000": 4, "1772582400": 1, "1772755200": 2, "1772841600": 3, "1773100800": 9,
+    "1773360000": 1, "1773446400": 4, "1773619200": 2, "1773705600": 5, "1773792000": 2,
+    "1773878400": 3, "1773964800": 1, "1774051200": 2, "1774137600": 3, "1774224000": 4,
+    "1774310400": 5, "1774396800": 4, "1774483200": 2, "1774569600": 2, "1774656000": 3,
+    "1774742400": 3, "1774828800": 2, "1774915200": 5, "1775606400": 2, "1775692800": 3,
+    "1777507200": 5, "1777593600": 3, "1777680000": 3, "1777766400": 2, "1777852800": 4,
+    "1777939200": 3, "1778112000": 5, "1778198400": 1, "1778284800": 1, "1778371200": 3,
+    "1778457600": 3, "1778544000": 1, "1778716800": 2, "1778803200": 1, "1778889600": 1,
+    "1779062400": 2, "1779148800": 2, "1779235200": 2, "1780272000": 1, "1780358400": 2,
+    "1780617600": 1, "1780704000": 2, "1780790400": 1, "1780876800": 3, "1781049600": 2,
+    "1781222400": 1, "1781308800": 2, "1781395200": 1, "1781481600": 1, "1781568000": 1,
+    "1781654400": 1, "1781913600": 2, "1782086400": 1, "1782172800": 1, "1782259200": 2,
+    "1782432000": 2, "1783123200": 1, "1783555200": 1, "1783641600": 5, "1783728000": 3,
+    "1783814400": 2, "1783900800": 1, "1783987200": 1, "1784073600": 1, "1784160000": 2,
+    "1784246400": 1, "1784332800": 3, "1784419200": 2, "1784505600": 1, "1784678400": 1,
+    "1784764800": 3, "1785024000": 3, "1785110400": 2, "1785196800": 1, "1785283200": 2,
+    "1785369600": 4, "1785456000": 3, "1785542400": 4
+  };
 
-  for (let i = 363; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
-    const dateStr = d.toISOString().split('T')[0];
-
-    let seed = 0;
-    for (let c = 0; c < dateStr.length; c++) {
-      seed = (seed + dateStr.charCodeAt(c) * (c + 1)) % 100;
-    }
-
-    if (seed > 40 || i <= 12) {
-      const startOfDaySec = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 1000);
-      const count = 1 + (seed % 4);
-      calendar[String(startOfDaySec)] = count;
-    }
-  }
-
-  const currentStreak = calculateStreak(calendar) || 12;
+  const currentStreak = calculateStreak(calendar) || 8;
 
   const profile: LeetCodeProfile = {
     username,
     name: 'Raj Bhokare',
-    avatarUrl: `https://assets.leetcode.com/users/avatar/default_avatar.png`,
+    avatarUrl: 'https://assets.leetcode.com/users/LzHyfJPCW5/avatar_1770200848.png',
     profileUrl: `https://leetcode.com/u/${username}/`,
-    ranking: 184520,
-    reputation: 145,
-    totalSolved: 168,
-    easySolved: 72,
+    ranking: 2239386,
+    reputation: 0,
+    totalSolved: 65,
+    easySolved: 47,
     totalEasy: 820,
-    mediumSolved: 84,
+    mediumSolved: 18,
     totalMedium: 1750,
-    hardSolved: 12,
+    hardSolved: 0,
     totalHard: 780,
-    totalSubmissions: 295,
-    acSubmissions: 188,
-    acceptanceRate: 63.7,
-    contestRating: 1520,
-    contestRanking: 45210,
-    contestAttended: 6,
+    totalSubmissions: 228,
+    acSubmissions: 114,
+    acceptanceRate: 50.0,
+    contestRating: null,
+    contestRanking: null,
+    contestAttended: 0,
     currentStreak,
     submissionCalendar: calendar,
   };
@@ -149,25 +152,18 @@ export function getFallbackLeetCodeData(username: string): LeetCodeData {
       timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 4),
     },
     {
-      title: 'Add Two Numbers',
-      titleSlug: 'add-two-numbers',
-      statusDisplay: 'Accepted',
-      lang: 'typescript',
-      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 28),
-    },
-    {
-      title: 'LRU Cache',
-      titleSlug: 'lru-cache',
+      title: 'Reverse String',
+      titleSlug: 'reverse-string',
       statusDisplay: 'Accepted',
       lang: 'cpp',
-      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 52),
+      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 24),
     },
     {
-      title: 'Valid Parentheses',
-      titleSlug: 'valid-parentheses',
+      title: 'Valid Palindrome',
+      titleSlug: 'valid-palindrome',
       statusDisplay: 'Accepted',
-      lang: 'javascript',
-      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 76),
+      lang: 'typescript',
+      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 48),
     },
   ];
 
@@ -177,7 +173,7 @@ export function getFallbackLeetCodeData(username: string): LeetCodeData {
 export async function fetchLeetCodeData(): Promise<LeetCodeData> {
   const username = config.leetcodeUsername || 'RajBhokare';
 
-  return fetchWithCache(`leetcode_${username}_v4`, async () => {
+  return fetchWithCache(`leetcode_${username}_v5`, async () => {
     const fallbackObj = getFallbackLeetCodeData(username);
 
     const graphqlQuery = `

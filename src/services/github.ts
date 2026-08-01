@@ -109,15 +109,15 @@ export function getFallbackGitHubData(username: string): {
     let intensity = 0;
 
     if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      if (seed > 30) {
+      if (seed > 35) {
         if (seed > 85) {
-          count = 7 + (seed % 6);
+          count = 5 + (seed % 4);
           intensity = 4;
         } else if (seed > 65) {
-          count = 4 + (seed % 3);
+          count = 3 + (seed % 2);
           intensity = 3;
         } else if (seed > 45) {
-          count = 2 + (seed % 2);
+          count = 2;
           intensity = 2;
         } else {
           count = 1;
@@ -125,9 +125,9 @@ export function getFallbackGitHubData(username: string): {
         }
       }
     } else {
-      if (seed > 75) {
-        count = 3;
-        intensity = 2;
+      if (seed > 80) {
+        count = 2;
+        intensity = 1;
       }
     }
 
@@ -143,39 +143,39 @@ export function getFallbackGitHubData(username: string): {
   const profile: GitHubProfile = {
     username,
     name: 'Raj Bhokare',
-    avatarUrl: `https://github.com/${username}.png`,
+    avatarUrl: 'https://avatars.githubusercontent.com/u/201620099?v=4',
     profileUrl: `https://github.com/${username}`,
-    bio: 'Full Stack Web Developer | Crafting scalable web applications & beautiful UI/UX',
+    bio: 'Frontend & Full Stack Developer | IT Engineering Student at D. Y. Patil Institute of Technology',
     publicRepos: 18,
-    followers: 24,
+    followers: 6,
     following: 15,
-    totalStars: 32,
+    totalStars: 0,
   };
 
   const events: GitHubEvent[] = [
     {
       id: 'fallback-1',
       type: 'PushEvent',
-      repoName: `${username}/Portfolio`,
-      repoUrl: `https://github.com/${username}/Portfolio`,
+      repoName: `${username}/Portfolio-Website`,
+      repoUrl: `https://github.com/${username}/Portfolio-Website`,
       createdAt: new Date().toISOString(),
-      description: 'Pushed commit: "Optimize performance and standard UI features"',
+      description: 'Pushed commit: "fixing github and leetcode api"',
     },
     {
       id: 'fallback-2',
-      type: 'CreateEvent',
-      repoName: `${username}/fullstack-app`,
-      repoUrl: `https://github.com/${username}/fullstack-app`,
+      type: 'PushEvent',
+      repoName: `${username}/Portfolio-Website`,
+      repoUrl: `https://github.com/${username}/Portfolio-Website`,
       createdAt: new Date(Date.now() - 86400000).toISOString(),
-      description: 'Created repository fullstack-app',
+      description: 'Pushed commit: "update UI and responsive styles"',
     },
     {
       id: 'fallback-3',
-      type: 'PushEvent',
-      repoName: `${username}/react-components`,
-      repoUrl: `https://github.com/${username}/react-components`,
+      type: 'CreateEvent',
+      repoName: `${username}/Portfolio-Website`,
+      repoUrl: `https://github.com/${username}/Portfolio-Website`,
       createdAt: new Date(Date.now() - 172800000).toISOString(),
-      description: 'Pushed 3 commits to main branch',
+      description: 'Created repository Portfolio-Website',
     },
   ];
 
@@ -183,7 +183,7 @@ export function getFallbackGitHubData(username: string): {
     profile,
     events,
     contributions: {
-      totalContributions: totalContribs || 342,
+      totalContributions: 269,
       contributions,
     },
   };
@@ -196,7 +196,7 @@ export async function fetchGitHubData(): Promise<{
 }> {
   const username = config.githubUsername || 'RajBhokare';
 
-  return fetchWithCache(`github_${username}_v4`, async () => {
+  return fetchWithCache(`github_${username}_v5`, async () => {
     const fallbackObj = getFallbackGitHubData(username);
 
     try {
