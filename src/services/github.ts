@@ -34,6 +34,19 @@ export interface GitHubContributionData {
   contributions: ContributionDay[];
 }
 
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 2500): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(timer);
+    return res;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
+  }
+}
+
 function parseGitHubHTML(html: string): GitHubContributionData {
   const totalMatch = html.match(/([\d,]+)\s+contributions/i);
   const totalContributions = totalMatch ? parseInt(totalMatch[1].replace(/,/g, ''), 10) : 0;
@@ -87,7 +100,6 @@ export function getFallbackGitHubData(username: string): {
     const dateStr = d.toISOString().split('T')[0];
     const dayOfWeek = d.getDay(); // 0 is Sun, 6 is Sat
 
-    // Deterministic pseudo-random based on date char codes to keep heatmap static
     let seed = 0;
     for (let c = 0; c < dateStr.length; c++) {
       seed = (seed + dateStr.charCodeAt(c) * (c + 1)) % 100;
@@ -184,17 +196,17 @@ export async function fetchGitHubData(): Promise<{
 }> {
   const username = config.githubUsername || 'RajBhokare';
 
-  return fetchWithCache(`github_${username}_v3`, async () => {
-    try {
-      // 1. Fetch User Profile, Repos, Events, and Contributions in parallel
-      const [profileRes, reposRes, eventsRes, contribRes] = await Promise.all([
-        fetch(`https://api.github.com/users/${username}`).catch(() => null),
-        fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`).catch(() => null),
-        fetch(`https://api.github.com/users/${username}/events/public?per_page=10`).catch(() => null),
-        fetch(`/api/github-contributions?username=${username}`).catch(() => null),
-      ]);
+  return fetchWithCache(`github_${username}_v4`, async () => {
+    const fallbackObj = getFallbackGitHubData(username);
 
-      const fallbackObj = getFallbackGitHubData(username);
+    try {
+      // 1. Fetch User Profile & Repos in parallel with fast 2.5s timeout
+      const [profileRes, reposRes, eventsRes, contribRes] = await Promise.all([
+        fetchWithTimeout(`https://api.github.com/users/${username}`, {}, 2500).catch(() => null),
+        fetchWithTimeout(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`, {}, 2500).catch(() => null),
+        fetchWithTimeout(`https://api.github.com/users/${username}/events/public?per_page=10`, {}, 2500).catch(() => null),
+        fetchWithTimeout(`/api/github-contributions?username=${username}`, {}, 2500).catch(() => null),
+      ]);
 
       let profile: GitHubProfile = fallbackObj.profile;
 
@@ -218,7 +230,6 @@ export async function fetchGitHubData(): Promise<{
         };
       }
 
-      // Format events if available
       let events: GitHubEvent[] = fallbackObj.events;
       if (eventsRes && eventsRes.ok) {
         const eventsJson = await eventsRes.json();
@@ -255,7 +266,6 @@ export async function fetchGitHubData(): Promise<{
         }
       }
 
-      // Parse Contribution Graph
       let contributionData: GitHubContributionData = {
         totalContributions: 0,
         contributions: [],
@@ -277,55 +287,35 @@ export async function fetchGitHubData(): Promise<{
         }
       }
 
-      // Fallback 1 for contributions: github-contributions-api or vercel app
+      // Try CORS proxy for GitHub contributions if primary failed
       if (!contributionData.contributions || contributionData.contributions.length === 0) {
         try {
-          const fallbackRes = await fetch(`https://github-contributions.vercel.app/api/v1/${username}`);
-          if (fallbackRes.ok) {
-            const fbJson = await fallbackRes.json();
-            const rawDays: ContributionDay[] = fbJson.contributions || [];
-            rawDays.sort((a, b) => a.date.localeCompare(b.date));
-
-            const normalized = rawDays.map((d) => {
-              const count = d.count || 0;
-              let intensity = parseInt(String(d.intensity), 10) || 0;
-              if (count > 0 && intensity === 0) {
-                if (count >= 10) intensity = 4;
-                else if (count >= 5) intensity = 3;
-                else if (count >= 3) intensity = 2;
-                else intensity = 1;
-              }
-              return {
-                date: d.date,
-                count,
-                color: d.color || '',
-                intensity,
-              };
-            });
-
-            const total =
-              (fbJson.years || []).reduce((acc: number, y: any) => acc + (y.total || 0), 0) ||
-              normalized.reduce((acc: number, d: any) => acc + (d.count || 0), 0);
-
-            contributionData = {
-              totalContributions: total,
-              contributions: normalized,
-            };
+          const corsProxyRes = await fetchWithTimeout(
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://github.com/users/${username}/contributions`)}`,
+            {},
+            2500
+          );
+          if (corsProxyRes.ok) {
+            const html = await corsProxyRes.text();
+            const parsed = parseGitHubHTML(html);
+            if (parsed.contributions.length > 0) {
+              contributionData = parsed;
+            }
           }
-        } catch (fbErr) {
-          console.warn('Fallback contribution API failed:', fbErr);
+        } catch (e) {
+          // ignore CORS proxy fail
         }
       }
 
-      // Fallback 2 for contributions: guaranteed static/generated heatmap data
+      // If still empty, use fallback contributions heatmap
       if (!contributionData.contributions || contributionData.contributions.length === 0) {
         contributionData = fallbackObj.contributions;
       }
 
       return { profile, events, contributions: contributionData };
     } catch (err) {
-      console.warn('All GitHub fetches failed, returning rich fallback data:', err);
-      return getFallbackGitHubData(username);
+      console.warn('GitHub fetch error, returning fallback dataset:', err);
+      return fallbackObj;
     }
   });
 }

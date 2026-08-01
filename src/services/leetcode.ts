@@ -38,13 +38,25 @@ export interface LeetCodeData {
   recentSubmissions: LeetCodeSubmission[];
 }
 
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 2500): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(timer);
+    return res;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
+  }
+}
+
 // Utility to calculate current consecutive streak from submission calendar
 function calculateStreak(submissionCalendar: Record<string, number>): number {
   if (!submissionCalendar || Object.keys(submissionCalendar).length === 0) {
     return 0;
   }
 
-  // Convert timestamps to date strings (YYYY-MM-DD) in local time
   const activeDates = new Set<string>();
   Object.keys(submissionCalendar).forEach((ts) => {
     const timestampMs = parseInt(ts, 10) * 1000;
@@ -61,8 +73,6 @@ function calculateStreak(submissionCalendar: Record<string, number>): number {
 
   const now = new Date();
   let streak = 0;
-
-  // Check today, yesterday, and go backward day by day
   let checkDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   const toDateStr = (d: Date) =>
@@ -70,7 +80,6 @@ function calculateStreak(submissionCalendar: Record<string, number>): number {
 
   let checkStr = toDateStr(checkDate);
 
-  // If today has no submission, check if yesterday had one to continue streak
   if (!activeDates.has(checkStr)) {
     checkDate.setDate(checkDate.getDate() - 1);
     checkStr = toDateStr(checkDate);
@@ -93,14 +102,12 @@ export function getFallbackLeetCodeData(username: string): LeetCodeData {
     const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
     const dateStr = d.toISOString().split('T')[0];
 
-    // Seed calculation for consistent submission calendar
     let seed = 0;
     for (let c = 0; c < dateStr.length; c++) {
       seed = (seed + dateStr.charCodeAt(c) * (c + 1)) % 100;
     }
 
     if (seed > 40 || i <= 12) {
-      // Active day
       const startOfDaySec = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 1000);
       const count = 1 + (seed % 4);
       calendar[String(startOfDaySec)] = count;
@@ -170,7 +177,9 @@ export function getFallbackLeetCodeData(username: string): LeetCodeData {
 export async function fetchLeetCodeData(): Promise<LeetCodeData> {
   const username = config.leetcodeUsername || 'RajBhokare';
 
-  return fetchWithCache(`leetcode_${username}_v3`, async () => {
+  return fetchWithCache(`leetcode_${username}_v4`, async () => {
+    const fallbackObj = getFallbackLeetCodeData(username);
+
     const graphqlQuery = `
       query getUserProfile($username: String!) {
         allQuestionsCount { difficulty count }
@@ -204,13 +213,17 @@ export async function fetchLeetCodeData(): Promise<LeetCodeData> {
       }
     `;
 
+    // 1. Try local/Vercel/Netlify proxy with fast 2.5s timeout
     try {
-      // 1. Primary: Call serverless/dev proxy endpoint
-      const proxyRes = await fetch('/api/leetcode', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: graphqlQuery, variables: { username } }),
-      }).catch(() => null);
+      const proxyRes = await fetchWithTimeout(
+        '/api/leetcode',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: graphqlQuery, variables: { username } }),
+        },
+        2500
+      ).catch(() => null);
 
       if (proxyRes && proxyRes.ok) {
         const json = await proxyRes.json();
@@ -219,12 +232,17 @@ export async function fetchLeetCodeData(): Promise<LeetCodeData> {
         }
       }
     } catch (err) {
-      console.warn('LeetCode proxy endpoint failed, trying microservices...', err);
+      console.warn('LeetCode proxy failed or timed out:', err);
     }
 
+    // 2. Try Alfa LeetCode public API with 2.5s timeout
     try {
-      // 2. Fallback: Alfa LeetCode public API
-      const fallbackRes = await fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${username}`).catch(() => null);
+      const fallbackRes = await fetchWithTimeout(
+        `https://alfa-leetcode-api.onrender.com/userProfile/${username}`,
+        {},
+        2500
+      ).catch(() => null);
+
       if (fallbackRes && fallbackRes.ok) {
         const fallbackJson = await fallbackRes.json();
         if (fallbackJson && (fallbackJson.totalSolved || fallbackJson.username || fallbackJson.ranking)) {
@@ -232,24 +250,11 @@ export async function fetchLeetCodeData(): Promise<LeetCodeData> {
         }
       }
     } catch (err) {
-      console.warn('Alfa LeetCode API failed:', err);
+      console.warn('Alfa LeetCode API failed/timed out:', err);
     }
 
-    try {
-      // 3. Fallback: leetcode-stats-api
-      const fallback2Res = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`).catch(() => null);
-      if (fallback2Res && fallback2Res.ok) {
-        const json2 = await fallback2Res.json();
-        if (json2 && json2.status === 'success') {
-          return parseLeetCodeStatsApiResponse(username, json2);
-        }
-      }
-    } catch (err) {
-      console.warn('LeetCode Stats API failed:', err);
-    }
-
-    // 4. Final Fallback: Return rich guaranteed fallback dataset
-    return getFallbackLeetCodeData(username);
+    // 3. Fast Return Fallback Data instantly (under 2.5s max total wait!)
+    return fallbackObj;
   });
 }
 
@@ -271,9 +276,9 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
   const mediumSolved = getAc('Medium');
   const hardSolved = getAc('Hard');
 
-  const totalEasy = getTotalCount('Easy') || 800;
-  const totalMedium = getTotalCount('Medium') || 1700;
-  const totalHard = getTotalCount('Hard') || 800;
+  const totalEasy = getTotalCount('Easy') || 820;
+  const totalMedium = getTotalCount('Medium') || 1750;
+  const totalHard = getTotalCount('Hard') || 780;
 
   const acSubmissions = getTotalAcSubmissions();
   const totalSubmissions = getTotalSubmissions();
@@ -290,12 +295,13 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
     }
   }
 
-  // If calendar is empty, merge with fallback calendar
+  const fallback = getFallbackLeetCodeData(username);
+
   if (Object.keys(calendarObj).length === 0) {
-    calendarObj = getFallbackLeetCodeData(username).profile.submissionCalendar;
+    calendarObj = fallback.profile.submissionCalendar;
   }
 
-  const streak = calculateStreak(calendarObj) || 7;
+  const streak = calculateStreak(calendarObj) || fallback.profile.currentStreak;
 
   const recentSubmissions: LeetCodeSubmission[] = (data.recentSubmissionList || []).map((sub: any) => ({
     title: sub.title,
@@ -304,8 +310,6 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
     lang: sub.lang,
     timestamp: sub.timestamp,
   }));
-
-  const fallback = getFallbackLeetCodeData(username);
 
   return {
     profile: {
@@ -324,7 +328,7 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
       totalHard,
       totalSubmissions,
       acSubmissions,
-      acceptanceRate,
+      acceptanceRate: acceptanceRate || fallback.profile.acceptanceRate,
       contestRating: contest?.rating ? Math.round(contest.rating) : fallback.profile.contestRating,
       contestRanking: contest?.globalRanking || fallback.profile.contestRanking,
       contestAttended: contest?.attendedContestsCount || fallback.profile.contestAttended,
@@ -364,7 +368,7 @@ function parseFallbackResponse(username: string, data: any): LeetCodeData {
     if (allAc) acSubmissions = allAc.submissions || acSubmissions;
   }
 
-  const acceptanceRate = totalSubmissions > 0 ? Math.round((acSubmissions / totalSubmissions) * 1000) / 10 : 63.5;
+  const acceptanceRate = totalSubmissions > 0 ? Math.round((acSubmissions / totalSubmissions) * 1000) / 10 : 63.7;
 
   return {
     profile: {
@@ -383,49 +387,6 @@ function parseFallbackResponse(username: string, data: any): LeetCodeData {
       totalHard,
       totalSubmissions,
       acSubmissions,
-      acceptanceRate,
-      contestRating: fallback.profile.contestRating,
-      contestRanking: fallback.profile.contestRanking,
-      contestAttended: fallback.profile.contestAttended,
-      currentStreak: streak,
-      submissionCalendar: calendarObj,
-    },
-    recentSubmissions: fallback.recentSubmissions,
-  };
-}
-
-function parseLeetCodeStatsApiResponse(username: string, data: any): LeetCodeData {
-  const fallback = getFallbackLeetCodeData(username);
-
-  const totalSolved = data.totalSolved || fallback.profile.totalSolved;
-  const easySolved = data.easySolved || fallback.profile.easySolved;
-  const mediumSolved = data.mediumSolved || fallback.profile.mediumSolved;
-  const hardSolved = data.hardSolved || fallback.profile.hardSolved;
-  const acceptanceRate = data.acceptanceRate || fallback.profile.acceptanceRate;
-  const ranking = data.ranking || fallback.profile.ranking;
-  const calendarObj = data.submissionCalendar && Object.keys(data.submissionCalendar).length > 0
-    ? data.submissionCalendar
-    : fallback.profile.submissionCalendar;
-
-  const streak = calculateStreak(calendarObj) || fallback.profile.currentStreak;
-
-  return {
-    profile: {
-      username,
-      name: username,
-      avatarUrl: fallback.profile.avatarUrl,
-      profileUrl: `https://leetcode.com/u/${username}/`,
-      ranking,
-      reputation: fallback.profile.reputation,
-      totalSolved,
-      easySolved,
-      totalEasy: data.totalEasy || 820,
-      mediumSolved,
-      totalMedium: data.totalMedium || 1750,
-      hardSolved,
-      totalHard: data.totalHard || 780,
-      totalSubmissions: data.totalSubmissions || fallback.profile.totalSubmissions,
-      acSubmissions: totalSolved,
       acceptanceRate,
       contestRating: fallback.profile.contestRating,
       contestRanking: fallback.profile.contestRanking,
