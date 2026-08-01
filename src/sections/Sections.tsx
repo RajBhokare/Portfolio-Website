@@ -18,7 +18,7 @@ export function About() {
               digital experiences — from pixel-perfect UIs to hardware-integrated systems.
             </p>
             <p>
-              Currently in my second year at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>,
+              Currently in my third year at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>,
               I specialise in building clean, responsive web interfaces while also exploring AI integration,
               Data Structures & Algorithms, and IoT embedded systems. I believe great engineering starts with curiosity, discipline, and a
               deep love for the craft.
@@ -29,7 +29,7 @@ export function About() {
           </div>
           <div className="about-cards reveal">
             {[
-              { icon: '🎓', label: 'Education',  value: '2nd Year, IT Engineering' },
+              { icon: '🎓', label: 'Education',  value: '3rd Year, IT Engineering' },
               { icon: '📍', label: 'Location',   value: 'Pune, India' },
               { icon: '💡', label: 'Focus',      value: 'Frontend Dev, DSA & IoT' },
             ].map(c => (
@@ -207,22 +207,34 @@ export function Skills() {
 /* ── EXPERIENCE ── */
 const experiences = [
   {
-    period: '2024 — Present', badge: 'Current', active: true,
-    role: 'Frontend & Full Stack Developer', org: 'Self-Initiated Projects & Open Source',
-    desc: 'Building production-ready frontend and full-stack interfaces. Focused on React, Node.js, Express, and AI APIs while integrating hardware dashboards with live telemetry streams.',
-    stack: ['HTML/CSS','JavaScript','React','Node.js','Express','Git'],
+    period: '2025 — Present', badge: 'Club', active: true,
+    role: 'Web Developer', org: 'Binary Brains Club, Dr. D. Y. Patil Institute of Technology',
+    desc: 'Developing responsive web applications and collaborating on full-stack projects using HTML, CSS, JavaScript, Node.js, and Git. Working in an Agile team environment, contributing to feature development, debugging, API integration, and code reviews.',
+    stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git', 'GitHub'],
   },
   {
-    period: '2023 — 2024', badge: 'Academic', active: false,
-    role: 'IoT & Hardware Developer', org: 'Dr. D. Y. Patil Institute of Technology, Pune',
-    desc: 'Designed and built IoT systems using ESP8266 & Arduino — including DustSense, a real-time PM2.5 air quality monitor transmitting data over MQTT. Implemented live web dashboards to visualize sensor metrics.',
-    stack: ['Embedded C','ESP8266','MQTT','Sensors','Dashboard'],
+    period: '2025 — Present', badge: 'Open Source', active: true,
+    role: 'Frontend & Full-Stack Developer', org: 'Self-Initiated Projects & Open Source',
+    desc: 'Building production-ready frontend and full-stack applications using React, Node.js, Express.js, and MySQL. Developing responsive user interfaces, REST APIs, authentication workflows, and deploying applications using modern development tools.',
+    stack: ['React', 'JavaScript', 'HTML', 'CSS', 'Node.js', 'Express.js', 'MySQL', 'REST APIs'],
   },
   {
-    period: '2023', badge: 'EdTech', active: false,
-    role: 'AI/ML Web App Developer', org: 'Academic & AI Projects — Quizzer & Briefly',
-    desc: 'Built AI-powered application platforms — Quizzer converts educational videos to MCQ quizzes via AssemblyAI, and Briefly automates meeting transcription and summary extraction using OpenAI Whisper API.',
-    stack: ['Node.js','Express','Whisper API','AssemblyAI','Bootstrap'],
+    period: '2025', badge: 'AI', active: false,
+    role: 'AI Application Developer', org: 'Academic & Hackathon Projects',
+    desc: 'Built AI-powered web applications including Briefly, an AI meeting assistant using OpenAI Whisper API, and Quizzer, an educational platform leveraging AssemblyAI for transcript generation, summarization, and quiz creation.',
+    stack: ['OpenAI Whisper', 'AssemblyAI', 'Node.js', 'Express.js', 'JavaScript', 'AI APIs'],
+  },
+  {
+    period: '2024 — 2025', badge: 'Hardware', active: false,
+    role: 'IoT & Hardware Developer', org: 'Dr. D. Y. Patil Institute of Technology',
+    desc: 'Designed and developed IoT systems using ESP8266 and Arduino, including DustSense, a real-time PM2.5 air quality monitoring system using MQTT with live web-based dashboards for sensor visualization.',
+    stack: ['ESP8266', 'Arduino', 'Embedded C', 'MQTT', 'Sensors', 'Dashboards'],
+  },
+  {
+    period: '2024 — Present', badge: 'Academic', active: true,
+    role: 'Full-Stack Developer', org: 'Academic Projects',
+    desc: 'Developed end-to-end web applications using React, Node.js, Express.js, and MySQL. Designed relational database schemas, implemented RESTful APIs, integrated AI services, and deployed scalable web solutions.',
+    stack: ['React', 'Node.js', 'Express.js', 'MySQL', 'REST APIs', 'Git'],
   },
 ]
 
