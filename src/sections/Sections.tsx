@@ -145,62 +145,6 @@ const skillGroups = [
 ]
 
 export function Skills() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [cardsPerView, setCardsPerView] = useState(2);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  useEffect(() => {
-    const updateCardsPerView = () => {
-      if (window.innerWidth < 768) {
-        setCardsPerView(1);
-      } else {
-        setCardsPerView(2);
-      }
-    };
-    updateCardsPerView();
-    window.addEventListener('resize', updateCardsPerView);
-    return () => window.removeEventListener('resize', updateCardsPerView);
-  }, []);
-
-  const maxIndex = Math.max(0, skillGroups.length - cardsPerView);
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  };
-
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [isPaused, maxIndex]);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > 50) {
-      nextSlide();
-    } else if (distance < -50) {
-      prevSlide();
-    }
-  };
-
   return (
     <section className="section section-dark" id="skills">
       <div className="container">
@@ -230,85 +174,30 @@ export function Skills() {
           </div>
         </div>
 
-        {/* Categorized Skill Groups Cards Carousel */}
-        <div
-          className="skills-cards-carousel-wrap reveal"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          <div className="skills-carousel-header">
-            <div className="skills-carousel-info">
-              <span className="skills-carousel-counter">
-                {String(currentIndex + 1).padStart(2, '0')} / {String(skillGroups.length).padStart(2, '0')}
-              </span>
-              <span className="skills-carousel-hint">Category Cards</span>
-            </div>
-
-            <div className="skills-carousel-controls">
-              <button
-                className="skills-carousel-btn"
-                onClick={prevSlide}
-                aria-label="Previous Skill Category"
-              >
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-              </button>
-
-              <div className="skills-carousel-dots">
-                {skillGroups.map((_, idx) => (
-                  <button
-                    key={idx}
-                    className={`skills-carousel-dot${idx === currentIndex ? ' active' : ''}`}
-                    onClick={() => setCurrentIndex(Math.min(idx, maxIndex))}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                className="skills-carousel-btn"
-                onClick={nextSlide}
-                aria-label="Next Skill Category"
-              >
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <div className="skills-carousel-track-container">
+        {/* Categorized Skill Group Containers with Continuous Inner Marquee Carousels */}
+        <div className="skills-layout">
+          {skillGroups.map((g, i) => (
             <div
-              className="skills-carousel-track"
-              style={{
-                transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)`,
-              }}
+              key={g.title}
+              className={`skill-group reveal${g.iot ? ' skill-group-iot' : ''}${g.span ? ' skill-group-span' : ''}`}
+              style={{ '--d': `${i * 100}ms` } as React.CSSProperties}
             >
-              {skillGroups.map((g) => (
-                <div
-                  key={g.title}
-                  className="skills-carousel-slide"
-                  style={{ flex: `0 0 ${100 / cardsPerView}%` }}
-                >
-                  <div className={`skill-group${g.iot ? ' skill-group-iot' : ''}`}>
-                    <div className="skill-group-header">
-                      <span className={`skill-icon-wrap${g.iot ? ' skill-icon-iot' : ''}`}>{g.icon}</span>
-                      <h3 className="skill-group-title">{g.title}</h3>
-                      <span className="skill-group-badge">{g.pills.length} Skills</span>
-                    </div>
-                    <div className="skill-pills">
-                      {g.pills.map((p) => (
-                        <span key={p.name} className={`pill pill-with-icon${g.iot ? ' pill-iot' : ''}`}>
-                          <img src={p.icon} alt={p.name} className="pill-icon" />
-                          <span>{p.name}</span>
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+              <div className="skill-group-header">
+                <span className={`skill-icon-wrap${g.iot ? ' skill-icon-iot' : ''}`}>{g.icon}</span>
+                <h3 className="skill-group-title">{g.title}</h3>
+              </div>
+              <div className="card-marquee-container">
+                <div className={`card-marquee-track ${i % 2 === 0 ? 'scroll-left' : 'scroll-right'}`}>
+                  {[...g.pills, ...g.pills, ...g.pills, ...g.pills, ...g.pills].map((p, idx) => (
+                    <span key={`${p.name}-${idx}`} className={`pill pill-with-icon${g.iot ? ' pill-iot' : ''}`}>
+                      <img src={p.icon} alt={p.name} className="pill-icon" />
+                      <span>{p.name}</span>
+                    </span>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
