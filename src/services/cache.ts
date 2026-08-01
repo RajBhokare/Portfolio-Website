@@ -12,30 +12,38 @@ export async function fetchWithCache<T>(
 ): Promise<T> {
   const cacheKey = `portfolio_cache_${key}`;
 
+  let cachedData: T | null = null;
   try {
     const cachedItem = localStorage.getItem(cacheKey);
     if (cachedItem) {
       const parsed: CacheEntry<T> = JSON.parse(cachedItem);
+      cachedData = parsed.data || null;
       const isExpired = Date.now() - parsed.timestamp > ttlMs;
-      if (!isExpired && parsed.data) {
-        return parsed.data;
+      if (!isExpired && cachedData) {
+        return cachedData;
       }
     }
   } catch (e) {
     console.warn(`Cache read warning for ${key}:`, e);
   }
 
-  const freshData = await fetcher();
-
   try {
-    const entry: CacheEntry<T> = {
-      timestamp: Date.now(),
-      data: freshData,
-    };
-    localStorage.setItem(cacheKey, JSON.stringify(entry));
-  } catch (e) {
-    console.warn(`Cache write warning for ${key}:`, e);
+    const freshData = await fetcher();
+    try {
+      const entry: CacheEntry<T> = {
+        timestamp: Date.now(),
+        data: freshData,
+      };
+      localStorage.setItem(cacheKey, JSON.stringify(entry));
+    } catch (e) {
+      console.warn(`Cache write warning for ${key}:`, e);
+    }
+    return freshData;
+  } catch (err) {
+    console.warn(`Fetcher failed for ${key}, falling back to cached or default data:`, err);
+    if (cachedData) {
+      return cachedData;
+    }
+    throw err;
   }
-
-  return freshData;
 }

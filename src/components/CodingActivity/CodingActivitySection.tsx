@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
-import { fetchGitHubData, GitHubProfile, ContributionDay } from '../../services/github';
-import { fetchLeetCodeData, LeetCodeProfile } from '../../services/leetcode';
+import { fetchGitHubData, getFallbackGitHubData, GitHubProfile, ContributionDay } from '../../services/github';
+import { fetchLeetCodeData, getFallbackLeetCodeData, LeetCodeProfile } from '../../services/leetcode';
+import { config } from '../../config/env';
 import { GitHubCard } from './GitHubCard';
 import { LeetCodeCard } from './LeetCodeCard';
 import { GitHubContributionHeatmap } from './GitHubContributionHeatmap';
 import { LeetCodeHeatmap } from './LeetCodeHeatmap';
 import { CodingActivitySkeleton } from './CodingActivitySkeleton';
-import { CodingActivityError } from './CodingActivityError';
 import './CodingActivity.css';
 
 export default function CodingActivitySection() {
   const [activeTab, setActiveTab] = useState<'all' | 'github' | 'leetcode'>('all');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const [githubProfile, setGithubProfile] = useState<GitHubProfile | null>(null);
   const [githubContribs, setGithubContribs] = useState<ContributionDay[]>([]);
@@ -22,7 +21,6 @@ export default function CodingActivitySection() {
 
   const loadData = async () => {
     setLoading(true);
-    setError(null);
 
     try {
       const [ghResult, lcResult] = await Promise.allSettled([
@@ -30,29 +28,32 @@ export default function CodingActivitySection() {
         fetchLeetCodeData(),
       ]);
 
-      let hasSuccess = false;
-
-      if (ghResult.status === 'fulfilled') {
+      if (ghResult.status === 'fulfilled' && ghResult.value) {
         setGithubProfile(ghResult.value.profile);
         setGithubContribs(ghResult.value.contributions.contributions);
         setGithubTotalContribs(ghResult.value.contributions.totalContributions);
-        hasSuccess = true;
       } else {
-        console.error('GitHub fetch error:', ghResult.reason);
+        const fbGh = getFallbackGitHubData(config.githubUsername || 'RajBhokare');
+        setGithubProfile(fbGh.profile);
+        setGithubContribs(fbGh.contributions.contributions);
+        setGithubTotalContribs(fbGh.contributions.totalContributions);
       }
 
-      if (lcResult.status === 'fulfilled') {
+      if (lcResult.status === 'fulfilled' && lcResult.value) {
         setLeetcodeProfile(lcResult.value.profile);
-        hasSuccess = true;
       } else {
-        console.error('LeetCode fetch error:', lcResult.reason);
+        const fbLc = getFallbackLeetCodeData(config.leetcodeUsername || 'RajBhokare');
+        setLeetcodeProfile(fbLc.profile);
       }
+    } catch (err) {
+      console.warn('Unexpected error in loadData, activating fallbacks:', err);
+      const fbGh = getFallbackGitHubData(config.githubUsername || 'RajBhokare');
+      setGithubProfile(fbGh.profile);
+      setGithubContribs(fbGh.contributions.contributions);
+      setGithubTotalContribs(fbGh.contributions.totalContributions);
 
-      if (!hasSuccess) {
-        throw new Error('Could not retrieve coding activity statistics from APIs.');
-      }
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred while loading coding activity.');
+      const fbLc = getFallbackLeetCodeData(config.leetcodeUsername || 'RajBhokare');
+      setLeetcodeProfile(fbLc.profile);
     } finally {
       setLoading(false);
     }
@@ -93,8 +94,6 @@ export default function CodingActivitySection() {
 
         {loading ? (
           <CodingActivitySkeleton />
-        ) : error ? (
-          <CodingActivityError error={error} onRetry={loadData} />
         ) : (
           <div className="activity-content">
             {/* OVERVIEW TAB */}
