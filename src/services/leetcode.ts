@@ -17,7 +17,7 @@ export interface LeetCodeProfile {
   totalHard: number;
   totalSubmissions: number;
   acSubmissions: number;
-  acceptanceRate: number; // percentage e.g. 58.2
+  acceptanceRate: number; // percentage e.g. 51.1
   contestRating: number | null;
   contestRanking: number | null;
   contestAttended: number;
@@ -36,9 +36,10 @@ export interface LeetCodeSubmission {
 export interface LeetCodeData {
   profile: LeetCodeProfile;
   recentSubmissions: LeetCodeSubmission[];
+  isFallback?: boolean;
 }
 
-async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 2500): Promise<Response> {
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 8000): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -52,7 +53,7 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
 }
 
 // Utility to calculate current consecutive streak from submission calendar
-function calculateStreak(submissionCalendar: Record<string, number>): number {
+export function calculateStreak(submissionCalendar: Record<string, number>): number {
   if (!submissionCalendar || Object.keys(submissionCalendar).length === 0) {
     return 0;
   }
@@ -114,28 +115,29 @@ export function getFallbackLeetCodeData(username: string): LeetCodeData {
     "1783814400": 2, "1783900800": 1, "1783987200": 1, "1784073600": 1, "1784160000": 2,
     "1784246400": 1, "1784332800": 3, "1784419200": 2, "1784505600": 1, "1784678400": 1,
     "1784764800": 3, "1785024000": 3, "1785110400": 2, "1785196800": 1, "1785283200": 2,
-    "1785369600": 4, "1785456000": 3, "1785542400": 4
+    "1785369600": 4, "1785456000": 3, "1785542400": 4, "1785628800": 2, "1785715200": 1,
+    "1785801600": 1, "1785888000": 1
   };
 
-  const currentStreak = calculateStreak(calendar) || 8;
+  const currentStreak = calculateStreak(calendar) || 16;
 
   const profile: LeetCodeProfile = {
     username,
     name: 'Raj Bhokare',
     avatarUrl: 'https://assets.leetcode.com/users/LzHyfJPCW5/avatar_1770200848.png',
     profileUrl: `https://leetcode.com/u/${username}/`,
-    ranking: 2239386,
+    ranking: 2155404,
     reputation: 0,
-    totalSolved: 65,
-    easySolved: 47,
-    totalEasy: 820,
+    totalSolved: 69,
+    easySolved: 51,
+    totalEasy: 958,
     mediumSolved: 18,
-    totalMedium: 1750,
+    totalMedium: 2095,
     hardSolved: 0,
-    totalHard: 780,
-    totalSubmissions: 228,
-    acSubmissions: 114,
-    acceptanceRate: 50.0,
+    totalHard: 960,
+    totalSubmissions: 233,
+    acSubmissions: 119,
+    acceptanceRate: 51.1,
     contestRating: null,
     contestRanking: null,
     contestAttended: 0,
@@ -145,113 +147,231 @@ export function getFallbackLeetCodeData(username: string): LeetCodeData {
 
   const recentSubmissions: LeetCodeSubmission[] = [
     {
-      title: 'Two Sum',
-      titleSlug: 'two-sum',
+      title: 'Digit Frequency Score',
+      titleSlug: 'digit-frequency-score',
       statusDisplay: 'Accepted',
       lang: 'cpp',
-      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 4),
+      timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 2),
     },
     {
-      title: 'Reverse String',
-      titleSlug: 'reverse-string',
+      title: 'Minimum Operations to Make Array Sum Divisible by K',
+      titleSlug: 'minimum-operations-to-make-array-sum-divisible-by-k',
       statusDisplay: 'Accepted',
       lang: 'cpp',
       timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 24),
     },
     {
-      title: 'Valid Palindrome',
-      titleSlug: 'valid-palindrome',
+      title: "Pascal's Triangle",
+      titleSlug: 'pascals-triangle',
       statusDisplay: 'Accepted',
-      lang: 'typescript',
+      lang: 'cpp',
       timestamp: String(Math.floor(Date.now() / 1000) - 3600 * 48),
     },
   ];
 
-  return { profile, recentSubmissions };
+  return { profile, recentSubmissions, isFallback: true };
 }
 
-export async function fetchLeetCodeData(): Promise<LeetCodeData> {
+export async function fetchLeetCodeData(forceRefresh = false): Promise<LeetCodeData> {
   const username = config.leetcodeUsername || 'RajBhokare';
 
-  return fetchWithCache(`leetcode_${username}_v5`, async () => {
-    const fallbackObj = getFallbackLeetCodeData(username);
-
-    const graphqlQuery = `
-      query getUserProfile($username: String!) {
-        allQuestionsCount { difficulty count }
-        matchedUser(username: $username) {
-          username
-          profile {
-            realName
-            userAvatar
-            ranking
-            reputation
-          }
-          submissionCalendar
-          submitStats {
-            acSubmissionNum { difficulty count submissions }
-            totalSubmissionNum { difficulty count submissions }
-          }
-        }
-        userContestRanking(username: $username) {
-          attendedContestsCount
-          rating
-          globalRanking
-          topPercentage
-        }
-        recentSubmissionList(username: $username, limit: 8) {
-          title
-          titleSlug
-          timestamp
-          statusDisplay
-          lang
-        }
-      }
-    `;
-
-    // 1. Try local/Vercel/Netlify proxy with fast 2.5s timeout
+  if (forceRefresh) {
     try {
-      const proxyRes = await fetchWithTimeout(
-        '/api/leetcode',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: graphqlQuery, variables: { username } }),
-        },
-        2500
-      ).catch(() => null);
+      localStorage.removeItem(`portfolio_cache_leetcode_${username}_v7`);
+    } catch (e) {}
+  }
 
-      if (proxyRes && proxyRes.ok) {
-        const json = await proxyRes.json();
-        if (json.data && json.data.matchedUser) {
-          return parseGraphQLResponse(username, json.data);
+  return fetchWithCache(
+    `leetcode_${username}_v7`,
+    async () => {
+      const fallbackObj = getFallbackLeetCodeData(username);
+
+      // 1. Primary: Try Vercel LeetCode API (Fastest, zero-cold-start CORS live endpoint)
+      try {
+        const vercelRes = await fetchWithTimeout(
+          `https://leetcode-api-faisalshohag.vercel.app/${username}`,
+          {},
+          8000
+        );
+
+        if (vercelRes.ok) {
+          const json = await vercelRes.json();
+          if (json && (json.totalSolved !== undefined || json.ranking || json.totalEasy)) {
+            return parseAlfaResponse(username, json, fallbackObj);
+          }
         }
+      } catch (err) {
+        console.warn('Vercel LeetCode API failed/timed out, trying Render endpoint:', err);
       }
-    } catch (err) {
-      console.warn('LeetCode proxy failed or timed out:', err);
-    }
 
-    // 2. Try Alfa LeetCode public API with 2.5s timeout
+      // 2. Secondary: Try Alfa LeetCode API on Render
+      try {
+        const alfaRes = await fetchWithTimeout(
+          `https://alfa-leetcode-api.onrender.com/userProfile/${username}`,
+          {},
+          8000
+        );
+
+        if (alfaRes.ok) {
+          const alfaJson = await alfaRes.json();
+          if (alfaJson && (alfaJson.totalSolved !== undefined || alfaJson.ranking || alfaJson.username)) {
+            return parseAlfaResponse(username, alfaJson, fallbackObj);
+          }
+        }
+      } catch (err) {
+        console.warn('Alfa LeetCode API /userProfile timed out or failed:', err);
+      }
+
+      // 3. Tertiary: Try local proxy / Netlify GraphQL function
+      const graphqlQuery = `
+        query getUserProfile($username: String!) {
+          allQuestionsCount { difficulty count }
+          matchedUser(username: $username) {
+            username
+            profile {
+              realName
+              userAvatar
+              ranking
+              reputation
+            }
+            submissionCalendar
+            submitStats {
+              acSubmissionNum { difficulty count submissions }
+              totalSubmissionNum { difficulty count submissions }
+            }
+          }
+          userContestRanking(username: $username) {
+            attendedContestsCount
+            rating
+            globalRanking
+            topPercentage
+          }
+          recentSubmissionList(username: $username, limit: 8) {
+            title
+            titleSlug
+            timestamp
+            statusDisplay
+            lang
+          }
+        }
+      `;
+
+      try {
+        const proxyRes = await fetchWithTimeout(
+          '/api/leetcode',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: graphqlQuery, variables: { username } }),
+          },
+          8000
+        ).catch(() => null);
+
+        if (proxyRes && proxyRes.ok) {
+          const json = await proxyRes.json();
+          if (json.data && json.data.matchedUser) {
+            return parseGraphQLResponse(username, json.data);
+          }
+        }
+      } catch (err) {
+        console.warn('LeetCode GraphQL proxy failed:', err);
+      }
+
+      // Fallback Return
+      return fallbackObj;
+    },
+    15 * 60 * 1000,
+    (res) => !!res.isFallback
+  );
+}
+
+function parseAlfaResponse(username: string, data: any, fallbackObj: LeetCodeData): LeetCodeData {
+  const totalSolved = data.totalSolved ?? fallbackObj.profile.totalSolved;
+  const easySolved = data.easySolved ?? fallbackObj.profile.easySolved;
+  const mediumSolved = data.mediumSolved ?? fallbackObj.profile.mediumSolved;
+  const hardSolved = data.hardSolved ?? fallbackObj.profile.hardSolved;
+
+  const totalEasy = data.totalEasy || 958;
+  const totalMedium = data.totalMedium || 2095;
+  const totalHard = data.totalHard || 960;
+
+  // Parse submission calendar
+  let calendarObj: Record<string, number> = {};
+  if (data.submissionCalendar) {
     try {
-      const fallbackRes = await fetchWithTimeout(
-        `https://alfa-leetcode-api.onrender.com/userProfile/${username}`,
-        {},
-        2500
-      ).catch(() => null);
-
-      if (fallbackRes && fallbackRes.ok) {
-        const fallbackJson = await fallbackRes.json();
-        if (fallbackJson && (fallbackJson.totalSolved || fallbackJson.username || fallbackJson.ranking)) {
-          return parseFallbackResponse(username, fallbackJson);
-        }
-      }
-    } catch (err) {
-      console.warn('Alfa LeetCode API failed/timed out:', err);
+      calendarObj = typeof data.submissionCalendar === 'string'
+        ? JSON.parse(data.submissionCalendar)
+        : data.submissionCalendar;
+    } catch (e) {
+      console.warn('Failed to parse submissionCalendar in API response:', e);
     }
+  }
 
-    // 3. Fast Return Fallback Data instantly (under 2.5s max total wait!)
-    return fallbackObj;
-  });
+  if (Object.keys(calendarObj).length === 0) {
+    calendarObj = fallbackObj.profile.submissionCalendar;
+  }
+
+  const streak = calculateStreak(calendarObj) || fallbackObj.profile.currentStreak;
+
+  // Extract AC submissions and Total submissions
+  let totalSubmissions = fallbackObj.profile.totalSubmissions;
+  let acSubmissions = fallbackObj.profile.acSubmissions;
+
+  if (Array.isArray(data.matchedUserStats?.acSubmissionNum)) {
+    const allAc = data.matchedUserStats.acSubmissionNum.find((s: any) => s.difficulty === 'All');
+    if (allAc) acSubmissions = allAc.submissions || acSubmissions;
+  } else if (Array.isArray(data.totalSubmissions)) {
+    const allAc = data.totalSubmissions.find((s: any) => s.difficulty === 'All');
+    if (allAc) acSubmissions = allAc.count || allAc.submissions || acSubmissions;
+  }
+
+  if (Array.isArray(data.totalSubmissions)) {
+    const allStat = data.totalSubmissions.find((s: any) => s.difficulty === 'All');
+    if (allStat) totalSubmissions = allStat.submissions || allStat.count || totalSubmissions;
+  }
+
+  const acceptanceRate = totalSubmissions > 0
+    ? Math.round((acSubmissions / totalSubmissions) * 1000) / 10
+    : fallbackObj.profile.acceptanceRate;
+
+  let recentSubmissions: LeetCodeSubmission[] = [];
+  if (Array.isArray(data.recentSubmissions) && data.recentSubmissions.length > 0) {
+    recentSubmissions = data.recentSubmissions.slice(0, 8).map((sub: any) => ({
+      title: sub.title,
+      titleSlug: sub.titleSlug,
+      statusDisplay: sub.statusDisplay,
+      lang: sub.lang,
+      timestamp: sub.timestamp,
+    }));
+  }
+
+  return {
+    profile: {
+      username,
+      name: 'Raj Bhokare',
+      avatarUrl: fallbackObj.profile.avatarUrl,
+      profileUrl: `https://leetcode.com/u/${username}/`,
+      ranking: data.ranking || fallbackObj.profile.ranking,
+      reputation: data.reputation || fallbackObj.profile.reputation,
+      totalSolved,
+      easySolved,
+      totalEasy,
+      mediumSolved,
+      totalMedium,
+      hardSolved,
+      totalHard,
+      totalSubmissions,
+      acSubmissions,
+      acceptanceRate,
+      contestRating: fallbackObj.profile.contestRating,
+      contestRanking: fallbackObj.profile.contestRanking,
+      contestAttended: fallbackObj.profile.contestAttended,
+      currentStreak: streak,
+      submissionCalendar: calendarObj,
+    },
+    recentSubmissions: recentSubmissions.length > 0 ? recentSubmissions : fallbackObj.recentSubmissions,
+    isFallback: false,
+  };
 }
 
 function parseGraphQLResponse(username: string, data: any): LeetCodeData {
@@ -272,9 +392,9 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
   const mediumSolved = getAc('Medium');
   const hardSolved = getAc('Hard');
 
-  const totalEasy = getTotalCount('Easy') || 820;
-  const totalMedium = getTotalCount('Medium') || 1750;
-  const totalHard = getTotalCount('Hard') || 780;
+  const totalEasy = getTotalCount('Easy') || 958;
+  const totalMedium = getTotalCount('Medium') || 2095;
+  const totalHard = getTotalCount('Hard') || 960;
 
   const acSubmissions = getTotalAcSubmissions();
   const totalSubmissions = getTotalSubmissions();
@@ -310,7 +430,7 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
   return {
     profile: {
       username: user.username || username,
-      name: profile.realName || username,
+      name: profile.realName || 'Raj Bhokare',
       avatarUrl: profile.userAvatar || fallback.profile.avatarUrl,
       profileUrl: `https://leetcode.com/u/${username}/`,
       ranking: profile.ranking || fallback.profile.ranking,
@@ -332,64 +452,6 @@ function parseGraphQLResponse(username: string, data: any): LeetCodeData {
       submissionCalendar: calendarObj,
     },
     recentSubmissions: recentSubmissions.length > 0 ? recentSubmissions : fallback.recentSubmissions,
-  };
-}
-
-function parseFallbackResponse(username: string, data: any): LeetCodeData {
-  const fallback = getFallbackLeetCodeData(username);
-
-  const totalSolved = data.totalSolved || fallback.profile.totalSolved;
-  const easySolved = data.easySolved || fallback.profile.easySolved;
-  const mediumSolved = data.mediumSolved || fallback.profile.mediumSolved;
-  const hardSolved = data.hardSolved || fallback.profile.hardSolved;
-
-  const totalEasy = data.totalEasy || 820;
-  const totalMedium = data.totalMedium || 1750;
-  const totalHard = data.totalHard || 780;
-
-  const calendarObj = data.submissionCalendar && Object.keys(data.submissionCalendar).length > 0
-    ? data.submissionCalendar
-    : fallback.profile.submissionCalendar;
-
-  const streak = calculateStreak(calendarObj) || fallback.profile.currentStreak;
-
-  let totalSubmissions = fallback.profile.totalSubmissions;
-  let acSubmissions = fallback.profile.acSubmissions;
-  if (Array.isArray(data.totalSubmissions)) {
-    const allStat = data.totalSubmissions.find((s: any) => s.difficulty === 'All');
-    if (allStat) totalSubmissions = allStat.submissions || totalSubmissions;
-  }
-  if (Array.isArray(data.matchedUserStats?.acSubmissionNum)) {
-    const allAc = data.matchedUserStats.acSubmissionNum.find((s: any) => s.difficulty === 'All');
-    if (allAc) acSubmissions = allAc.submissions || acSubmissions;
-  }
-
-  const acceptanceRate = totalSubmissions > 0 ? Math.round((acSubmissions / totalSubmissions) * 1000) / 10 : 63.7;
-
-  return {
-    profile: {
-      username,
-      name: username,
-      avatarUrl: fallback.profile.avatarUrl,
-      profileUrl: `https://leetcode.com/u/${username}/`,
-      ranking: data.ranking || fallback.profile.ranking,
-      reputation: data.reputation || fallback.profile.reputation,
-      totalSolved,
-      easySolved,
-      totalEasy,
-      mediumSolved,
-      totalMedium,
-      hardSolved,
-      totalHard,
-      totalSubmissions,
-      acSubmissions,
-      acceptanceRate,
-      contestRating: fallback.profile.contestRating,
-      contestRanking: fallback.profile.contestRanking,
-      contestAttended: fallback.profile.contestAttended,
-      currentStreak: streak,
-      submissionCalendar: calendarObj,
-    },
-    recentSubmissions: fallback.recentSubmissions,
+    isFallback: false,
   };
 }

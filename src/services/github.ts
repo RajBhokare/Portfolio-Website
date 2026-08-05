@@ -32,9 +32,17 @@ export interface ContributionDay {
 export interface GitHubContributionData {
   totalContributions: number;
   contributions: ContributionDay[];
+  isFallback?: boolean;
 }
 
-async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 2500): Promise<Response> {
+export interface GitHubDataResult {
+  profile: GitHubProfile;
+  events: GitHubEvent[];
+  contributions: GitHubContributionData;
+  isFallback?: boolean;
+}
+
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 8000): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -85,12 +93,7 @@ function parseGitHubHTML(html: string): GitHubContributionData {
   };
 }
 
-// Generate realistic mock dataset for RajBhokare if external network/API completely fails
-export function getFallbackGitHubData(username: string): {
-  profile: GitHubProfile;
-  events: GitHubEvent[];
-  contributions: GitHubContributionData;
-} {
+export function getFallbackGitHubData(username: string): GitHubDataResult {
   const now = new Date();
   const contributions: ContributionDay[] = [];
   let totalContribs = 0;
@@ -98,36 +101,15 @@ export function getFallbackGitHubData(username: string): {
   for (let i = 363; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
     const dateStr = d.toISOString().split('T')[0];
-    const dayOfWeek = d.getDay(); // 0 is Sun, 6 is Sat
-
-    let seed = 0;
-    for (let c = 0; c < dateStr.length; c++) {
-      seed = (seed + dateStr.charCodeAt(c) * (c + 1)) % 100;
-    }
+    const dayOfWeek = d.getDay();
 
     let count = 0;
     let intensity = 0;
 
     if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      if (seed > 35) {
-        if (seed > 85) {
-          count = 5 + (seed % 4);
-          intensity = 4;
-        } else if (seed > 65) {
-          count = 3 + (seed % 2);
-          intensity = 3;
-        } else if (seed > 45) {
-          count = 2;
-          intensity = 2;
-        } else {
-          count = 1;
-          intensity = 1;
-        }
-      }
-    } else {
-      if (seed > 80) {
-        count = 2;
-        intensity = 1;
+      if ((i % 3) === 0) {
+        count = (i % 4) + 1;
+        intensity = count > 3 ? 3 : count;
       }
     }
 
@@ -159,23 +141,7 @@ export function getFallbackGitHubData(username: string): {
       repoName: `${username}/Portfolio-Website`,
       repoUrl: `https://github.com/${username}/Portfolio-Website`,
       createdAt: new Date().toISOString(),
-      description: 'Pushed commit: "fixing github and leetcode api"',
-    },
-    {
-      id: 'fallback-2',
-      type: 'PushEvent',
-      repoName: `${username}/Portfolio-Website`,
-      repoUrl: `https://github.com/${username}/Portfolio-Website`,
-      createdAt: new Date(Date.now() - 86400000).toISOString(),
-      description: 'Pushed commit: "update UI and responsive styles"',
-    },
-    {
-      id: 'fallback-3',
-      type: 'CreateEvent',
-      repoName: `${username}/Portfolio-Website`,
-      repoUrl: `https://github.com/${username}/Portfolio-Website`,
-      createdAt: new Date(Date.now() - 172800000).toISOString(),
-      description: 'Created repository Portfolio-Website',
+      description: 'Pushed commit to Portfolio-Website',
     },
   ];
 
@@ -183,139 +149,184 @@ export function getFallbackGitHubData(username: string): {
     profile,
     events,
     contributions: {
-      totalContributions: 269,
+      totalContributions: 206,
       contributions,
+      isFallback: true,
     },
+    isFallback: true,
   };
 }
 
-export async function fetchGitHubData(): Promise<{
-  profile: GitHubProfile;
-  events: GitHubEvent[];
-  contributions: GitHubContributionData;
-}> {
+export async function fetchGitHubData(forceRefresh = false): Promise<GitHubDataResult> {
   const username = config.githubUsername || 'RajBhokare';
 
-  return fetchWithCache(`github_${username}_v5`, async () => {
-    const fallbackObj = getFallbackGitHubData(username);
-
+  if (forceRefresh) {
     try {
-      // 1. Fetch User Profile & Repos in parallel with fast 2.5s timeout
-      const [profileRes, reposRes, eventsRes, contribRes] = await Promise.all([
-        fetchWithTimeout(`https://api.github.com/users/${username}`, {}, 2500).catch(() => null),
-        fetchWithTimeout(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`, {}, 2500).catch(() => null),
-        fetchWithTimeout(`https://api.github.com/users/${username}/events/public?per_page=10`, {}, 2500).catch(() => null),
-        fetchWithTimeout(`/api/github-contributions?username=${username}`, {}, 2500).catch(() => null),
-      ]);
+      localStorage.removeItem(`portfolio_cache_github_${username}_v7`);
+    } catch (e) {}
+  }
 
-      let profile: GitHubProfile = fallbackObj.profile;
+  return fetchWithCache(
+    `github_${username}_v7`,
+    async () => {
+      const fallbackObj = getFallbackGitHubData(username);
 
-      if (profileRes && profileRes.ok) {
-        const profileJson = await profileRes.json();
-        const reposJson = reposRes && reposRes.ok ? await reposRes.json() : [];
-        const totalStars = Array.isArray(reposJson)
-          ? reposJson.reduce((sum: number, repo: any) => sum + (repo.stargazers_count || 0), 0)
-          : profile.totalStars;
+      try {
+        // 1. Fetch User Profile & Repos in parallel with 8s timeout
+        const [profileRes, reposRes, eventsRes] = await Promise.all([
+          fetchWithTimeout(`https://api.github.com/users/${username}`, {}, 8000).catch(() => null),
+          fetchWithTimeout(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`, {}, 8000).catch(() => null),
+          fetchWithTimeout(`https://api.github.com/users/${username}/events/public?per_page=10`, {}, 8000).catch(() => null),
+        ]);
 
-        profile = {
-          username: profileJson.login || username,
-          name: profileJson.name || profileJson.login || username,
-          avatarUrl: profileJson.avatar_url || profile.avatarUrl,
-          profileUrl: profileJson.html_url || `https://github.com/${username}`,
-          bio: profileJson.bio || profile.bio,
-          publicRepos: profileJson.public_repos ?? profile.publicRepos,
-          followers: profileJson.followers ?? profile.followers,
-          following: profileJson.following ?? profile.following,
-          totalStars,
-        };
-      }
+        let profile: GitHubProfile = fallbackObj.profile;
 
-      let events: GitHubEvent[] = fallbackObj.events;
-      if (eventsRes && eventsRes.ok) {
-        const eventsJson = await eventsRes.json();
-        if (Array.isArray(eventsJson) && eventsJson.length > 0) {
-          events = eventsJson.slice(0, 6).map((ev: any) => {
-            let description = 'Activity on repository';
-            if (ev.type === 'PushEvent') {
-              const commitMsg = ev.payload?.commits?.[0]?.message;
-              description = commitMsg
-                ? `Pushed commit: "${commitMsg.slice(0, 60)}${commitMsg.length > 60 ? '...' : ''}"`
-                : `Pushed ${ev.payload?.commits?.length || 1} commit(s)`;
-            } else if (ev.type === 'CreateEvent') {
-              description = `Created ${ev.payload?.ref_type || 'repository'} ${ev.payload?.ref ? `'${ev.payload.ref}'` : ''}`;
-            } else if (ev.type === 'WatchEvent') {
-              description = 'Starred repository';
-            } else if (ev.type === 'PullRequestEvent') {
-              description = `${ev.payload?.action || 'Opened'} pull request #${ev.payload?.number}`;
-            } else if (ev.type === 'IssuesEvent') {
-              description = `${ev.payload?.action || 'Opened'} issue #${ev.payload?.issue?.number}`;
-            } else if (ev.type === 'ForkEvent') {
-              description = 'Forked repository';
-            }
+        if (profileRes && profileRes.ok) {
+          const profileJson = await profileRes.json();
+          const reposJson = reposRes && reposRes.ok ? await reposRes.json() : [];
+          const totalStars = Array.isArray(reposJson)
+            ? reposJson.reduce((sum: number, repo: any) => sum + (repo.stargazers_count || 0), 0)
+            : profile.totalStars;
 
-            const repoShort = ev.repo?.name || 'repository';
-            return {
-              id: ev.id || String(Math.random()),
-              type: ev.type || 'Event',
-              repoName: repoShort,
-              repoUrl: `https://github.com/${repoShort}`,
-              createdAt: ev.created_at || new Date().toISOString(),
-              description,
-            };
-          });
+          profile = {
+            username: profileJson.login || username,
+            name: profileJson.name || profileJson.login || username,
+            avatarUrl: profileJson.avatar_url || profile.avatarUrl,
+            profileUrl: profileJson.html_url || `https://github.com/${username}`,
+            bio: profileJson.bio || profile.bio,
+            publicRepos: profileJson.public_repos ?? profile.publicRepos,
+            followers: profileJson.followers ?? profile.followers,
+            following: profileJson.following ?? profile.following,
+            totalStars,
+          };
         }
-      }
 
-      let contributionData: GitHubContributionData = {
-        totalContributions: 0,
-        contributions: [],
-      };
+        let events: GitHubEvent[] = fallbackObj.events;
+        if (eventsRes && eventsRes.ok) {
+          const eventsJson = await eventsRes.json();
+          if (Array.isArray(eventsJson) && eventsJson.length > 0) {
+            events = eventsJson.slice(0, 6).map((ev: any) => {
+              let description = 'Activity on repository';
+              if (ev.type === 'PushEvent') {
+                const commitMsg = ev.payload?.commits?.[0]?.message;
+                description = commitMsg
+                  ? `Pushed commit: "${commitMsg.slice(0, 60)}${commitMsg.length > 60 ? '...' : ''}"`
+                  : `Pushed ${ev.payload?.commits?.length || 1} commit(s)`;
+              } else if (ev.type === 'CreateEvent') {
+                description = `Created ${ev.payload?.ref_type || 'repository'} ${ev.payload?.ref ? `'${ev.payload.ref}'` : ''}`;
+              } else if (ev.type === 'WatchEvent') {
+                description = 'Starred repository';
+              } else if (ev.type === 'PullRequestEvent') {
+                description = `${ev.payload?.action || 'Opened'} pull request #${ev.payload?.number}`;
+              } else if (ev.type === 'IssuesEvent') {
+                description = `${ev.payload?.action || 'Opened'} issue #${ev.payload?.issue?.number}`;
+              } else if (ev.type === 'ForkEvent') {
+                description = 'Forked repository';
+              }
 
-      if (contribRes && contribRes.ok) {
-        const contentType = contribRes.headers.get('content-type') || '';
-        if (contentType.includes('application/json')) {
-          const contribJson = await contribRes.json();
-          if (Array.isArray(contribJson.contributions) && contribJson.contributions.length > 0) {
-            contributionData = {
-              totalContributions: contribJson.totalContributions || 0,
-              contributions: contribJson.contributions,
-            };
+              const repoShort = ev.repo?.name || 'repository';
+              return {
+                id: ev.id || String(Math.random()),
+                type: ev.type || 'Event',
+                repoName: repoShort,
+                repoUrl: `https://github.com/${repoShort}`,
+                createdAt: ev.created_at || new Date().toISOString(),
+                description,
+              };
+            });
           }
-        } else {
-          const text = await contribRes.text();
-          contributionData = parseGitHubHTML(text);
         }
-      }
 
-      // Try CORS proxy for GitHub contributions if primary failed
-      if (!contributionData.contributions || contributionData.contributions.length === 0) {
+        let contributionData: GitHubContributionData = {
+          totalContributions: 0,
+          contributions: [],
+        };
+
+        // 2. Try jogruber.de API first (Fast, reliable GitHub contribution API with CORS)
         try {
-          const corsProxyRes = await fetchWithTimeout(
-            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://github.com/users/${username}/contributions`)}`,
+          const jogruberRes = await fetchWithTimeout(
+            `https://github-contributions-api.jogruber.de/v4/${username}`,
             {},
-            2500
+            8000
           );
-          if (corsProxyRes.ok) {
-            const html = await corsProxyRes.text();
-            const parsed = parseGitHubHTML(html);
-            if (parsed.contributions.length > 0) {
-              contributionData = parsed;
+          if (jogruberRes.ok) {
+            const jogruberJson = await jogruberRes.json();
+            if (Array.isArray(jogruberJson.contributions) && jogruberJson.contributions.length > 0) {
+              const days: ContributionDay[] = jogruberJson.contributions.map((item: any) => ({
+                date: item.date,
+                count: item.count || 0,
+                intensity: item.level ?? (item.count > 0 ? (item.count >= 10 ? 4 : item.count >= 5 ? 3 : item.count >= 3 ? 2 : 1) : 0),
+                color: '',
+              }));
+
+              let total = 0;
+              if (typeof jogruberJson.total === 'object' && jogruberJson.total !== null) {
+                total = Object.values(jogruberJson.total as Record<string, number>).reduce((s, v) => s + (v || 0), 0);
+              } else if (typeof jogruberJson.total === 'number') {
+                total = jogruberJson.total;
+              } else {
+                total = days.reduce((sum, d) => sum + d.count, 0);
+              }
+
+              contributionData = {
+                totalContributions: total,
+                contributions: days,
+                isFallback: false,
+              };
             }
           }
         } catch (e) {
-          // ignore CORS proxy fail
+          console.warn('jogruber API failed, trying fallback contribution providers:', e);
         }
-      }
 
-      // If still empty, use fallback contributions heatmap
-      if (!contributionData.contributions || contributionData.contributions.length === 0) {
-        contributionData = fallbackObj.contributions;
-      }
+        // 3. If jogruber fails, try local proxy / Netlify function
+        if (!contributionData.contributions || contributionData.contributions.length === 0) {
+          try {
+            const contribRes = await fetchWithTimeout(
+              `/api/github-contributions?username=${username}`,
+              {},
+              8000
+            );
+            if (contribRes.ok) {
+              const contentType = contribRes.headers.get('content-type') || '';
+              if (contentType.includes('application/json')) {
+                const contribJson = await contribRes.json();
+                if (Array.isArray(contribJson.contributions) && contribJson.contributions.length > 0) {
+                  contributionData = {
+                    totalContributions: contribJson.totalContributions || 0,
+                    contributions: contribJson.contributions,
+                    isFallback: false,
+                  };
+                }
+              } else {
+                const text = await contribRes.text();
+                contributionData = parseGitHubHTML(text);
+                contributionData.isFallback = false;
+              }
+            }
+          } catch (e) {
+            console.warn('/api/github-contributions failed:', e);
+          }
+        }
 
-      return { profile, events, contributions: contributionData };
-    } catch (err) {
-      console.warn('GitHub fetch error, returning fallback dataset:', err);
-      return fallbackObj;
-    }
-  });
+        // If still empty, use fallback contributions heatmap & mark as fallback
+        const isFallback = !contributionData.contributions || contributionData.contributions.length === 0;
+        if (isFallback) {
+          contributionData = fallbackObj.contributions;
+        }
+
+        return {
+          profile,
+          events,
+          contributions: contributionData,
+          isFallback,
+        };
+      } catch (err) {
+        console.warn('GitHub fetch error, returning fallback dataset:', err);
+        return fallbackObj;
+      }
+    },
+    15 * 60 * 1000,
+    (res) => !!res.isFallback || !!res.contributions?.isFallback
+  );
 }

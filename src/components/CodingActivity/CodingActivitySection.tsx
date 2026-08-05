@@ -19,13 +19,25 @@ export default function CodingActivitySection() {
 
   const [leetcodeProfile, setLeetcodeProfile] = useState<LeetCodeProfile | null>(null);
 
-  const loadData = async () => {
+  const loadData = async (forceRefresh = false) => {
     setLoading(true);
 
     try {
+      if (forceRefresh) {
+        try {
+          Object.keys(localStorage).forEach((key) => {
+            if (key.startsWith('portfolio_cache_')) {
+              localStorage.removeItem(key);
+            }
+          });
+        } catch (e) {
+          // ignore
+        }
+      }
+
       const [ghResult, lcResult] = await Promise.allSettled([
-        fetchGitHubData(),
-        fetchLeetCodeData(),
+        fetchGitHubData(forceRefresh),
+        fetchLeetCodeData(forceRefresh),
       ]);
 
       if (ghResult.status === 'fulfilled' && ghResult.value) {
@@ -60,6 +72,15 @@ export default function CodingActivitySection() {
   };
 
   useEffect(() => {
+    // Purge old pre-v7 cached items automatically on mount
+    try {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith('portfolio_cache_') && !key.endsWith('_v7')) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch (e) {}
+
     loadData();
   }, []);
 
@@ -71,7 +92,7 @@ export default function CodingActivitySection() {
           <h2 className="section-title">Coding Activity</h2>
         </div>
 
-        <div className="activity-tabs reveal">
+        <div className="activity-tabs reveal" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
           <button
             className={`tab-btn ${activeTab === 'all' ? 'active' : ''}`}
             onClick={() => setActiveTab('all')}
@@ -89,6 +110,14 @@ export default function CodingActivitySection() {
             onClick={() => setActiveTab('leetcode')}
           >
             <span>🧩</span> LeetCode
+          </button>
+          <button
+            className="tab-btn"
+            onClick={() => loadData(true)}
+            title="Clear cache and fetch live stats"
+            style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.05)', fontSize: '0.82rem' }}
+          >
+            <span>🔄</span> Refresh Live Data
           </button>
         </div>
 
