@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fetchGitHubData, getFallbackGitHubData, GitHubProfile, ContributionDay } from '../../services/github';
-import { fetchLeetCodeData, getFallbackLeetCodeData, LeetCodeProfile } from '../../services/leetcode';
-import { config } from '../../config/env';
+import { fetchGitHubData, GitHubProfile, ContributionDay } from '../../services/github';
+import { fetchLeetCodeData, LeetCodeProfile } from '../../services/leetcode';
 import { GitHubCard } from './GitHubCard';
 import { LeetCodeCard } from './LeetCodeCard';
 import { GitHubContributionHeatmap } from './GitHubContributionHeatmap';
@@ -9,87 +8,97 @@ import { LeetCodeHeatmap } from './LeetCodeHeatmap';
 import { CodingActivitySkeleton } from './CodingActivitySkeleton';
 import './CodingActivity.css';
 
+function formatLastUpdated(timestamp: number | null): string {
+  if (!timestamp) return 'Never';
+  const diffSec = Math.floor((Date.now() - timestamp) / 1000);
+  if (diffSec < 60) return 'Just now';
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `${diffMin}m ago`;
+  const diffHours = Math.floor(diffMin / 60);
+  return `${diffHours}h ago`;
+}
+
 export default function CodingActivitySection() {
   const [activeTab, setActiveTab] = useState<'all' | 'github' | 'leetcode'>('all');
-  const [loading, setLoading] = useState(true);
 
+  const [githubLoading, setGithubLoading] = useState(true);
+  const [githubError, setGithubError] = useState<string | null>(null);
   const [githubProfile, setGithubProfile] = useState<GitHubProfile | null>(null);
+  const [githubEvents, setGithubEvents] = useState<GitHubEvent[]>([]);
   const [githubContribs, setGithubContribs] = useState<ContributionDay[]>([]);
   const [githubTotalContribs, setGithubTotalContribs] = useState(0);
 
+  const [leetcodeLoading, setLeetcodeLoading] = useState(true);
+  const [leetcodeError, setLeetcodeError] = useState<string | null>(null);
   const [leetcodeProfile, setLeetcodeProfile] = useState<LeetCodeProfile | null>(null);
+  const [leetcodeSubmissions, setLeetcodeSubmissions] = useState<LeetCodeSubmission[]>([]);
 
-  const loadData = async (forceRefresh = false) => {
-    setLoading(true);
+  const [lastUpdated, setLastUpdated] = useState<number | null>(null);
 
+  const loadGitHub = async (forceRefresh = false) => {
+    setGithubLoading(true);
+    setGithubError(null);
     try {
-      if (forceRefresh) {
-        try {
-          Object.keys(localStorage).forEach((key) => {
-            if (key.startsWith('portfolio_cache_')) {
-              localStorage.removeItem(key);
-            }
-          });
-        } catch (e) {
-          // ignore
-        }
-      }
-
-      const [ghResult, lcResult] = await Promise.allSettled([
-        fetchGitHubData(forceRefresh),
-        fetchLeetCodeData(forceRefresh),
-      ]);
-
-      if (ghResult.status === 'fulfilled' && ghResult.value) {
-        setGithubProfile(ghResult.value.profile);
-        setGithubContribs(ghResult.value.contributions.contributions);
-        setGithubTotalContribs(ghResult.value.contributions.totalContributions);
-      } else {
-        const fbGh = getFallbackGitHubData(config.githubUsername || 'RajBhokare');
-        setGithubProfile(fbGh.profile);
-        setGithubContribs(fbGh.contributions.contributions);
-        setGithubTotalContribs(fbGh.contributions.totalContributions);
-      }
-
-      if (lcResult.status === 'fulfilled' && lcResult.value) {
-        setLeetcodeProfile(lcResult.value.profile);
-      } else {
-        const fbLc = getFallbackLeetCodeData(config.leetcodeUsername || 'RajBhokare');
-        setLeetcodeProfile(fbLc.profile);
-      }
-    } catch (err) {
-      console.warn('Unexpected error in loadData, activating fallbacks:', err);
-      const fbGh = getFallbackGitHubData(config.githubUsername || 'RajBhokare');
-      setGithubProfile(fbGh.profile);
-      setGithubContribs(fbGh.contributions.contributions);
-      setGithubTotalContribs(fbGh.contributions.totalContributions);
-
-      const fbLc = getFallbackLeetCodeData(config.leetcodeUsername || 'RajBhokare');
-      setLeetcodeProfile(fbLc.profile);
+      const ghData = await fetchGitHubData(forceRefresh);
+      setGithubProfile(ghData.profile);
+      setGithubEvents(ghData.events || []);
+      setGithubContribs(ghData.contributions.contributions);
+      setGithubTotalContribs(ghData.contributions.totalContributions);
+      setLastUpdated(ghData.lastUpdated);
+    } catch (err: any) {
+      console.error('GitHub fetch failed:', err);
+      setGithubError(err.message || 'GitHub activity unavailable.');
+      setGithubProfile(null);
+      setGithubContribs([]);
+      setGithubTotalContribs(0);
+      setGithubEvents([]);
     } finally {
-      setLoading(false);
+      setGithubLoading(false);
     }
   };
 
-  useEffect(() => {
-    // Purge old pre-v7 cached items automatically on mount
+  const loadLeetCode = async (forceRefresh = false) => {
+    setLeetcodeLoading(true);
+    setLeetcodeError(null);
     try {
-      Object.keys(localStorage).forEach((key) => {
-        if (key.startsWith('portfolio_cache_') && !key.endsWith('_v7')) {
-          localStorage.removeItem(key);
-        }
-      });
-    } catch (e) {}
+      const lcData = await fetchLeetCodeData(forceRefresh);
+      setLeetcodeProfile(lcData.profile);
+      setLeetcodeSubmissions(lcData.recentSubmissions || []);
+      setLastUpdated(lcData.lastUpdated);
+    } catch (err: any) {
+      console.error('LeetCode fetch failed:', err);
+      setLeetcodeError(err.message || 'LeetCode activity unavailable.');
+      setLeetcodeProfile(null);
+      setLeetcodeSubmissions([]);
+    } finally {
+      setLeetcodeLoading(false);
+    }
+  };
 
-    loadData();
+  const loadAll = (forceRefresh = false) => {
+    loadGitHub(forceRefresh);
+    loadLeetCode(forceRefresh);
+  };
+
+  useEffect(() => {
+    loadAll(false);
   }, []);
+
+  const isGlobalLoading = githubLoading && leetcodeLoading;
 
   return (
     <section className="section section-dark" id="activity">
       <div className="container">
-        <div className="section-header reveal">
-          <span className="section-eyebrow">coding activity & stats</span>
-          <h2 className="section-title">Coding Activity</h2>
+        <div className="section-header reveal" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <span className="section-eyebrow">coding activity & stats</span>
+            <h2 className="section-title">Coding Activity</h2>
+          </div>
+          {lastUpdated && (
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-2)', fontFamily: 'var(--mono)', background: 'rgba(255, 255, 255, 0.04)', padding: '0.3rem 0.7rem', borderRadius: '4px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              Last updated: {formatLastUpdated(lastUpdated)}
+            </span>
+          )}
         </div>
 
         <div className="activity-tabs reveal" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
@@ -113,15 +122,15 @@ export default function CodingActivitySection() {
           </button>
           <button
             className="tab-btn"
-            onClick={() => loadData(true)}
-            title="Clear cache and fetch live stats"
+            onClick={() => loadAll(true)}
+            title="Clear cache and fetch fresh stats"
             style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.05)', fontSize: '0.82rem' }}
           >
             <span>🔄</span> Refresh Live Data
           </button>
         </div>
 
-        {loading ? (
+        {isGlobalLoading ? (
           <CodingActivitySkeleton />
         ) : (
           <div className="activity-content">
@@ -130,19 +139,50 @@ export default function CodingActivitySection() {
               <>
                 <div className="activity-grid">
                   <div className="col-span-6">
-                    {githubProfile && <GitHubCard profile={githubProfile} />}
+                    {githubLoading ? (
+                      <CodingActivitySkeleton />
+                    ) : githubError ? (
+                      <div className="activity-card" style={{ borderColor: 'var(--coral-dim)', textAlign: 'center', padding: '2rem 1.5rem' }}>
+                        <div className="card-title" style={{ color: 'var(--coral)', marginBottom: '0.5rem' }}>
+                          🐙 GitHub Activity Unavailable
+                        </div>
+                        <p style={{ color: 'var(--text-2)', fontSize: '0.85rem', marginBottom: '1rem' }}>{githubError}</p>
+                        <button className="tab-btn" onClick={() => loadGitHub(true)} style={{ background: 'var(--coral-dim)', color: 'var(--coral)' }}>
+                          🔄 Retry GitHub
+                        </button>
+                      </div>
+                    ) : (
+                      githubProfile && <GitHubCard profile={githubProfile} />
+                    )}
                   </div>
+
                   <div className="col-span-6">
-                    {leetcodeProfile && <LeetCodeCard profile={leetcodeProfile} />}
+                    {leetcodeLoading ? (
+                      <CodingActivitySkeleton />
+                    ) : leetcodeError ? (
+                      <div className="activity-card" style={{ borderColor: 'var(--coral-dim)', textAlign: 'center', padding: '2rem 1.5rem' }}>
+                        <div className="card-title" style={{ color: 'var(--coral)', marginBottom: '0.5rem' }}>
+                          🧩 LeetCode Activity Unavailable
+                        </div>
+                        <p style={{ color: 'var(--text-2)', fontSize: '0.85rem', marginBottom: '1rem' }}>{leetcodeError}</p>
+                        <button className="tab-btn" onClick={() => loadLeetCode(true)} style={{ background: 'var(--coral-dim)', color: 'var(--coral)' }}>
+                          🔄 Retry LeetCode
+                        </button>
+                      </div>
+                    ) : (
+                      leetcodeProfile && <LeetCodeCard profile={leetcodeProfile} />
+                    )}
                   </div>
                 </div>
 
                 <div className="activity-grid">
                   <div className="col-span-12">
-                    <GitHubContributionHeatmap
-                      contributions={githubContribs}
-                      totalContributions={githubTotalContribs}
-                    />
+                    {githubProfile && (
+                      <GitHubContributionHeatmap
+                        contributions={githubContribs}
+                        totalContributions={githubTotalContribs}
+                      />
+                    )}
                   </div>
                   <div className="col-span-12">
                     {leetcodeProfile && (
@@ -156,33 +196,57 @@ export default function CodingActivitySection() {
             {/* GITHUB TAB */}
             {activeTab === 'github' && (
               <>
-                <div className="activity-grid">
-                  <div className="col-span-12">
-                    {githubProfile && <GitHubCard profile={githubProfile} />}
+                {githubError ? (
+                  <div className="activity-card" style={{ borderColor: 'var(--coral-dim)', textAlign: 'center', padding: '2.5rem 1.5rem' }}>
+                    <div className="card-title" style={{ color: 'var(--coral)', marginBottom: '0.5rem' }}>
+                      🐙 GitHub Activity Unavailable
+                    </div>
+                    <p style={{ color: 'var(--text-2)', fontSize: '0.88rem', marginBottom: '1.2rem' }}>{githubError}</p>
+                    <button className="tab-btn" onClick={() => loadGitHub(true)} style={{ background: 'var(--coral-dim)', color: 'var(--coral)' }}>
+                      🔄 Retry GitHub
+                    </button>
                   </div>
-                  <div className="col-span-12">
-                    <GitHubContributionHeatmap
-                      contributions={githubContribs}
-                      totalContributions={githubTotalContribs}
-                    />
+                ) : (
+                  <div className="activity-grid">
+                    <div className="col-span-12">
+                      {githubProfile && <GitHubCard profile={githubProfile} />}
+                    </div>
+                    <div className="col-span-12">
+                      <GitHubContributionHeatmap
+                        contributions={githubContribs}
+                        totalContributions={githubTotalContribs}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             )}
 
             {/* LEETCODE TAB */}
             {activeTab === 'leetcode' && (
               <>
-                <div className="activity-grid">
-                  <div className="col-span-12">
-                    {leetcodeProfile && <LeetCodeCard profile={leetcodeProfile} />}
+                {leetcodeError ? (
+                  <div className="activity-card" style={{ borderColor: 'var(--coral-dim)', textAlign: 'center', padding: '2.5rem 1.5rem' }}>
+                    <div className="card-title" style={{ color: 'var(--coral)', marginBottom: '0.5rem' }}>
+                      🧩 LeetCode Activity Unavailable
+                    </div>
+                    <p style={{ color: 'var(--text-2)', fontSize: '0.88rem', marginBottom: '1.2rem' }}>{leetcodeError}</p>
+                    <button className="tab-btn" onClick={() => loadLeetCode(true)} style={{ background: 'var(--coral-dim)', color: 'var(--coral)' }}>
+                      🔄 Retry LeetCode
+                    </button>
                   </div>
-                  <div className="col-span-12">
-                    {leetcodeProfile && (
-                      <LeetCodeHeatmap submissionCalendar={leetcodeProfile.submissionCalendar} />
-                    )}
+                ) : (
+                  <div className="activity-grid">
+                    <div className="col-span-12">
+                      {leetcodeProfile && <LeetCodeCard profile={leetcodeProfile} />}
+                    </div>
+                    <div className="col-span-12">
+                      {leetcodeProfile && (
+                        <LeetCodeHeatmap submissionCalendar={leetcodeProfile.submissionCalendar} />
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             )}
           </div>
@@ -191,3 +255,4 @@ export default function CodingActivitySection() {
     </section>
   );
 }
+

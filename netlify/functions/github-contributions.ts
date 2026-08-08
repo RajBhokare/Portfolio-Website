@@ -17,6 +17,91 @@ export async function handler(event: any) {
 
   const username = event.queryStringParameters?.username || 'RajBhokare';
 
+  if (username.toLowerCase() !== 'rajbhokare') {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: 'Identity verification failed: requested user must be RajBhokare' }),
+    };
+  }
+
+  const token = process.env.GITHUB_TOKEN;
+
+  if (token) {
+    try {
+      const graphqlQuery = `
+        query getContributions($username: String!) {
+          user(login: $username) {
+            login
+            contributionsCollection {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  contributionDays {
+                    contributionCount
+                    date
+                    contributionLevel
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
+
+      const ghRes = await fetch('https://api.github.com/graphql', {
+        method: 'POST',
+        headers: {
+          Authorization: `bearer ${token}`,
+          'Content-Type': 'application/json',
+          'User-Agent': 'RajBhokare-Portfolio',
+        },
+        body: JSON.stringify({ query: graphqlQuery, variables: { username } }),
+      });
+
+      if (ghRes.ok) {
+        const json = await ghRes.json();
+        const user = json.data?.user;
+        if (user && user.login.toLowerCase() === 'rajbhokare') {
+          const calendar = user.contributionsCollection?.contributionCalendar;
+          const days: Array<{ date: string; intensity: number; count: number; color: string }> = [];
+
+          if (calendar?.weeks) {
+            calendar.weeks.forEach((week: any) => {
+              week.contributionDays?.forEach((d: any) => {
+                const levelMap: Record<string, number> = {
+                  NONE: 0,
+                  FIRST_QUARTILE: 1,
+                  SECOND_QUARTILE: 2,
+                  THIRD_QUARTILE: 3,
+                  FOURTH_QUARTILE: 4,
+                };
+                days.push({
+                  date: d.date,
+                  count: d.contributionCount || 0,
+                  intensity: levelMap[d.contributionLevel] ?? (d.contributionCount > 0 ? 1 : 0),
+                  color: '',
+                });
+              });
+            });
+          }
+
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              username: user.login,
+              totalContributions: calendar?.totalContributions || days.reduce((sum, d) => sum + d.count, 0),
+              contributions: days,
+            }),
+          };
+        }
+      }
+    } catch (err) {
+      console.warn('GitHub GraphQL fetch failed in Netlify function:', err);
+    }
+  }
+
   try {
     const ghRes = await fetch(`https://github.com/users/${username}/contributions`, {
       headers: {
@@ -46,25 +131,13 @@ export async function handler(event: any) {
       });
     }
 
-    const regex2 = /data-level="(\d+)"[^>]*data-date="(\d{4}-\d{2}-\d{2})"/g;
-    while ((match = regex2.exec(html)) !== null) {
-      if (!days.some((d) => d.date === match[2])) {
-        const level = parseInt(match[1], 10);
-        days.push({
-          date: match[2],
-          intensity: level,
-          count: level > 0 ? (level === 1 ? 1 : level === 2 ? 3 : level === 3 ? 5 : 8) : 0,
-          color: '',
-        });
-      }
-    }
-
     days.sort((a, b) => a.date.localeCompare(b.date));
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
+        username: 'RajBhokare',
         totalContributions,
         contributions: days,
       }),

@@ -3,25 +3,22 @@ interface CacheEntry<T> {
   data: T;
 }
 
-const DEFAULT_TTL_MS = 15 * 60 * 1000; // 15 minutes cache
+const DEFAULT_TTL_MS = 10 * 60 * 1000; // 10 minutes cache
 
 export async function fetchWithCache<T>(
   key: string,
   fetcher: () => Promise<T>,
-  ttlMs: number = DEFAULT_TTL_MS,
-  isFallback?: (data: T) => boolean
+  ttlMs: number = DEFAULT_TTL_MS
 ): Promise<T> {
   const cacheKey = `portfolio_cache_${key}`;
 
-  let cachedData: T | null = null;
   try {
     const cachedItem = localStorage.getItem(cacheKey);
     if (cachedItem) {
       const parsed: CacheEntry<T> = JSON.parse(cachedItem);
-      cachedData = parsed.data || null;
       const isExpired = Date.now() - parsed.timestamp > ttlMs;
-      if (!isExpired && cachedData && !(isFallback && isFallback(cachedData))) {
-        return cachedData;
+      if (!isExpired && parsed.data) {
+        return parsed.data;
       }
     }
   } catch (e) {
@@ -30,30 +27,23 @@ export async function fetchWithCache<T>(
 
   try {
     const freshData = await fetcher();
-    if (!isFallback || !isFallback(freshData)) {
-      try {
-        const entry: CacheEntry<T> = {
-          timestamp: Date.now(),
-          data: freshData,
-        };
-        localStorage.setItem(cacheKey, JSON.stringify(entry));
-      } catch (e) {
-        console.warn(`Cache write warning for ${key}:`, e);
-      }
-    } else {
-      try {
-        localStorage.removeItem(cacheKey);
-      } catch (e) {
-        // ignore
-      }
+    try {
+      const entry: CacheEntry<T> = {
+        timestamp: Date.now(),
+        data: freshData,
+      };
+      localStorage.setItem(cacheKey, JSON.stringify(entry));
+    } catch (e) {
+      console.warn(`Cache write warning for ${key}:`, e);
     }
     return freshData;
   } catch (err) {
-    console.warn(`Fetcher failed for ${key}, falling back to cached or default data:`, err);
-    if (cachedData) {
-      return cachedData;
-    }
+    // If fetching live data fails, remove any cached data for this key and throw error
+    try {
+      localStorage.removeItem(cacheKey);
+    } catch (e) {}
     throw err;
   }
 }
+
 

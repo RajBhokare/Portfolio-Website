@@ -64,7 +64,7 @@ export function LeetCodeCard({ profile }: Props) {
         </div>
         <div className="stat-box">
           <div className="stat-value" style={{ color: 'var(--gold)' }}>
-            {profile.currentStreak} 🔥
+            {profile.currentStreak > 0 ? `${profile.currentStreak} 🔥` : 'N/A'}
           </div>
           <div className="stat-label">Current Streak</div>
         </div>

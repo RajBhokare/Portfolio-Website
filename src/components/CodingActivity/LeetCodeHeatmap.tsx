@@ -3,26 +3,26 @@ interface Props {
 }
 
 export function LeetCodeHeatmap({ submissionCalendar }: Props) {
-  // Convert Unix timestamps map into last 364 days array
+  // Pre-aggregate counts by YYYY-MM-DD date string (UTC)
+  const calendarByDate: Record<string, number> = {};
+  if (submissionCalendar) {
+    for (const [tsStr, count] of Object.entries(submissionCalendar)) {
+      const ts = parseInt(tsStr, 10);
+      if (!isNaN(ts)) {
+        const dateStr = new Date(ts * 1000).toISOString().split('T')[0];
+        calendarByDate[dateStr] = (calendarByDate[dateStr] || 0) + count;
+      }
+    }
+  }
+
+  // Convert map into last 364 days array
   const now = new Date();
   const days: { dateStr: string; count: number }[] = [];
 
   for (let i = 363; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
-    // Standardize to UTC start of day timestamp
-    const startOfDaySec = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 1000);
-    const localSec = Math.floor(d.getTime() / 1000);
-
-    // Look up count matching timestamp
-    let count = 0;
-    for (const tsKey of Object.keys(submissionCalendar || {})) {
-      const tsNum = parseInt(tsKey, 10);
-      if (Math.abs(tsNum - startOfDaySec) < 43200 || Math.abs(tsNum - localSec) < 43200) {
-        count += submissionCalendar[tsKey];
-      }
-    }
-
     const dateStr = d.toISOString().split('T')[0];
+    const count = calendarByDate[dateStr] || 0;
     days.push({ dateStr, count });
   }
 
