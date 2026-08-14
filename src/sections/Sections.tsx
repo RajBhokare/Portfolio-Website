@@ -14,7 +14,7 @@ export function About() {
         <div className="about-layout">
           <div className="about-text reveal">
             <p className="about-lead">
-              I'm a <mark>Frontend & Full Stack Developer</mark> who loves turning ideas into polished
+              I'm a <mark>Full Stack Developer</mark> who loves turning ideas into polished
               digital experiences — from pixel-perfect UIs to hardware-integrated systems.
             </p>
             <p>
@@ -31,7 +31,7 @@ export function About() {
             {[
               { icon: '🎓', label: 'Education',  value: '3rd Year, IT Engineering' },
               { icon: '📍', label: 'Location',   value: 'Pune, India' },
-              { icon: '💡', label: 'Focus',      value: 'Frontend Dev, DSA & IoT' },
+              { icon: '💡', label: 'Focus',      value: 'Full Stack Dev, DSA & IoT' },
             ].map(c => (
               <div className="info-card" key={c.label}>
                 <div className="info-card-icon">{c.icon}</div>
@@ -214,7 +214,7 @@ const experiences = [
   },
   {
     period: '2025 — Present', badge: 'Open Source', active: true,
-    role: 'Frontend & Full-Stack Developer', org: 'Self-Initiated Projects & Open Source',
+    role: 'Full-Stack Developer', org: 'Self-Initiated Projects & Open Source',
     desc: 'Building production-ready frontend and full-stack applications using React, Node.js, Express.js, and MySQL. Developing responsive user interfaces, REST APIs, authentication workflows, and deploying applications using modern development tools.',
     stack: ['React', 'JavaScript', 'HTML', 'CSS', 'Node.js', 'Express.js', 'MySQL', 'REST APIs'],
   },
@@ -603,7 +603,7 @@ export function Contact() {
         </div>
         <div className="footer-bottom">
           <p className="footer-copy">© 2026 Raj Bhokare</p>
-          <p className="footer-built">Frontend & Full Stack Developer · Built with React, Vite, Three.js & Lenis</p>
+          <p className="footer-built">Full Stack Developer · Built with React, Vite, Three.js & Lenis</p>
         </div>
       </div>
     </footer>
