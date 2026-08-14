@@ -1,8 +1,9 @@
 interface Props {
   submissionCalendar: Record<string, number>;
+  totalSubmissions: number | null;
 }
 
-export function LeetCodeHeatmap({ submissionCalendar }: Props) {
+export function LeetCodeHeatmap({ submissionCalendar, totalSubmissions }: Props) {
   // Pre-aggregate counts by YYYY-MM-DD date string (UTC)
   const calendarByDate: Record<string, number> = {};
   if (submissionCalendar) {
@@ -35,7 +36,8 @@ export function LeetCodeHeatmap({ submissionCalendar }: Props) {
   };
 
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const totalSubmissions = Object.values(submissionCalendar || {}).reduce((a, b) => a + b, 0);
+  const calendarSubmissions = Object.values(submissionCalendar || {}).reduce((a, b) => a + b, 0);
+  const displayedTotal = totalSubmissions ?? calendarSubmissions;
 
   return (
     <div className="activity-card">
@@ -43,7 +45,7 @@ export function LeetCodeHeatmap({ submissionCalendar }: Props) {
         <div className="card-title">
           <span>🔥</span> LeetCode Submission Heatmap
         </div>
-        <span className="card-badge">{totalSubmissions} Total Submissions</span>
+        <span className="card-badge">{displayedTotal} Total Submissions</span>
       </div>
 
       <div className="heatmap-container">

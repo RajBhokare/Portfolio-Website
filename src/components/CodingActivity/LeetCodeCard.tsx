@@ -18,24 +18,14 @@ export function LeetCodeCard({ profile }: Props) {
           </svg>
           LeetCode Stats
         </div>
-        <a
-          href={profile.profileUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="card-badge"
-        >
-          @{profile.username} ↗
+        <a href={profile.profileUrl} target="_blank" rel="noopener noreferrer" className="card-badge">
+          @{profile.username} - open
         </a>
       </div>
 
       <div className="profile-header-wrap">
         {profile.avatarUrl ? (
-          <img
-            src={profile.avatarUrl}
-            alt={profile.name}
-            className="profile-avatar"
-            style={{ borderColor: 'var(--gold)' }}
-          />
+          <img src={profile.avatarUrl} alt={profile.name} className="profile-avatar" style={{ borderColor: 'var(--gold)' }} />
         ) : (
           <div className="profile-avatar-placeholder" style={{ borderColor: 'var(--gold)', color: 'var(--gold)' }}>
             LC
@@ -44,7 +34,7 @@ export function LeetCodeCard({ profile }: Props) {
         <div>
           <h3 className="profile-details-name">{profile.name}</h3>
           <p className="profile-details-handle">
-            <span>Global Rank: {profile.ranking ? `#${profile.ranking.toLocaleString()}` : 'Top Tier'}</span>
+            <span>Global Rank: {profile.ranking ? `#${profile.ranking.toLocaleString()}` : 'N/A'}</span>
           </p>
         </div>
       </div>
@@ -58,13 +48,13 @@ export function LeetCodeCard({ profile }: Props) {
         </div>
         <div className="stat-box">
           <div className="stat-value" style={{ color: 'var(--cyan)' }}>
-            {profile.acceptanceRate > 0 ? `${profile.acceptanceRate}%` : 'N/A'}
+            {profile.acceptanceRate !== null ? `${profile.acceptanceRate}%` : 'N/A'}
           </div>
           <div className="stat-label">Acceptance</div>
         </div>
         <div className="stat-box">
           <div className="stat-value" style={{ color: 'var(--gold)' }}>
-            {profile.currentStreak > 0 ? `${profile.currentStreak} 🔥` : 'N/A'}
+            {profile.currentStreak !== null ? profile.currentStreak : 'N/A'}
           </div>
           <div className="stat-label">Current Streak</div>
         </div>
@@ -73,6 +63,18 @@ export function LeetCodeCard({ profile }: Props) {
             {profile.contestRating ? profile.contestRating : 'N/A'}
           </div>
           <div className="stat-label">Contest Rating</div>
+        </div>
+        <div className="stat-box">
+          <div className="stat-value" style={{ color: 'var(--green)' }}>
+            {profile.totalSubmissions !== null ? profile.totalSubmissions : 'N/A'}
+          </div>
+          <div className="stat-label">Submissions</div>
+        </div>
+        <div className="stat-box">
+          <div className="stat-value" style={{ color: 'var(--cyan)' }}>
+            {profile.activeDays}
+          </div>
+          <div className="stat-label">Active Days</div>
         </div>
       </div>
 

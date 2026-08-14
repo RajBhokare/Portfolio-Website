@@ -159,6 +159,7 @@
 .hero-bio {
   font-size: 1.05rem; color: var(--text-2); max-width: 480px;
   margin-bottom: 2.2rem; line-height: 1.8;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 
 .hero-actions { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap; margin-bottom: 2rem; }
@@ -172,6 +173,7 @@
   padding: .42rem .85rem; border: 1px solid var(--border);
   border-radius: var(--r-sm); color: var(--text-2);
   font-family: var(--mono); font-size: .7rem; letter-spacing: .03em;
+  background: rgba(11, 11, 26, 0.6); backdrop-filter: blur(8px);
   transition: all var(--t); cursor: none;
 }
 .icon-link svg { width: 13px; height: 13px; flex-shrink: 0; }
@@ -184,8 +186,10 @@
 /* Stats */
 .hero-stats {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: rgba(11, 11, 26, 0.82); border: 1px solid var(--border);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   border-radius: var(--r); overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
 }
 .hero-stat {
   display: flex; flex-direction: column; align-items: center;

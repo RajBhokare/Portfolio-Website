@@ -1,137 +1,233 @@
-export default async function handler(req: any, res: any) {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+const USERNAME = 'RajBhokare';
+const CACHE_TTL_MS = 10 * 60 * 1000;
+
+interface CacheEntry {
+  expiresAt: number;
+  data: GitHubEndpointResponse;
+}
+
+interface GitHubEndpointResponse {
+  username: string;
+  profile: {
+    username: string;
+    name: string;
+    avatarUrl: string;
+    profileUrl: string;
+    bio: string | null;
+    publicRepos: number;
+    followers: number;
+    following: number;
+    totalStars: number;
+  };
+  events: Array<{
+    id: string;
+    type: string;
+    repoName: string;
+    repoUrl: string;
+    createdAt: string;
+    description: string;
+  }>;
+  contributions: {
+    totalContributions: number;
+    contributions: Array<{
+      date: string;
+      count: number;
+      color: string;
+      intensity: number;
+      level: string;
+    }>;
+  };
+  lastUpdated: number;
+  source: 'github-graphql';
+}
+
+let cache: CacheEntry | null = null;
+
+const levelMap: Record<string, number> = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+};
+
+function json(res: any, status: number, body: unknown) {
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=300');
+  res.status(status).json(body);
+}
+
+function describeEvent(ev: any): string {
+  if (ev.type === 'PushEvent') {
+    const firstCommit = ev.payload?.commits?.[0]?.message;
+    return firstCommit ? `Pushed commit: "${String(firstCommit).slice(0, 60)}"` : `Pushed ${ev.payload?.commits?.length || 1} commit(s)`;
+  }
+  if (ev.type === 'CreateEvent') return `Created ${ev.payload?.ref_type || 'repository'}`;
+  if (ev.type === 'WatchEvent') return 'Starred repository';
+  if (ev.type === 'PullRequestEvent') return `${ev.payload?.action || 'Updated'} pull request #${ev.payload?.number || ''}`.trim();
+  if (ev.type === 'IssuesEvent') return `${ev.payload?.action || 'Updated'} issue #${ev.payload?.issue?.number || ''}`.trim();
+  if (ev.type === 'ForkEvent') return 'Forked repository';
+  return 'Activity on repository';
+}
+
+async function fetchGitHubActivity(): Promise<GitHubEndpointResponse> {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    throw new Error('GITHUB_TOKEN is required for the GitHub contribution calendar.');
+  }
+
+  const query = `
+    query PortfolioGitHubActivity($username: String!) {
+      user(login: $username) {
+        login
+        name
+        avatarUrl
+        url
+        bio
+        repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC) {
+          totalCount
+          nodes {
+            stargazerCount
+          }
+        }
+        followers {
+          totalCount
+        }
+        following {
+          totalCount
+        }
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                contributionCount
+                contributionLevel
+                date
+                color
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const graphRes = await fetch('https://api.github.com/graphql', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'User-Agent': 'RajBhokare-Portfolio',
+    },
+    body: JSON.stringify({ query, variables: { username: USERNAME } }),
+  });
+
+  const graphJson = await graphRes.json();
+  if (!graphRes.ok || graphJson.errors?.length) {
+    throw new Error(graphJson.errors?.[0]?.message || `GitHub GraphQL failed with status ${graphRes.status}`);
+  }
+
+  const user = graphJson.data?.user;
+  if (!user || String(user.login).toLowerCase() !== USERNAME.toLowerCase()) {
+    throw new Error(`GitHub identity verification failed: expected ${USERNAME}, received ${user?.login || 'unknown'}.`);
+  }
+
+  const calendar = user.contributionsCollection?.contributionCalendar;
+  if (!calendar || !Array.isArray(calendar.weeks)) {
+    throw new Error('GitHub contribution calendar missing from GraphQL response.');
+  }
+
+  const contributions = calendar.weeks.flatMap((week: any) =>
+    (Array.isArray(week.contributionDays) ? week.contributionDays : []).map((day: any) => ({
+      date: String(day.date),
+      count: Number(day.contributionCount || 0),
+      color: String(day.color || ''),
+      intensity: levelMap[String(day.contributionLevel)] ?? 0,
+      level: String(day.contributionLevel || 'NONE'),
+    }))
   );
+
+  const eventsRes = await fetch(`https://api.github.com/users/${USERNAME}/events/public?per_page=8`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'User-Agent': 'RajBhokare-Portfolio',
+      Accept: 'application/vnd.github+json',
+    },
+  }).catch(() => null);
+
+  const eventsJson = eventsRes && eventsRes.ok ? await eventsRes.json() : [];
+  const events = Array.isArray(eventsJson)
+    ? eventsJson.map((ev: any, idx: number) => {
+        const repoName = String(ev.repo?.name || 'repository');
+        return {
+          id: String(ev.id || `${repoName}-${idx}`),
+          type: String(ev.type || 'Event'),
+          repoName,
+          repoUrl: `https://github.com/${repoName}`,
+          createdAt: String(ev.created_at || new Date().toISOString()),
+          description: describeEvent(ev),
+        };
+      })
+    : [];
+
+  const totalStars = Array.isArray(user.repositories?.nodes)
+    ? user.repositories.nodes.reduce((sum: number, repo: any) => sum + Number(repo?.stargazerCount || 0), 0)
+    : 0;
+
+  return {
+    username: user.login,
+    profile: {
+      username: user.login,
+      name: user.name || user.login,
+      avatarUrl: user.avatarUrl || '',
+      profileUrl: user.url || `https://github.com/${USERNAME}`,
+      bio: user.bio || null,
+      publicRepos: Number(user.repositories?.totalCount || 0),
+      followers: Number(user.followers?.totalCount || 0),
+      following: Number(user.following?.totalCount || 0),
+      totalStars,
+    },
+    events,
+    contributions: {
+      totalContributions: Number(calendar.totalContributions || 0),
+      contributions,
+    },
+    lastUpdated: Date.now(),
+    source: 'github-graphql',
+  };
+}
+
+export default async function handler(req: any, res: any) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
-  const username = req.query?.username || 'RajBhokare';
-
-  // Strict Identity Check
-  if (username.toLowerCase() !== 'rajbhokare') {
-    res.status(400).json({ error: 'Identity verification failed: requested user must be RajBhokare' });
+  if (req.method !== 'GET') {
+    json(res, 405, { error: 'Method not allowed' });
     return;
   }
 
-  const token = process.env.GITHUB_TOKEN;
-
-  if (token) {
-    try {
-      const graphqlQuery = `
-        query getContributions($username: String!) {
-          user(login: $username) {
-            login
-            contributionsCollection {
-              contributionCalendar {
-                totalContributions
-                weeks {
-                  contributionDays {
-                    contributionCount
-                    date
-                    contributionLevel
-                  }
-                }
-              }
-            }
-          }
-        }
-      `;
-
-      const ghRes = await fetch('https://api.github.com/graphql', {
-        method: 'POST',
-        headers: {
-          Authorization: `bearer ${token}`,
-          'Content-Type': 'application/json',
-          'User-Agent': 'RajBhokare-Portfolio',
-        },
-        body: JSON.stringify({ query: graphqlQuery, variables: { username } }),
-      });
-
-      if (ghRes.ok) {
-        const json = await ghRes.json();
-        const user = json.data?.user;
-        if (user && user.login.toLowerCase() === 'rajbhokare') {
-          const calendar = user.contributionsCollection?.contributionCalendar;
-          const days: Array<{ date: string; intensity: number; count: number; color: string }> = [];
-
-          if (calendar?.weeks) {
-            calendar.weeks.forEach((week: any) => {
-              week.contributionDays?.forEach((d: any) => {
-                const levelMap: Record<string, number> = {
-                  NONE: 0,
-                  FIRST_QUARTILE: 1,
-                  SECOND_QUARTILE: 2,
-                  THIRD_QUARTILE: 3,
-                  FOURTH_QUARTILE: 4,
-                };
-                days.push({
-                  date: d.date,
-                  count: d.contributionCount || 0,
-                  intensity: levelMap[d.contributionLevel] ?? (d.contributionCount > 0 ? 1 : 0),
-                  color: '',
-                });
-              });
-            });
-          }
-
-          res.status(200).json({
-            username: user.login,
-            totalContributions: calendar?.totalContributions || days.reduce((sum, d) => sum + d.count, 0),
-            contributions: days,
-          });
-          return;
-        }
-      }
-    } catch (err) {
-      console.warn('GitHub GraphQL fetch failed, trying HTML fallback:', err);
-    }
+  if (req.query?.username && String(req.query.username).toLowerCase() !== USERNAME.toLowerCase()) {
+    json(res, 400, { error: `Identity verification failed: requested user must be ${USERNAME}` });
+    return;
   }
 
-  // Fallback to HTML parsing if GITHUB_TOKEN is not configured
+  const forceRefresh = req.query?.refresh === '1';
+  if (!forceRefresh && cache && cache.expiresAt > Date.now()) {
+    json(res, 200, cache.data);
+    return;
+  }
+
   try {
-    const ghRes = await fetch(`https://github.com/users/${username}/contributions`, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      },
-    });
-
-    if (!ghRes.ok) {
-      throw new Error(`GitHub HTTP error: ${ghRes.status}`);
-    }
-
-    const html = await ghRes.text();
-    const totalMatch = html.match(/([\d,]+)\s+contributions/i);
-    const totalContributions = totalMatch ? parseInt(totalMatch[1].replace(/,/g, ''), 10) : 0;
-
-    const days: Array<{ date: string; intensity: number; count: number; color: string }> = [];
-    const regex1 = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d+)"/g;
-    let match;
-    while ((match = regex1.exec(html)) !== null) {
-      const level = parseInt(match[2], 10);
-      days.push({
-        date: match[1],
-        intensity: level,
-        count: level > 0 ? (level === 1 ? 1 : level === 2 ? 3 : level === 3 ? 5 : 8) : 0,
-        color: '',
-      });
-    }
-
-    days.sort((a, b) => a.date.localeCompare(b.date));
-
-    res.status(200).json({
-      username: 'RajBhokare',
-      totalContributions,
-      contributions: days,
-    });
+    const data = await fetchGitHubActivity();
+    cache = { data, expiresAt: Date.now() + CACHE_TTL_MS };
+    json(res, 200, data);
   } catch (err: any) {
-    res.status(500).json({ error: err.message || 'Failed to fetch GitHub contributions' });
+    json(res, 503, { error: err.message || 'GitHub activity unavailable' });
   }
 }

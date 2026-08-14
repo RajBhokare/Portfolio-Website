@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fetchGitHubData, GitHubProfile, ContributionDay } from '../../services/github';
-import { fetchLeetCodeData, LeetCodeProfile } from '../../services/leetcode';
+import { fetchGitHubData, GitHubProfile, ContributionDay, GitHubEvent } from '../../services/github';
+import { fetchLeetCodeData, LeetCodeProfile, LeetCodeSubmission } from '../../services/leetcode';
 import { GitHubCard } from './GitHubCard';
 import { LeetCodeCard } from './LeetCodeCard';
 import { GitHubContributionHeatmap } from './GitHubContributionHeatmap';
@@ -186,7 +186,10 @@ export default function CodingActivitySection() {
                   </div>
                   <div className="col-span-12">
                     {leetcodeProfile && (
-                      <LeetCodeHeatmap submissionCalendar={leetcodeProfile.submissionCalendar} />
+                      <LeetCodeHeatmap
+                        submissionCalendar={leetcodeProfile.submissionCalendar}
+                        totalSubmissions={leetcodeProfile.totalSubmissions}
+                      />
                     )}
                   </div>
                 </div>
@@ -242,7 +245,10 @@ export default function CodingActivitySection() {
                     </div>
                     <div className="col-span-12">
                       {leetcodeProfile && (
-                        <LeetCodeHeatmap submissionCalendar={leetcodeProfile.submissionCalendar} />
+                        <LeetCodeHeatmap
+                          submissionCalendar={leetcodeProfile.submissionCalendar}
+                          totalSubmissions={leetcodeProfile.totalSubmissions}
+                        />
                       )}
                     </div>
                   </div>
@@ -255,4 +261,3 @@ export default function CodingActivitySection() {
     </section>
   );
 }
-

@@ -9,8 +9,7 @@ export function GitHubContributionHeatmap({ contributions, totalContributions }:
   // Ensure array is sorted ascending by date
   const sorted = [...contributions].sort((a, b) => a.date.localeCompare(b.date));
 
-  // Take the most recent 364 days (52 full weeks)
-  const displayDays = sorted.slice(-364);
+  const displayDays = sorted;
 
   const getCellClass = (intensity: number, count: number) => {
     if (count === 0 && intensity === 0) return 'cell cell-l0';
@@ -30,7 +29,7 @@ export function GitHubContributionHeatmap({ contributions, totalContributions }:
           <span>💚</span> GitHub Contributions
         </div>
         <span className="card-badge">
-          {totalContributions > 0 ? `${totalContributions} contributions in the last year` : 'Live Calendar'}
+          {`${totalContributions} contributions in the last year`}
         </span>
       </div>
 

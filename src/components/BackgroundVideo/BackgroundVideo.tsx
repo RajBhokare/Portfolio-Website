@@ -5,6 +5,10 @@ export const BackgroundVideo = React.memo(function BackgroundVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    const savedOpacity = localStorage.getItem('bg-video-opacity');
+    const opacityVal = savedOpacity !== null ? savedOpacity : '0.32';
+    document.documentElement.style.setProperty('--bg-video-opacity', opacityVal);
+
     const video = videoRef.current;
     if (!video) return;
 

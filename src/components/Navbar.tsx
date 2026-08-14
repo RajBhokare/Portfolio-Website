@@ -15,12 +15,19 @@ export default function Navbar() {
   const [active, setActive]     = useState('');
   const [open, setOpen]         = useState(false);
   const [theme, setTheme]       = useState('dark');
+  const [videoOpacity, setVideoOpacity] = useState<string>(() => {
+    return localStorage.getItem('bg-video-opacity') || '0.32';
+  });
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
+
+    const savedOpacity = localStorage.getItem('bg-video-opacity') || '0.32';
+    setVideoOpacity(savedOpacity);
+    document.documentElement.style.setProperty('--bg-video-opacity', savedOpacity);
   }, []);
 
   const toggleTheme = () => {
@@ -28,6 +35,25 @@ export default function Navbar() {
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+  };
+
+  const cycleVideoOpacity = () => {
+    // Presets: 0.32 (Balanced) -> 0.60 (Vivid) -> 0.15 (Dim) -> 0 (Off) -> 0.32
+    const presets = ['0.32', '0.60', '0.15', '0'];
+    const currentIndex = presets.indexOf(videoOpacity);
+    const nextVal = presets[(currentIndex + 1) % presets.length] || '0.32';
+    setVideoOpacity(nextVal);
+    localStorage.setItem('bg-video-opacity', nextVal);
+    document.documentElement.style.setProperty('--bg-video-opacity', nextVal);
+  };
+
+  const getOpacityLabel = (val: string) => {
+    switch (val) {
+      case '0': return 'Video: Off';
+      case '0.15': return 'Video: Dim (15%)';
+      case '0.60': return 'Video: Vivid (60%)';
+      default: return 'Video: Balanced (32%)';
+    }
   };
 
   useEffect(() => {
@@ -164,6 +190,35 @@ export default function Navbar() {
 
           <li style={{ marginLeft: '.25rem' }}>
             <MagneticButton>
+              <button
+                onClick={cycleVideoOpacity}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--r-sm)',
+                  padding: '.42rem .75rem',
+                  cursor: 'none',
+                  color: 'var(--text-2)',
+                  fontSize: '.72rem',
+                  fontFamily: 'var(--mono)',
+                  transition: 'all .25s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '.35rem',
+                }}
+                title="Click to cycle video opacity"
+                aria-label="Toggle background video opacity"
+              >
+                <span>🎬</span>
+                <span style={{ color: 'var(--cyan)' }}>
+                  {videoOpacity === '0' ? 'Off' : videoOpacity === '0.15' ? '15%' : videoOpacity === '0.60' ? '60%' : '32%'}
+                </span>
+              </button>
+            </MagneticButton>
+          </li>
+
+          <li style={{ marginLeft: '.25rem' }}>
+            <MagneticButton>
               <a
                 href="#contact"
                 onClick={(e) => {
@@ -244,22 +299,39 @@ export default function Navbar() {
             overflowY: 'auto',
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
             <button
               onClick={toggleTheme}
               style={{
-                background: 'none',
+                background: 'rgba(255,255,255,0.05)',
                 border: '1px solid var(--border)',
                 borderRadius: 'var(--r-sm)',
                 padding: '.5rem 1rem',
                 cursor: 'none',
                 color: 'var(--text)',
-                fontSize: '1rem',
+                fontSize: '.85rem',
                 transition: 'all .25s',
               }}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
+              {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+            </button>
+            <button
+              onClick={cycleVideoOpacity}
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--r-sm)',
+                padding: '.5rem 1rem',
+                cursor: 'none',
+                color: 'var(--text)',
+                fontSize: '.85rem',
+                fontFamily: 'var(--mono)',
+                transition: 'all .25s',
+              }}
+              aria-label="Toggle video opacity"
+            >
+              🎬 {getOpacityLabel(videoOpacity)}
             </button>
           </div>
           {[...links, { href: '#contact', label: 'Contact', num: '' }].map((l) => (
