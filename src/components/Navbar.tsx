@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { FiSun, FiMoon, FiFilm, FiSend, FiMenu, FiX } from 'react-icons/fi';
 import { MagneticButton } from './MagneticButton/MagneticButton';
 
 const links = [
@@ -183,7 +184,7 @@ export default function Navbar() {
                 }}
                 aria-label="Toggle theme"
               >
-                {theme === 'dark' ? '☀️' : '🌙'}
+                {theme === 'dark' ? <FiSun size={15} color="var(--gold)" /> : <FiMoon size={15} color="var(--cyan)" />}
               </button>
             </MagneticButton>
           </li>
@@ -209,7 +210,7 @@ export default function Navbar() {
                 title="Click to cycle video opacity"
                 aria-label="Toggle background video opacity"
               >
-                <span>🎬</span>
+                <FiFilm size={14} color="var(--cyan)" />
                 <span style={{ color: 'var(--cyan)' }}>
                   {videoOpacity === '0' ? 'Off' : videoOpacity === '0.15' ? '15%' : videoOpacity === '0.60' ? '60%' : '32%'}
                 </span>
@@ -237,8 +238,12 @@ export default function Navbar() {
                   fontWeight: 600,
                   transition: 'all .25s',
                   boxShadow: '0 0 15px rgba(0,229,255,.15)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '.35rem',
                 }}
               >
+                <FiSend size={13} />
                 Contact
               </a>
             </MagneticButton>
@@ -251,36 +256,16 @@ export default function Navbar() {
           aria-label="menu"
           style={{
             display: 'none',
-            flexDirection: 'column',
-            gap: 6,
+            alignItems: 'center',
+            justifyContent: 'center',
             background: 'none',
             border: 'none',
             cursor: 'none',
             padding: 6,
+            color: 'var(--text)',
           }}
         >
-          <span
-            style={{
-              display: 'block',
-              width: 22,
-              height: 1.5,
-              background: 'var(--text)',
-              borderRadius: 2,
-              transition: 'all .25s',
-              transform: open ? 'translateY(7.5px) rotate(45deg)' : '',
-            }}
-          />
-          <span
-            style={{
-              display: 'block',
-              width: 22,
-              height: 1.5,
-              background: 'var(--text)',
-              borderRadius: 2,
-              transition: 'all .25s',
-              transform: open ? 'translateY(-7.5px) rotate(-45deg)' : '',
-            }}
-          />
+          {open ? <FiX size={22} /> : <FiMenu size={22} />}
         </button>
       </div>
 

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { SiGithub, SiLeetcode } from 'react-icons/si';
+import { FiBarChart2, FiRefreshCw } from 'react-icons/fi';
 import { fetchGitHubData, GitHubProfile, ContributionDay, GitHubEvent } from '../../services/github';
 import { fetchLeetCodeData, LeetCodeProfile, LeetCodeSubmission } from '../../services/leetcode';
 import { GitHubCard } from './GitHubCard';
@@ -105,28 +107,31 @@ export default function CodingActivitySection() {
           <button
             className={`tab-btn ${activeTab === 'all' ? 'active' : ''}`}
             onClick={() => setActiveTab('all')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <span>📊</span> Overview
+            <FiBarChart2 size={15} /> Overview
           </button>
           <button
             className={`tab-btn ${activeTab === 'github' ? 'active' : ''}`}
             onClick={() => setActiveTab('github')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <span>🐙</span> GitHub
+            <SiGithub size={15} /> GitHub
           </button>
           <button
             className={`tab-btn ${activeTab === 'leetcode' ? 'active' : ''}`}
             onClick={() => setActiveTab('leetcode')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <span>🧩</span> LeetCode
+            <SiLeetcode size={15} color="var(--gold)" /> LeetCode
           </button>
           <button
             className="tab-btn"
             onClick={() => loadAll(true)}
             title="Clear cache and fetch fresh stats"
-            style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.05)', fontSize: '0.82rem' }}
+            style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.05)', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <span>🔄</span> Refresh Live Data
+            <FiRefreshCw size={14} /> Refresh Live Data
           </button>
         </div>
 
