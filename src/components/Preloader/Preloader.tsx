@@ -6,31 +6,20 @@ interface Props {
 }
 
 export function Preloader({ onComplete }: Props) {
-  const [progress, setProgress] = useState(0);
   const [hidden, setHidden] = useState(false);
+  const [unmounted, setUnmounted] = useState(false);
 
   useEffect(() => {
-    const duration = 1200; // 1.2 seconds total animation
-    const interval = 20;
-    const steps = duration / interval;
-    let currentStep = 0;
+    const timer = setTimeout(() => {
+      setHidden(true);
+      if (onComplete) onComplete();
+      setTimeout(() => setUnmounted(true), 400);
+    }, 500);
 
-    const timer = setInterval(() => {
-      currentStep++;
-      const nextProgress = Math.min(100, Math.round((currentStep / steps) * 100));
-      setProgress(nextProgress);
-
-      if (currentStep >= steps) {
-        clearInterval(timer);
-        setTimeout(() => {
-          setHidden(true);
-          if (onComplete) onComplete();
-        }, 300);
-      }
-    }, interval);
-
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [onComplete]);
+
+  if (unmounted) return null;
 
   return (
     <div className={`preloader ${hidden ? 'preloader-hidden' : ''}`} aria-hidden={hidden}>
@@ -41,10 +30,8 @@ export function Preloader({ onComplete }: Props) {
           <span className="cyan">/&gt;</span>
         </div>
 
-        <div className="preloader-counter">{progress}%</div>
-
         <div className="preloader-bar-wrap">
-          <div className="preloader-bar-fill" style={{ width: `${progress}%` }} />
+          <div className="preloader-bar-fill" />
         </div>
 
         <div className="preloader-sub">Loading Experience</div>

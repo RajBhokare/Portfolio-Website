@@ -2,33 +2,27 @@ import React, { useState, useEffect } from 'react'
 import {
   SiReact,
   SiJavascript,
-  SiTypescript,
   SiNodedotjs,
   SiExpress,
   SiHtml5,
   SiCss,
-  SiTailwindcss,
   SiBootstrap,
   SiMysql,
   SiPython,
   SiCplusplus,
   SiGit,
   SiGithub,
-  SiLinux,
-  SiArduino,
-  SiEspressif,
-  SiMqtt,
-  SiFigma,
+  SiGooglecloud,
+  SiJupyter,
   SiLeetcode,
 } from 'react-icons/si'
-import { FaJava, FaQuoteLeft, FaLinkedin, FaPalette } from 'react-icons/fa6'
-import { TbBrandVscode } from 'react-icons/tb'
-import { DiPhotoshop } from 'react-icons/di'
+import { FaJava, FaAws, FaLinkedin, FaQuoteLeft } from 'react-icons/fa6'
 import {
   FiCode,
   FiServer,
   FiTool,
-  FiCpu,
+  FiCloud,
+  FiDatabase,
   FiArrowUpRight,
   FiExternalLink,
   FiBookOpen,
@@ -59,23 +53,23 @@ export function About() {
           <div className="about-text reveal">
             <p className="about-lead">
               I'm a <mark>Full Stack Developer</mark> who loves turning ideas into polished
-              digital experiences — from pixel-perfect UIs to hardware-integrated systems.
+              digital experiences — from pixel-perfect UIs to cloud-connected backend systems.
             </p>
             <p>
               Currently in my third year at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>,
-              I specialise in building clean, responsive web interfaces while also exploring AI integration,
-              Data Structures & Algorithms, and IoT embedded systems. I believe great engineering starts with curiosity, discipline, and a
+              I specialise in building clean, responsive web interfaces while also exploring cloud computing,
+              Data Structures & Algorithms, and backend services. I believe great engineering starts with curiosity, discipline, and a
               deep love for the craft.
             </p>
             <p>
-              When I'm not coding, I'm probably debugging hardware sensor modules or exploring new web technologies.
+              When I'm not coding, I'm probably solving algorithmic challenges or exploring cloud architecture on AWS and Google Cloud.
             </p>
           </div>
           <div className="about-cards reveal">
             {[
               { icon: <FiBookOpen size={20} color="var(--cyan)" />, label: 'Education',  value: '3rd Year, IT Engineering' },
               { icon: <FiMapPin size={20} color="var(--violet)" />, label: 'Location',   value: 'Pune, India' },
-              { icon: <FiCpu size={20} color="var(--gold)" />, label: 'Focus',      value: 'Full Stack Dev, DSA & IoT' },
+              { icon: <FiCloud size={20} color="var(--gold)" />, label: 'Focus',      value: 'Full Stack & Cloud Computing' },
             ].map(c => (
               <div className="info-card" key={c.label}>
                 <div className="info-card-icon">{c.icon}</div>
@@ -103,93 +97,81 @@ export function About() {
 
 /* ── SKILLS ── */
 const SKILL_ICONS: Record<string, { icon: React.ReactElement; color: string }> = {
-  'React.js': { icon: <SiReact />, color: '#61DAFB' },
-  'JavaScript': { icon: <SiJavascript />, color: '#F7DF1E' },
-  'TypeScript': { icon: <SiTypescript />, color: '#3178C6' },
-  'Node.js': { icon: <SiNodedotjs />, color: '#5FA04E' },
-  'Express.js': { icon: <SiExpress />, color: '#E1E1E1' },
   'HTML5': { icon: <SiHtml5 />, color: '#E34F26' },
   'CSS3': { icon: <SiCss />, color: '#1572B6' },
-  'Tailwind CSS': { icon: <SiTailwindcss />, color: '#06B6D4' },
+  'JavaScript': { icon: <SiJavascript />, color: '#F7DF1E' },
+  'Node.js': { icon: <SiNodedotjs />, color: '#5FA04E' },
+  'Express.js': { icon: <SiExpress />, color: '#E1E1E1' },
+  'React': { icon: <SiReact />, color: '#61DAFB' },
   'Bootstrap': { icon: <SiBootstrap />, color: '#7952B3' },
-  'MySQL': { icon: <SiMysql />, color: '#4479A1' },
+  'C++': { icon: <SiCplusplus />, color: '#00599C' },
   'Java': { icon: <FaJava />, color: '#ED8B00' },
   'Python': { icon: <SiPython />, color: '#3776AB' },
-  'C++': { icon: <SiCplusplus />, color: '#00599C' },
+  'MySQL': { icon: <SiMysql />, color: '#4479A1' },
+  'AWS': { icon: <FaAws />, color: '#FF9900' },
+  'Google Cloud': { icon: <SiGooglecloud />, color: '#4285F4' },
   'Git': { icon: <SiGit />, color: '#F05032' },
-  'GitHub': { icon: <SiGithub />, color: '#FFFFFF' },
-  'Linux': { icon: <SiLinux />, color: '#FCC624' },
-  'VS Code': { icon: <TbBrandVscode />, color: '#007ACC' },
-  'Arduino': { icon: <SiArduino />, color: '#00979D' },
-  'ESP8266/32': { icon: <SiEspressif />, color: '#E7352C' },
-  'MQTT': { icon: <SiMqtt />, color: '#A155E8' },
-  'Figma': { icon: <SiFigma />, color: '#F24E1E' },
-  'Photoshop': { icon: <DiPhotoshop />, color: '#31A8FF' },
+  'GitHub': { icon: <SiGithub />, color: 'var(--text)' },
+  'Jupyter Notebook': { icon: <SiJupyter />, color: '#F37626' },
 }
 
 const marqueeSkillsRow1 = [
-  'React.js',
-  'JavaScript',
-  'TypeScript',
-  'Node.js',
-  'Express.js',
   'HTML5',
   'CSS3',
-  'Tailwind CSS',
+  'JavaScript',
+  'React',
   'Bootstrap',
+  'Node.js',
+  'Express.js',
   'MySQL',
 ]
 
 const marqueeSkillsRow2 = [
+  'C++',
   'Java',
   'Python',
-  'C++',
+  'AWS',
+  'Google Cloud',
   'Git',
   'GitHub',
-  'Linux',
-  'VS Code',
-  'Arduino',
-  'ESP8266/32',
-  'MQTT',
-  'Figma',
-  'Photoshop',
+  'Jupyter Notebook',
 ]
 
 const skillGroups = [
   {
     icon: <FiCode size={18} />,
-    title: 'Frontend Development',
-    pills: ['React.js', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap'],
+    title: 'Web & Frontend Development',
+    pills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Bootstrap'],
     span: false,
-    iot: false,
+    accent: 'cyan',
   },
   {
     icon: <FiServer size={18} />,
-    title: 'Programming & Backend',
-    pills: ['Node.js', 'Express.js', 'MySQL', 'Java', 'Python', 'C++'],
+    title: 'Backend & Programming Languages',
+    pills: ['Node.js', 'Express.js', 'C++', 'Java', 'Python'],
     span: false,
-    iot: false,
+    accent: 'violet',
+  },
+  {
+    icon: <FiCloud size={18} />,
+    title: 'Cloud Computing',
+    pills: ['AWS', 'Google Cloud'],
+    span: false,
+    accent: 'gold',
+  },
+  {
+    icon: <FiDatabase size={18} />,
+    title: 'Databases & Storage',
+    pills: ['MySQL'],
+    span: false,
+    accent: 'green',
   },
   {
     icon: <FiTool size={18} />,
-    title: 'Tools & Platforms',
-    pills: ['Git', 'GitHub', 'Linux', 'VS Code'],
-    span: false,
-    iot: false,
-  },
-  {
-    icon: <FiCpu size={18} />,
-    title: 'Hardware & IoT',
-    pills: ['Arduino', 'ESP8266/32', 'MQTT'],
-    span: false,
-    iot: true,
-  },
-  {
-    icon: <FaPalette size={18} />,
-    title: 'Creative & UI Design',
-    pills: ['Figma', 'Photoshop'],
+    title: 'Developer Tools & Environments',
+    pills: ['Git', 'GitHub', 'Jupyter Notebook'],
     span: true,
-    iot: false,
+    accent: 'coral',
   },
 ]
 
@@ -198,11 +180,11 @@ export function Skills() {
     <section className="section section-dark" id="skills">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">what I work with</span>
-          <h2 className="section-title">Skills & Tools</h2>
+          <span className="section-eyebrow">technical expertise</span>
+          <h2 className="section-title">Skills & Technologies</h2>
         </div>
 
-        {/* Infinite Continuous Marquee Carousel - Slowed Down & Enhanced Readability */}
+        {/* Infinite Continuous Marquee Banner */}
         <div className="skills-marquee-container reveal">
           <div className="skills-marquee-track">
             {[...marqueeSkillsRow1, ...marqueeSkillsRow1, ...marqueeSkillsRow1].map((name, idx) => {
@@ -233,32 +215,31 @@ export function Skills() {
           </div>
         </div>
 
-        {/* Categorized Skill Group Containers with Continuous Inner Marquee Carousels */}
+        {/* Categorized Professional Skill Cards */}
         <div className="skills-layout">
           {skillGroups.map((g, i) => (
             <div
               key={g.title}
-              className={`skill-group reveal${g.iot ? ' skill-group-iot' : ''}${g.span ? ' skill-group-span' : ''}`}
+              className={`skill-group reveal${g.span ? ' skill-group-span' : ''}`}
+              data-accent={g.accent}
               style={{ '--d': `${i * 100}ms` } as React.CSSProperties}
             >
               <div className="skill-group-header">
-                <span className={`skill-icon-wrap${g.iot ? ' skill-icon-iot' : ''}`}>{g.icon}</span>
+                <span className="skill-icon-wrap">{g.icon}</span>
                 <h3 className="skill-group-title">{g.title}</h3>
               </div>
-              <div className="card-marquee-container">
-                <div className={`card-marquee-track ${i % 2 === 0 ? 'scroll-left' : 'scroll-right'}`}>
-                  {[...g.pills, ...g.pills, ...g.pills, ...g.pills].map((name, idx) => {
-                    const item = SKILL_ICONS[name] || { icon: <FiCode />, color: 'var(--cyan)' }
-                    return (
-                      <span key={`${name}-${idx}`} className={`pill pill-with-icon${g.iot ? ' pill-iot' : ''}`}>
-                        <span className="pill-icon" style={{ color: item.color }}>
-                          {item.icon}
-                        </span>
-                        <span>{name}</span>
+              <div className="skill-pills">
+                {g.pills.map((name) => {
+                  const item = SKILL_ICONS[name] || { icon: <FiCode />, color: 'var(--cyan)' }
+                  return (
+                    <span key={name} className="pill pill-with-icon">
+                      <span className="pill-icon" style={{ color: item.color }}>
+                        {item.icon}
                       </span>
-                    )
-                  })}
-                </div>
+                      <span>{name}</span>
+                    </span>
+                  )
+                })}
               </div>
             </div>
           ))}

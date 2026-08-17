@@ -192,7 +192,7 @@ em { font-style: normal; color: var(--cyan); }
 
 /* Reveal Animations */
 .reveal {
-  opacity: 0; transform: translateY(36px);
+  opacity: 1;
   transition: opacity .85s var(--ease), transform .85s var(--ease);
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }

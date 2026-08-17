@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { SiGithub, SiLeetcode } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa6';
@@ -6,6 +6,29 @@ import { FiArrowRight } from 'react-icons/fi';
 import AstronautScene from '../components/AstronautScene';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
+
+class CanvasErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: any) {
+    console.warn('3D Canvas failed to load or WebGL is disabled:', error);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-3)', fontFamily: 'var(--mono)', fontSize: '0.8rem' }}>
+          <span>[ 3D Scene Unavailable ]</span>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const phrases = ['Frontend Developer', 'UI Engineer', 'DSA Enthusiast', 'IoT Builder', 'Full Stack Developer'];
 
@@ -139,11 +162,13 @@ export default function Hero() {
 
         <div className="hero-right fade-up" style={{ '--d': '300ms' } as React.CSSProperties}>
           <div className="canvas-wrapper">
-            <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
-              <Suspense fallback={null}>
-                <AstronautScene />
-              </Suspense>
-            </Canvas>
+            <CanvasErrorBoundary>
+              <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+                <Suspense fallback={null}>
+                  <AstronautScene />
+                </Suspense>
+              </Canvas>
+            </CanvasErrorBoundary>
             <div className="canvas-glow" />
           </div>
           <div className="hero-caption">

@@ -3,7 +3,6 @@ import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import { About, Skills, Experience, Projects, Philosophy, Contact } from './sections/Sections';
-import { Preloader } from './components/Preloader/Preloader';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
 
 const CodingActivitySection = lazy(() => import('./components/CodingActivity/CodingActivitySection'));
@@ -86,12 +85,12 @@ function useScrollReveal() {
           if (entry.isIntersecting) {
             setTimeout(() => {
               entry.target.classList.add('visible');
-            }, i * 60);
+            }, i * 40);
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.01, rootMargin: '50px 0px 50px 0px' }
     );
 
     const observe = () => {
@@ -99,9 +98,28 @@ function useScrollReveal() {
     };
 
     observe();
-    setTimeout(observe, 500);
 
-    return () => observer.disconnect();
+    // Immediate check for visible items on screen
+    const revealVisible = () => {
+      document.querySelectorAll('.reveal').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 100) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    revealVisible();
+    setTimeout(revealVisible, 300);
+
+    // Ultimate fallback: ensure all elements become visible
+    const timer = setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
+    }, 1000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, []);
 }
 
@@ -109,28 +127,36 @@ export default function App() {
   useScrollReveal();
 
   useEffect(() => {
-    // Initialize Lenis Smooth Scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 2,
-    });
+    let lenis: Lenis | null = null;
+    let rafId: number;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    try {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 2,
+      });
+
+      function raf(time: number) {
+        if (lenis) {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        }
+      }
+      rafId = requestAnimationFrame(raf);
+    } catch (err) {
+      console.warn('Lenis smooth scroll failed to initialize:', err);
     }
-    requestAnimationFrame(raf);
 
     return () => {
-      lenis.destroy();
+      if (lenis) lenis.destroy();
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
   return (
     <>
-      <Preloader />
       <ScrollProgress />
       <div className="noise" aria-hidden="true" />
       <Cursor />
