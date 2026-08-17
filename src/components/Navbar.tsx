@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiSun, FiMoon, FiFilm, FiSend, FiMenu, FiX } from 'react-icons/fi';
+import { FiSun, FiMoon, FiSend, FiMenu, FiX } from 'react-icons/fi';
 import { MagneticButton } from './MagneticButton/MagneticButton';
 
 const links = [
@@ -16,19 +16,12 @@ export default function Navbar() {
   const [active, setActive]     = useState('');
   const [open, setOpen]         = useState(false);
   const [theme, setTheme]       = useState('dark');
-  const [videoOpacity, setVideoOpacity] = useState<string>(() => {
-    return localStorage.getItem('bg-video-opacity') || '0.32';
-  });
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
-
-    const savedOpacity = localStorage.getItem('bg-video-opacity') || '0.32';
-    setVideoOpacity(savedOpacity);
-    document.documentElement.style.setProperty('--bg-video-opacity', savedOpacity);
   }, []);
 
   const toggleTheme = () => {
@@ -36,25 +29,6 @@ export default function Navbar() {
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-  };
-
-  const cycleVideoOpacity = () => {
-    // Presets: 0.32 (Balanced) -> 0.60 (Vivid) -> 0.15 (Dim) -> 0 (Off) -> 0.32
-    const presets = ['0.32', '0.60', '0.15', '0'];
-    const currentIndex = presets.indexOf(videoOpacity);
-    const nextVal = presets[(currentIndex + 1) % presets.length] || '0.32';
-    setVideoOpacity(nextVal);
-    localStorage.setItem('bg-video-opacity', nextVal);
-    document.documentElement.style.setProperty('--bg-video-opacity', nextVal);
-  };
-
-  const getOpacityLabel = (val: string) => {
-    switch (val) {
-      case '0': return 'Video: Off';
-      case '0.15': return 'Video: Dim (15%)';
-      case '0.60': return 'Video: Vivid (60%)';
-      default: return 'Video: Balanced (32%)';
-    }
   };
 
   useEffect(() => {
@@ -90,77 +64,88 @@ export default function Navbar() {
         zIndex: 100,
         background: scrolled
           ? theme === 'dark'
-            ? 'rgba(5, 5, 13, 0.82)'
-            : 'rgba(244, 245, 248, 0.82)'
+            ? 'rgba(5, 5, 14, 0.85)'
+            : 'rgba(248, 250, 252, 0.88)'
           : 'transparent',
         backdropFilter: scrolled ? 'blur(24px)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(24px)' : 'none',
         borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-        transition: 'background .3s, border-color .3s, backdrop-filter .3s',
+        transition: 'background .3s ease, border-color .3s ease, backdrop-filter .3s ease',
       }}
     >
       <div
+        className="container"
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 68,
           maxWidth: 1200,
           margin: '0 auto',
           padding: '0 2rem',
-          height: 72,
-          display: 'flex',
-          alignItems: 'center',
-          justify: 'space-between',
         }}
       >
-        <MagneticButton>
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              go('#hero');
-            }}
-            style={{
-              fontFamily: 'var(--mono)',
-              fontSize: '.95rem',
-              fontWeight: 600,
-              letterSpacing: '.02em',
-              cursor: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ color: 'var(--cyan)', opacity: 0.85 }}>&lt;</span>
-            <span style={{ color: 'var(--text)', fontWeight: 800 }}>RB</span>
-            <span style={{ color: 'var(--cyan)', opacity: 0.85 }}>/&gt;</span>
-          </a>
-        </MagneticButton>
+        <a
+          href="#hero"
+          onClick={(e) => {
+            e.preventDefault();
+            go('#hero');
+          }}
+          style={{
+            fontFamily: 'var(--mono)',
+            fontSize: '1.15rem',
+            fontWeight: 700,
+            color: 'var(--text)',
+            letterSpacing: '-.02em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '.3rem',
+          }}
+        >
+          <span style={{ color: 'var(--cyan)', opacity: 0.85 }}>&lt;</span>
+          <span style={{ color: 'var(--text)', fontWeight: 800 }}>RB</span>
+          <span style={{ color: 'var(--cyan)', opacity: 0.85 }}>/&gt;</span>
+        </a>
 
-        <ul style={{ display: 'flex', gap: '.2rem', alignItems: 'center', listStyle: 'none' }} className="dnav">
+        <ul
+          className="dnav"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '.4rem',
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+          }}
+        >
           {links.map((l) => {
-            const isActive = active === l.href.slice(1);
+            const isActive = active === l.href.replace('#', '');
             return (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    go(l.href);
-                  }}
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '.75rem',
-                    cursor: 'none',
-                    padding: '.42rem .9rem',
-                    borderRadius: 'var(--r-sm)',
-                    transition: 'all .25s var(--spring)',
-                    position: 'relative',
-                    display: 'inline-block',
-                    color: isActive ? 'var(--cyan)' : 'var(--text-2)',
-                    background: isActive ? 'var(--cyan-dim)' : 'transparent',
-                    border: isActive ? '1px solid rgba(0, 229, 255, 0.2)' : '1px solid transparent',
-                  }}
-                >
-                  <span style={{ color: 'var(--text-3)', fontSize: '.62rem' }}>{l.num}. </span>
-                  {l.label}
-                </a>
+                <MagneticButton>
+                  <a
+                    href={l.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      go(l.href);
+                    }}
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: '.75rem',
+                      padding: '.4rem .75rem',
+                      borderRadius: 'var(--r-sm)',
+                      color: isActive ? 'var(--cyan)' : 'var(--text-2)',
+                      background: isActive ? 'var(--cyan-dim)' : 'transparent',
+                      border: isActive ? '1px solid var(--border-h)' : '1px solid transparent',
+                      transition: 'all .25s',
+                      display: 'block',
+                      cursor: 'none',
+                    }}
+                  >
+                    <span style={{ color: 'var(--text-3)', fontSize: '.62rem' }}>{l.num}. </span>
+                    {l.label}
+                  </a>
+                </MagneticButton>
               </li>
             );
           })}
@@ -170,10 +155,10 @@ export default function Navbar() {
               <button
                 onClick={toggleTheme}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
+                  background: 'var(--bg-card)',
                   border: '1px solid var(--border)',
                   borderRadius: 'var(--r-sm)',
-                  padding: '.42rem .65rem',
+                  padding: '.45rem .65rem',
                   cursor: 'none',
                   color: 'var(--text)',
                   fontSize: '.85rem',
@@ -181,39 +166,12 @@ export default function Navbar() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  boxShadow: 'var(--card-shadow)',
                 }}
                 aria-label="Toggle theme"
+                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
                 {theme === 'dark' ? <FiSun size={15} color="var(--gold)" /> : <FiMoon size={15} color="var(--cyan)" />}
-              </button>
-            </MagneticButton>
-          </li>
-
-          <li style={{ marginLeft: '.25rem' }}>
-            <MagneticButton>
-              <button
-                onClick={cycleVideoOpacity}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)',
-                  padding: '.42rem .75rem',
-                  cursor: 'none',
-                  color: 'var(--text-2)',
-                  fontSize: '.72rem',
-                  fontFamily: 'var(--mono)',
-                  transition: 'all .25s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '.35rem',
-                }}
-                title="Click to cycle video opacity"
-                aria-label="Toggle background video opacity"
-              >
-                <FiFilm size={14} color="var(--cyan)" />
-                <span style={{ color: 'var(--cyan)' }}>
-                  {videoOpacity === '0' ? 'Off' : videoOpacity === '0.15' ? '15%' : videoOpacity === '0.60' ? '60%' : '32%'}
-                </span>
               </button>
             </MagneticButton>
           </li>
@@ -231,13 +189,13 @@ export default function Navbar() {
                   fontSize: '.75rem',
                   cursor: 'none',
                   color: 'var(--cyan)',
-                  border: '1px solid rgba(0,229,255,.3)',
+                  border: '1px solid var(--border-h)',
                   padding: '.42rem 1.2rem',
                   borderRadius: 'var(--r-sm)',
                   background: 'var(--cyan-dim)',
                   fontWeight: 600,
                   transition: 'all .25s',
-                  boxShadow: '0 0 15px rgba(0,229,255,.15)',
+                  boxShadow: '0 0 15px var(--cyan-dim)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '.35rem',
@@ -274,7 +232,7 @@ export default function Navbar() {
           style={{
             position: 'fixed',
             inset: '72px 0 0',
-            background: theme === 'dark' ? 'rgba(5,5,13,.97)' : 'rgba(244,245,248,.97)',
+            background: theme === 'dark' ? 'rgba(5,5,14,.96)' : 'rgba(248,250,252,.96)',
             backdropFilter: 'blur(24px)',
             display: 'flex',
             flexDirection: 'column',
@@ -284,39 +242,26 @@ export default function Navbar() {
             overflowY: 'auto',
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
             <button
               onClick={toggleTheme}
               style={{
-                background: 'rgba(255,255,255,0.05)',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 borderRadius: 'var(--r-sm)',
-                padding: '.5rem 1rem',
+                padding: '.6rem 1.2rem',
                 cursor: 'none',
                 color: 'var(--text)',
-                fontSize: '.85rem',
+                fontSize: '.9rem',
+                fontWeight: 600,
                 transition: 'all .25s',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '.5rem',
               }}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
-            </button>
-            <button
-              onClick={cycleVideoOpacity}
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--r-sm)',
-                padding: '.5rem 1rem',
-                cursor: 'none',
-                color: 'var(--text)',
-                fontSize: '.85rem',
-                fontFamily: 'var(--mono)',
-                transition: 'all .25s',
-              }}
-              aria-label="Toggle video opacity"
-            >
-              🎬 {getOpacityLabel(videoOpacity)}
+              {theme === 'dark' ? '☀️ Switch to Light Mode' : '🌙 Switch to Dark Mode'}
             </button>
           </div>
           {[...links, { href: '#contact', label: 'Contact', num: '' }].map((l) => (

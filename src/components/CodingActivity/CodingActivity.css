@@ -258,14 +258,14 @@
   outline: 1px solid var(--text);
 }
 
-.cell-l0 { background: rgba(255, 255, 255, 0.04); }
+.cell-l0 { background: var(--heatmap-empty); }
 .cell-l1 { background: rgba(0, 229, 255, 0.25); }
 .cell-l2 { background: rgba(0, 229, 255, 0.50); }
 .cell-l3 { background: rgba(0, 229, 255, 0.75); }
 .cell-l4 { background: #00e5ff; box-shadow: 0 0 6px var(--cyan); }
 
 /* LeetCode Heatmap theme variant */
-.cell-lc-l0 { background: rgba(255, 255, 255, 0.04); }
+.cell-lc-l0 { background: var(--heatmap-empty); }
 .cell-lc-l1 { background: rgba(6, 255, 165, 0.25); }
 .cell-lc-l2 { background: rgba(6, 255, 165, 0.50); }
 .cell-lc-l3 { background: rgba(6, 255, 165, 0.75); }
@@ -295,14 +295,14 @@
   gap: 0.85rem;
   padding: 0.85rem;
   border-radius: var(--r-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-card-h);
   border: 1px solid var(--border);
   transition: all var(--t);
 }
 
 .feed-item:hover {
-  background: var(--bg-card-h);
-  border-color: rgba(0, 229, 255, 0.2);
+  background: var(--bg-card);
+  border-color: var(--border-h);
 }
 
 .feed-icon {

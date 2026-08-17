@@ -97,7 +97,7 @@ export default function CodingActivitySection() {
             <h2 className="section-title">Coding Activity</h2>
           </div>
           {lastUpdated && (
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-2)', fontFamily: 'var(--mono)', background: 'rgba(255, 255, 255, 0.04)', padding: '0.3rem 0.7rem', borderRadius: '4px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-2)', fontFamily: 'var(--mono)', background: 'var(--bg-card)', padding: '0.3rem 0.7rem', borderRadius: '4px', border: '1px solid var(--border)' }}>
               Last updated: {formatLastUpdated(lastUpdated)}
             </span>
           )}
@@ -129,7 +129,7 @@ export default function CodingActivitySection() {
             className="tab-btn"
             onClick={() => loadAll(true)}
             title="Clear cache and fetch fresh stats"
-            style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.05)', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ marginLeft: 'auto', background: 'var(--bg-card)', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
             <FiRefreshCw size={14} /> Refresh Live Data
           </button>
