@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { SiGithub, SiLeetcode } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa6';
 import { FiArrowRight } from 'react-icons/fi';
 import AstronautScene from '../components/AstronautScene';
@@ -115,12 +114,6 @@ export default function Hero() {
 
           <div className="hero-socials fade-up" style={{ '--d': '620ms' } as React.CSSProperties}>
             <MagneticButton>
-              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="icon-link">
-                <SiGithub size={18} />
-                GitHub
-              </a>
-            </MagneticButton>
-            <MagneticButton>
               <a
                 href="https://linkedin.com/in/rajbhokare1"
                 target="_blank"
@@ -129,17 +122,6 @@ export default function Hero() {
               >
                 <FaLinkedin size={18} />
                 LinkedIn
-              </a>
-            </MagneticButton>
-            <MagneticButton>
-              <a
-                href="https://leetcode.com/u/RajBhokare/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="icon-link"
-              >
-                <SiLeetcode size={18} />
-                LeetCode
               </a>
             </MagneticButton>
           </div>

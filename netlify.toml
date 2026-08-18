@@ -1,17 +1,6 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions"
-
-[[redirects]]
-  from = "/api/github-contributions"
-  to = "/.netlify/functions/github-contributions"
-  status = 200
-
-[[redirects]]
-  from = "/api/leetcode"
-  to = "/.netlify/functions/leetcode"
-  status = 200
 
 [[redirects]]
   from = "/*"

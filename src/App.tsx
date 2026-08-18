@@ -1,11 +1,9 @@
-import { useEffect, useRef, lazy, Suspense } from 'react';
+import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import { About, Skills, Experience, Projects, Philosophy, Contact } from './sections/Sections';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
-
-const CodingActivitySection = lazy(() => import('./components/CodingActivity/CodingActivitySection'));
 
 function Cursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -172,18 +170,7 @@ export default function App() {
         <Experience />
         <div className="section-sep" aria-hidden="true" />
         <Projects />
-        <div className="section-sep" aria-hidden="true" />
-        <Suspense
-          fallback={
-            <div className="section section-dark">
-              <div className="container">
-                <div className="skeleton-pulse" style={{ height: 400, borderRadius: 24 }} />
-              </div>
-            </div>
-          }
-        >
-          <CodingActivitySection />
-        </Suspense>
+
         <div className="section-sep" aria-hidden="true" />
         <Philosophy />
       </main>

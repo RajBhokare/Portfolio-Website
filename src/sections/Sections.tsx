@@ -11,10 +11,8 @@ import {
   SiPython,
   SiCplusplus,
   SiGit,
-  SiGithub,
   SiGooglecloud,
   SiJupyter,
-  SiLeetcode,
 } from 'react-icons/si'
 import { FaJava, FaAws, FaLinkedin, FaQuoteLeft } from 'react-icons/fa6'
 import {
@@ -111,7 +109,6 @@ const SKILL_ICONS: Record<string, { icon: React.ReactElement; color: string }> =
   'AWS': { icon: <FaAws />, color: '#FF9900' },
   'Google Cloud': { icon: <SiGooglecloud />, color: '#4285F4' },
   'Git': { icon: <SiGit />, color: '#F05032' },
-  'GitHub': { icon: <SiGithub />, color: 'var(--text)' },
   'Jupyter Notebook': { icon: <SiJupyter />, color: '#F37626' },
 }
 
@@ -133,7 +130,6 @@ const marqueeSkillsRow2 = [
   'AWS',
   'Google Cloud',
   'Git',
-  'GitHub',
   'Jupyter Notebook',
 ]
 
@@ -169,7 +165,7 @@ const skillGroups = [
   {
     icon: <FiTool size={18} />,
     title: 'Developer Tools & Environments',
-    pills: ['Git', 'GitHub', 'Jupyter Notebook'],
+    pills: ['Git', 'Jupyter Notebook'],
     span: true,
     accent: 'coral',
   },
@@ -255,7 +251,7 @@ const experiences = [
     period: '2025 — Present', badge: 'Club', active: true,
     role: 'Web Developer', org: 'Binary Brains Club, Dr. D. Y. Patil Institute of Technology',
     desc: 'Developing responsive web applications and collaborating on full-stack projects using HTML, CSS, JavaScript, Node.js, and Git. Working in an Agile team environment, contributing to feature development, debugging, API integration, and code reviews.',
-    stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git', 'GitHub'],
+    stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git'],
   },
   {
     period: '2025 — Present', badge: 'Open Source', active: true,
@@ -384,8 +380,8 @@ export function Projects() {
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <SiGithub size={16} />
-                  GitHub
+                  <FiCode size={16} />
+                  Code
                 </a>
               </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
@@ -442,8 +438,8 @@ export function Projects() {
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <SiGithub size={16} />
-                  GitHub
+                  <FiCode size={16} />
+                  Code
                 </a>
               </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
@@ -492,8 +488,8 @@ export function Projects() {
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <SiGithub size={16} />
-                  GitHub
+                  <FiCode size={16} />
+                  Code
                 </a>
               </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
@@ -554,8 +550,8 @@ export function Projects() {
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <SiGithub size={16} />
-                  GitHub
+                  <FiCode size={16} />
+                  Code
                 </a>
               </MagneticButton>
               <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
@@ -612,9 +608,7 @@ export function Philosophy() {
 /* ── CONTACT / FOOTER ── */
 export function Contact() {
   const socials = [
-    { href: 'https://github.com/RajBhokare', label: 'GitHub', icon: <SiGithub size={18} /> },
     { href: 'https://linkedin.com/in/rajbhokare1', label: 'LinkedIn', icon: <FaLinkedin size={18} /> },
-    { href: 'https://leetcode.com/u/RajBhokare/', label: 'LeetCode', icon: <SiLeetcode size={18} /> },
   ]
 
   return (
