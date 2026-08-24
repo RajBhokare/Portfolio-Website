@@ -1,20 +1,76 @@
 /* ── ABOUT ── */
-.about-layout { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: start; }
+.about-layout { display: grid; grid-template-columns: 1fr 360px; gap: 3.5rem; align-items: start; }
 .about-lead { font-family: var(--display); font-size: 1.15rem; color: var(--text); margin-bottom: 1.2rem; line-height: 1.6; font-weight: 600; }
-.about-text p:not(.about-lead) { margin-bottom: 1.1rem; font-size: .98rem; line-height: 1.75; }
-.about-cards { display: flex; flex-direction: column; gap: .75rem; }
-.info-card {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1rem 1.2rem; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: var(--r-sm);
-  transition: all var(--t); position: relative; overflow: hidden;
+.about-text p:not(.about-lead) { margin-bottom: 1.1rem; font-size: .98rem; line-height: 1.75; color: var(--text-2); }
+
+.about-focus-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.6rem 1.5rem;
   box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
 }
-.info-card:hover { border-color: var(--border-h); background: var(--bg-card-h); transform: translateY(-1px); }
-.info-card-highlight { border-color: rgba(16, 185, 129, 0.25); background: var(--green-dim); }
-.info-card-icon { width: 32px; text-align: center; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.info-card-label { font-family: var(--mono); font-size: .65rem; color: var(--text-3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
-.info-card-value { font-size: .88rem; color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.about-focus-title {
+  font-family: var(--display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--border);
+}
+.about-focus-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+.about-focus-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+}
+.focus-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cyan-dim);
+  border: 1px solid var(--border-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.focus-name {
+  display: block;
+  font-family: var(--display);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.focus-sub {
+  font-size: .8rem;
+  color: var(--text-3);
+  line-height: 1.45;
+  margin: 0;
+}
+.about-status-banner {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .75rem 1rem;
+  background: var(--green-dim);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--r-sm);
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--green);
+}
 .status-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 6px var(--green); flex-shrink: 0; }
 
 /* ── SKILLS ── */

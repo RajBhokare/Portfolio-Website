@@ -44,47 +44,49 @@ import './Sections.css'
 
 /* ── ABOUT ── */
 export function About() {
+  const coreStrengths = [
+    { name: 'Frontend Development', desc: 'Building responsive, accessible interfaces with React & CSS.' },
+    { name: 'Full-Stack Development', desc: 'Connecting dynamic frontend apps with server-side logic.' },
+    { name: 'REST API Development', desc: 'Creating structured, reliable API endpoints with Express & Node.' },
+    { name: 'Responsive UI', desc: 'Ensuring seamless experiences across mobile, tablet, and desktop.' },
+    { name: 'Database Integration', desc: 'Managing application data with MongoDB and relational databases.' },
+  ]
+
   return (
     <section className="section" id="about">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">Background & Focus</span>
+          <span className="section-eyebrow">Developer Introduction</span>
           <h2 className="section-title">About Me</h2>
         </div>
         <div className="about-layout">
           <div className="about-text reveal">
             <p className="about-lead">
-              I am a <mark>Full-Stack Developer & Software Engineer</mark> dedicated to building responsive web applications, scalable backend APIs, and real-time hardware telemetry systems.
+              Hi, I’m <strong>Raj Bhokare</strong> — a dedicated <strong>MERN Stack Developer</strong> focused on building clean, practical, and responsive web applications.
             </p>
             <p>
-              Currently in my third year of Information Technology engineering at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>, I combine core computer science fundamentals (Data Structures & Algorithms, Object-Oriented Design) with hands-on full-stack development in React, Node.js, and MySQL.
+              My primary core stack includes <strong>React, JavaScript, Node.js, Express, and MongoDB</strong>. I enjoy crafting software that solves real-world problems through clean code structure, intuitive interfaces, and reliable API architecture.
             </p>
             <p>
-              Beyond traditional web stack development, I am actively expanding my knowledge in cloud architecture (AWS & Google Cloud Platform), AI API integration (speech-to-text, LLM summaries), and IoT telemetry.
+              I am passionate about real-world software engineering and continuous technical learning. Currently, I am actively seeking <strong>internship and junior developer opportunities</strong> where I can contribute to engineering teams and build high-quality web applications.
             </p>
           </div>
-          <div className="about-cards reveal">
-            {[
-              { icon: <FiBookOpen size={18} color="var(--cyan)" />, label: 'Education',  value: 'B.Tech IT (3rd Year)' },
-              { icon: <FiMapPin size={18} color="var(--violet)" />, label: 'Location',   value: 'Pune, India' },
-              { icon: <FiCloud size={18} color="var(--gold)" />, label: 'Core Specialization', value: 'Full-Stack & Cloud Computing' },
-            ].map(c => (
-              <div className="info-card" key={c.label}>
-                <div className="info-card-icon">{c.icon}</div>
-                <div>
-                  <div className="info-card-label">{c.label}</div>
-                  <div className="info-card-value">{c.value}</div>
-                </div>
-              </div>
-            ))}
-            <div className="info-card info-card-highlight">
-              <div className="info-card-icon"><FiZap size={18} color="var(--green)" /></div>
-              <div>
-                <div className="info-card-label">Status</div>
-                <div className="info-card-value">
-                  <span className="status-dot" />Available for Engineering Opportunities
-                </div>
-              </div>
+          <div className="about-focus-card reveal">
+            <h3 className="about-focus-title">Core Strengths & Focus</h3>
+            <ul className="about-focus-list">
+              {coreStrengths.map((item) => (
+                <li key={item.name}>
+                  <span className="focus-check"><FiCheck size={14} color="var(--cyan)" /></span>
+                  <div>
+                    <strong className="focus-name">{item.name}</strong>
+                    <p className="focus-sub">{item.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="about-status-banner">
+              <span className="status-dot" />
+              <span>Seeking Internship & Junior Developer Opportunities</span>
             </div>
           </div>
         </div>
