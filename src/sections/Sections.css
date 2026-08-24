@@ -134,6 +134,92 @@
 .exp-stack { display: flex; flex-wrap: wrap; gap: .4rem; }
 .exp-stack span { font-family: var(--mono); font-size: .7rem; padding: .2rem .6rem; border-radius: 4px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-3); font-weight: 500; }
 
+/* ── EDUCATION ── */
+#education { background: transparent; position: relative; }
+.education-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.6rem 2rem;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: all var(--t);
+}
+.education-card:hover {
+  border-color: var(--border-h);
+  background: var(--bg-card-h);
+}
+.edu-main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.edu-year {
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--cyan);
+  font-weight: 600;
+  margin-bottom: .3rem;
+  display: block;
+}
+.edu-degree {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .25rem;
+  letter-spacing: -.01em;
+}
+.edu-institution {
+  font-size: .9rem;
+  color: var(--text-2);
+  margin: 0;
+}
+.edu-badge {
+  font-family: var(--mono);
+  font-size: .7rem;
+  padding: .2rem .65rem;
+  border-radius: 4px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid var(--border);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.edu-coursework {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.edu-coursework-title {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .6rem;
+  display: block;
+}
+.edu-coursework-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+.edu-coursework-tags span {
+  font-family: var(--mono);
+  font-size: .72rem;
+  padding: .25rem .65rem;
+  border-radius: 4px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  font-weight: 500;
+}
+
 /* ── PROJECTS / CASE STUDIES ── */
 #projects { background: transparent; position: relative; }
 .project-showcase {

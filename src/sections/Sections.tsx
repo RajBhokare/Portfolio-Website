@@ -273,6 +273,42 @@ export function Experience() {
   )
 }
 
+/* ── EDUCATION ── */
+export function Education() {
+  return (
+    <section className="section" id="education">
+      <div className="container">
+        <div className="section-header reveal">
+          <span className="section-eyebrow">Academic Background</span>
+          <h2 className="section-title">Education</h2>
+        </div>
+
+        <div className="education-card reveal">
+          <div className="edu-main-info">
+            <div>
+              <span className="edu-year">2022 — 2026 (Expected)</span>
+              <h3 className="edu-degree">Bachelor of Technology (B.Tech) in Information Technology</h3>
+              <p className="edu-institution">Dr. D. Y. Patil Institute of Technology · Pune, India</p>
+            </div>
+            <span className="edu-badge">3rd Year Student</span>
+          </div>
+
+          <div className="edu-coursework">
+            <span className="edu-coursework-title">Relevant Technical Coursework:</span>
+            <div className="edu-coursework-tags">
+              <span>Data Structures & Algorithms</span>
+              <span>Object-Oriented Programming (OOP)</span>
+              <span>Database Management Systems (DBMS)</span>
+              <span>Web Development</span>
+              <span>Software Engineering</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ── FEATURED PROJECTS ── */
 export function Projects() {
   return (
