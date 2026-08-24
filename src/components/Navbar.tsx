@@ -1,18 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiSun, FiMoon, FiSend, FiMenu, FiX, FiCode } from 'react-icons/fi';
+import { FiSun, FiMoon, FiMenu, FiX, FiCode, FiDownload } from 'react-icons/fi';
+import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { MagneticButton } from './MagneticButton/MagneticButton';
 
-const links = [
-  { href: '#about',      label: 'About',      num: '01' },
-  { href: '#skills',     label: 'Skills',     num: '02' },
-  { href: '#experience', label: 'Experience', num: '03' },
-  { href: '#projects',   label: 'Projects',   num: '04' },
-  { href: '#philosophy', label: 'Approach',   num: '05' },
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+const navLinks: NavItem[] = [
+  { href: '#hero',       label: 'Home' },
+  { href: '#about',      label: 'About' },
+  { href: '#skills',     label: 'Skills' },
+  { href: '#projects',   label: 'Projects' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#about',      label: 'Education' },
+  { href: '#contact',    label: 'Contact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive]     = useState('');
+  const [active, setActive]     = useState('hero');
   const [open, setOpen]         = useState(false);
   const [theme, setTheme]       = useState('dark');
   const navRef = useRef<HTMLElement>(null);
@@ -32,31 +40,50 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 20);
       const sections = document.querySelectorAll('section[id], footer[id]');
-      const offset   = (navRef.current?.offsetHeight ?? 68) + 80;
-      let current    = '';
+      const offset   = (navRef.current?.offsetHeight ?? 64) + 60;
+      let current    = 'hero';
       sections.forEach((s) => {
-        if (window.scrollY >= (s as HTMLElement).offsetTop - offset) current = s.id;
+        if (window.scrollY >= (s as HTMLElement).offsetTop - offset) {
+          current = s.id;
+        }
       });
       setActive(current);
     };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close mobile drawer on escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open]);
+
   const go = (href: string) => {
     setOpen(false);
+    if (href === '#hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const el = document.querySelector(href);
     if (!el) return;
-    const off = (navRef.current?.offsetHeight ?? 68) + 20;
+    const off = (navRef.current?.offsetHeight ?? 64) + 12;
     window.scrollTo({ top: (el as HTMLElement).offsetTop - off, behavior: 'smooth' });
   };
 
   return (
     <nav
       ref={navRef}
+      aria-label="Main Navigation"
       style={{
         position: 'fixed',
         inset: '0 0 auto',
@@ -69,7 +96,7 @@ export default function Navbar() {
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
         borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-        transition: 'background .3s ease, border-color .3s ease, backdrop-filter .3s ease',
+        transition: 'background .25s ease, border-color .25s ease, backdrop-filter .25s ease',
       }}
     >
       <div
@@ -78,27 +105,30 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 68,
+          height: 64,
           maxWidth: 1180,
           margin: '0 auto',
+          padding: '0 1.5rem',
         }}
       >
+        {/* Brand Logo */}
         <a
           href="#hero"
           onClick={(e) => {
             e.preventDefault();
             go('#hero');
           }}
+          aria-label="Raj Bhokare Developer Portfolio Home"
           style={{
             fontFamily: 'var(--display)',
-            fontSize: '1.05rem',
+            fontSize: '1rem',
             fontWeight: 800,
             color: 'var(--text)',
             letterSpacing: '-.02em',
             display: 'flex',
             alignItems: 'center',
-            gap: '.4rem',
-            cursor: 'pointer',
+            gap: '.45rem',
+            textDecoration: 'none',
           }}
         >
           <span style={{
@@ -117,7 +147,7 @@ export default function Navbar() {
           <span>Raj Bhokare</span>
           <span style={{
             fontFamily: 'var(--mono)',
-            fontSize: '.65rem',
+            fontSize: '.62rem',
             color: 'var(--cyan)',
             background: 'var(--cyan-dim)',
             padding: '2px 6px',
@@ -126,21 +156,24 @@ export default function Navbar() {
           }}>dev</span>
         </a>
 
+        {/* Center Desktop Links */}
         <ul
-          className="dnav"
+          className="desktop-nav"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '.3rem',
+            gap: '.25rem',
             margin: 0,
             padding: 0,
             listStyle: 'none',
           }}
         >
-          {links.map((l) => {
-            const isActive = active === l.href.replace('#', '');
+          {navLinks.map((l) => {
+            const sectionId = l.href.replace('#', '');
+            const isActive = active === sectionId;
+
             return (
-              <li key={l.href}>
+              <li key={l.label}>
                 <MagneticButton>
                   <a
                     href={l.href}
@@ -148,18 +181,19 @@ export default function Navbar() {
                       e.preventDefault();
                       go(l.href);
                     }}
+                    aria-current={isActive ? 'page' : undefined}
                     style={{
                       fontFamily: 'var(--display)',
                       fontSize: '.82rem',
                       fontWeight: 600,
-                      padding: '.45rem .85rem',
+                      padding: '.4rem .75rem',
                       borderRadius: 'var(--r-sm)',
                       color: isActive ? 'var(--cyan)' : 'var(--text-2)',
                       background: isActive ? 'var(--cyan-dim)' : 'transparent',
                       border: isActive ? '1px solid var(--border-h)' : '1px solid transparent',
-                      transition: 'all .2s',
+                      transition: 'all .2s ease',
                       display: 'block',
-                      cursor: 'pointer',
+                      textDecoration: 'none',
                     }}
                   >
                     {l.label}
@@ -168,143 +202,276 @@ export default function Navbar() {
               </li>
             );
           })}
-
-          <li style={{ marginLeft: '.4rem' }}>
-            <MagneticButton>
-              <button
-                onClick={toggleTheme}
-                style={{
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)',
-                  padding: '.45rem .65rem',
-                  cursor: 'pointer',
-                  color: 'var(--text)',
-                  fontSize: '.85rem',
-                  transition: 'all .2s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: 'var(--card-shadow)',
-                }}
-                aria-label="Toggle theme"
-                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              >
-                {theme === 'dark' ? <FiSun size={15} color="var(--gold)" /> : <FiMoon size={15} color="var(--cyan)" />}
-              </button>
-            </MagneticButton>
-          </li>
-
-          <li style={{ marginLeft: '.25rem' }}>
-            <MagneticButton>
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  go('#contact');
-                }}
-                style={{
-                  fontFamily: 'var(--display)',
-                  fontSize: '.82rem',
-                  cursor: 'pointer',
-                  color: 'var(--cyan)',
-                  border: '1px solid var(--border-h)',
-                  padding: '.45rem 1.1rem',
-                  borderRadius: 'var(--r-sm)',
-                  background: 'var(--cyan-dim)',
-                  fontWeight: 700,
-                  transition: 'all .2s',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '.35rem',
-                }}
-              >
-                <FiSend size={13} />
-                Get in Touch
-              </a>
-            </MagneticButton>
-          </li>
         </ul>
 
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="ham"
-          aria-label="menu"
-          style={{
-            display: 'none',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 6,
-            color: 'var(--text)',
-          }}
-        >
-          {open ? <FiX size={22} /> : <FiMenu size={22} />}
-        </button>
-      </div>
-
-      {open && (
+        {/* Right Side Social & CTAs */}
         <div
+          className="right-nav"
           style={{
-            position: 'fixed',
-            inset: '68px 0 0',
-            background: theme === 'dark' ? 'rgba(9, 13, 22, 0.98)' : 'rgba(248, 250, 252, 0.98)',
-            backdropFilter: 'blur(20px)',
             display: 'flex',
-            flexDirection: 'column',
-            padding: '1.5rem 2rem',
+            alignItems: 'center',
             gap: '.5rem',
-            zIndex: 99,
-            overflowY: 'auto',
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem' }}>
+          {/* GitHub Icon Link */}
+          <MagneticButton>
+            <a
+              href="https://github.com/RajBhokare"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+              title="GitHub Profile"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 34,
+                height: 34,
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-2)',
+                transition: 'all .2s ease',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border-h)';
+                e.currentTarget.style.color = 'var(--cyan)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.color = 'var(--text-2)';
+              }}
+            >
+              <FaGithub size={15} />
+            </a>
+          </MagneticButton>
+
+          {/* LinkedIn Icon Link */}
+          <MagneticButton>
+            <a
+              href="https://linkedin.com/in/rajbhokare1"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              title="LinkedIn Profile"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 34,
+                height: 34,
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-2)',
+                transition: 'all .2s ease',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border-h)';
+                e.currentTarget.style.color = 'var(--cyan)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.color = 'var(--text-2)';
+              }}
+            >
+              <FaLinkedin size={15} />
+            </a>
+          </MagneticButton>
+
+          {/* Download Resume Button */}
+          <MagneticButton>
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                go('#contact');
+              }}
+              className="btn-resume"
+              style={{
+                fontFamily: 'var(--display)',
+                fontSize: '.78rem',
+                fontWeight: 700,
+                color: 'var(--cyan)',
+                border: '1px solid var(--border-h)',
+                padding: '.4rem .85rem',
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--cyan-dim)',
+                transition: 'all .2s ease',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '.35rem',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <FiDownload size={13} />
+              <span>Resume</span>
+            </a>
+          </MagneticButton>
+
+          {/* Theme Toggle */}
+          <MagneticButton>
             <button
               onClick={toggleTheme}
               style={{
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 borderRadius: 'var(--r-sm)',
-                padding: '.6rem 1.2rem',
+                width: 34,
+                height: 34,
                 cursor: 'pointer',
                 color: 'var(--text)',
-                fontSize: '.9rem',
-                fontWeight: 600,
-                transition: 'all .25s',
+                transition: 'all .2s ease',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {theme === 'dark' ? <FiSun size={15} color="var(--gold)" /> : <FiMoon size={15} color="var(--cyan)" />}
+            </button>
+          </MagneticButton>
+
+          {/* Hamburger Menu Toggle (Mobile) */}
+          <button
+            onClick={() => setOpen((o) => !o)}
+            className="mobile-toggle"
+            aria-label={open ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--r-sm)',
+              width: 34,
+              height: 34,
+              cursor: 'pointer',
+              color: 'var(--text)',
+            }}
+          >
+            {open ? <FiX size={18} /> : <FiMenu size={18} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Navigation */}
+      {open && (
+        <div
+          id="mobile-navigation"
+          style={{
+            position: 'fixed',
+            inset: '64px 0 0',
+            background: theme === 'dark' ? 'rgba(9, 13, 22, 0.98)' : 'rgba(248, 250, 252, 0.98)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '1.5rem',
+            gap: '.5rem',
+            zIndex: 99,
+            overflowY: 'auto',
+            borderTop: '1px solid var(--border)',
+          }}
+        >
+          {navLinks.map((l) => {
+            const sectionId = l.href.replace('#', '');
+            const isActive = active === sectionId;
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  go(l.href);
+                }}
+                aria-current={isActive ? 'page' : undefined}
+                style={{
+                  fontFamily: 'var(--display)',
+                  fontSize: '1.05rem',
+                  fontWeight: 600,
+                  color: isActive ? 'var(--cyan)' : 'var(--text)',
+                  padding: '.75rem 0',
+                  borderBottom: '1px solid var(--border)',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <span>{l.label}</span>
+                {isActive && (
+                  <span style={{ fontSize: '.7rem', fontFamily: 'var(--mono)', color: 'var(--cyan)' }}>● Active</span>
+                )}
+              </a>
+            );
+          })}
+
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+            <a
+              href="https://github.com/RajBhokare"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                flex: 1,
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '.5rem',
-              }}
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? '☀️ Switch to Light Mode' : '🌙 Switch to Dark Mode'}
-            </button>
-          </div>
-          {[...links, { href: '#contact', label: 'Contact', num: '' }].map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={(e) => {
-                e.preventDefault();
-                go(l.href);
-              }}
-              style={{
-                fontFamily: 'var(--display)',
-                fontSize: '1.1rem',
-                fontWeight: 600,
+                padding: '.75rem',
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
                 color: 'var(--text)',
-                padding: '.8rem 0',
-                borderBottom: '1px solid var(--border)',
+                fontFamily: 'var(--display)',
+                fontSize: '.9rem',
+                fontWeight: 600,
+                textDecoration: 'none',
               }}
             >
-              {l.label}
+              <FaGithub size={16} />
+              <span>GitHub</span>
             </a>
-          ))}
+            <a
+              href="https://linkedin.com/in/rajbhokare1"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '.5rem',
+                padding: '.75rem',
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                color: 'var(--text)',
+                fontFamily: 'var(--display)',
+                fontSize: '.9rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              <FaLinkedin size={16} />
+              <span>LinkedIn</span>
+            </a>
+          </div>
         </div>
       )}
-      <style>{`@media(max-width:768px){.dnav{display:none!important}.ham{display:flex!important}}`}</style>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .desktop-nav { display: none !important; }
+          .mobile-toggle { display: flex !important; }
+        }
+      `}</style>
     </nav>
   );
 }
