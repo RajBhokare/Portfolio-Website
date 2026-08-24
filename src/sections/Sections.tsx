@@ -35,6 +35,9 @@ import {
   FiZap,
   FiMail,
   FiCopy,
+  FiGlobe,
+  FiLock,
+  FiGrid,
 } from 'react-icons/fi'
 import { MagneticButton } from '../components/MagneticButton/MagneticButton'
 import './Sections.css'
@@ -487,39 +490,60 @@ export function Projects() {
   )
 }
 
-/* ── PHILOSOPHY / ENGINEERING APPROACH ── */
-const principles = [
-  { num: '01', title: 'Pragmatic Architecture', body: 'Build clean, reliable solutions first. Understand constraints before introducing complexity, and refine iteratively based on measurements.' },
-  { num: '02', title: 'Code Readability & Standards', body: 'Write clean, self-documenting code with clear variable naming and structured modularity so teammates can seamlessly collaborate.' },
-  { num: '03', title: 'Systematic Learning', body: 'Compound technical growth through daily deliberate practice — exploring algorithm efficiency, cloud services, and system design.' },
-  { num: '04', title: 'Root-Cause Debugging', body: 'Investigate error logs and tracebacks deeply to resolve core systemic issues rather than masking symptoms.' },
+/* ── WHAT I BUILD ── */
+const buildCapabilities = [
+  {
+    icon: <FiGlobe size={20} color="var(--cyan)" />,
+    title: 'Responsive Web Applications',
+    desc: 'Developing mobile-friendly, accessible, and performant web interfaces using React, HTML5, and modern CSS.',
+  },
+  {
+    icon: <FiServer size={20} color="var(--violet)" />,
+    title: 'REST APIs',
+    desc: 'Designing and building structured, scalable backend RESTful API endpoints using Node.js and Express.js.',
+  },
+  {
+    icon: <FiLock size={20} color="var(--green)" />,
+    title: 'Authentication & Authorization',
+    desc: 'Implementing secure user login flows, JWT token management, password hashing, and role-based access controls.',
+  },
+  {
+    icon: <FiDatabase size={20} color="var(--gold)" />,
+    title: 'Database-Driven Applications',
+    desc: 'Architecting relational MySQL schemas and MongoDB document models for reliable storage and efficient queries.',
+  },
+  {
+    icon: <FiGrid size={20} color="var(--coral)" />,
+    title: 'Admin Dashboards',
+    desc: 'Building operational dashboards with metrics tracking, status indicators, and clean administrative user interfaces.',
+  },
+  {
+    icon: <FiZap size={20} color="var(--cyan)" />,
+    title: 'API Integrations',
+    desc: 'Connecting third-party REST services, AI speech APIs, webhooks, and cloud endpoints into existing web stacks.',
+  },
 ]
 
-export function Philosophy() {
+export function WhatIBuild() {
   return (
-    <section className="section section-dark" id="philosophy">
+    <section className="section section-dark" id="capabilities">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">Engineering Mindset</span>
-          <h2 className="section-title">Engineering Approach</h2>
+          <span className="section-eyebrow">Practical Capabilities</span>
+          <h2 className="section-title">What I Build</h2>
         </div>
-        <div className="philosophy-layout">
-          <div className="principles reveal">
-            {principles.map(p => (
-              <div className="principle" key={p.num}>
-                <span className="principle-num">{p.num}</span>
-                <div>
-                  <h4>{p.title}</h4>
-                  <p>{p.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="quote-block reveal">
-            <FaQuoteLeft className="quote-svg" size={32} color="var(--cyan)" style={{ opacity: 0.25 }} />
-            <blockquote>Prioritize clean architecture, reliability, and continuous iteration.</blockquote>
-            <cite>— Raj Bhokare</cite>
-          </div>
+        <div className="build-grid">
+          {buildCapabilities.map((item, i) => (
+            <div
+              className="build-card reveal"
+              key={item.title}
+              style={{ '--d': `${i * 60}ms` } as React.CSSProperties}
+            >
+              <div className="build-card-icon">{item.icon}</div>
+              <h3 className="build-card-title">{item.title}</h3>
+              <p className="build-card-desc">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -193,19 +193,54 @@
 .edu-stat-n { display: block; font-family: var(--display); font-size: .82rem; font-weight: 800; color: var(--coral); }
 .edu-stat-l { font-size: .52rem; color: var(--text-3); letter-spacing: .04em; text-transform: uppercase; }
 
-/* ── PHILOSOPHY ── */
-#philosophy { background: var(--bg-2); position: relative; }
-.philosophy-layout { display: grid; grid-template-columns: 1fr 300px; gap: 3.5rem; align-items: start; }
-.principles { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; background: var(--border); }
-.principle { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.4rem 1.6rem; background: var(--bg-card); transition: all var(--t); }
-.principle:hover { background: var(--bg-card-h); }
-.principle-num { font-family: var(--mono); font-size: .75rem; color: var(--cyan); font-weight: 700; flex-shrink: 0; padding-top: 2px; }
-.principle h4 { font-family: var(--display); font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
-.principle p { font-size: .88rem; color: var(--text-2); line-height: 1.6; }
-.quote-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; box-shadow: var(--card-shadow); }
-.quote-svg { color: var(--cyan); margin-bottom: 1rem; }
-.quote-block blockquote { font-family: var(--display); font-size: 1.2rem; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 1rem; }
-.quote-block cite { font-family: var(--mono); font-size: .75rem; color: var(--text-3); }
+/* ── WHAT I BUILD ── */
+#capabilities { background: var(--bg-2); position: relative; }
+.build-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.build-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.6rem 1.5rem;
+  transition: all var(--t);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+}
+.build-card:hover {
+  border-color: var(--border-h);
+  background: var(--bg-card-h);
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-h);
+}
+.build-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+.build-card-title {
+  font-family: var(--display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .4rem;
+  letter-spacing: -.01em;
+}
+.build-card-desc {
+  font-size: .88rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
 
 /* ── FOOTER / CONTACT ── */
 .footer { background: transparent; padding: 5.5rem 0 2.5rem; position: relative; }
@@ -226,7 +261,7 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .about-layout { grid-template-columns: 1fr 300px; gap: 2.5rem; }
-  .philosophy-layout { grid-template-columns: 1fr 260px; gap: 2rem; }
+  .build-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px) {
   .skills-layout { grid-template-columns: 1fr; }
@@ -234,9 +269,11 @@
   .project-showcase-flip .ps-visual { order: 0; }
   .project-showcase-flip .ps-content { order: 0; }
   .ps-visual { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--border); min-height: 260px; }
-  .philosophy-layout { grid-template-columns: 1fr; }
   .footer-main { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer-links { flex-direction: row; flex-wrap: wrap; }
+}
+@media (max-width: 640px) {
+  .build-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   .about-layout { grid-template-columns: 1fr; gap: 2rem; }

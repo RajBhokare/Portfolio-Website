@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
-import { About, Skills, Experience, Projects, Philosophy, Contact } from './sections/Sections';
+import { About, Skills, Experience, Projects, WhatIBuild, Contact } from './sections/Sections';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
 
 function Cursor() {
@@ -37,7 +37,7 @@ function Cursor() {
     const onOver = (e: MouseEvent) => {
       const t = e.target as Element;
       const interactive = t.closest(
-        'a, button, [role="button"], .pill, .info-card, .project-showcase, .skill-group, .exp-item, .footer-social-link'
+        'a, button, [role="button"], .pill, .info-card, .project-showcase, .skill-group, .exp-item, .footer-social-link, .build-card'
       );
       cursorRef.current?.classList.toggle('hovered', !!interactive);
       followerRef.current?.classList.toggle('hovered', !!interactive);
@@ -97,7 +97,6 @@ function useScrollReveal() {
 
     observe();
 
-    // Immediate check for visible items on screen
     const revealVisible = () => {
       document.querySelectorAll('.reveal').forEach((el) => {
         const rect = el.getBoundingClientRect();
@@ -109,7 +108,6 @@ function useScrollReveal() {
     revealVisible();
     setTimeout(revealVisible, 300);
 
-    // Ultimate fallback: ensure all elements become visible
     const timer = setTimeout(() => {
       document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
     }, 1000);
@@ -167,12 +165,11 @@ export default function App() {
         <div className="section-sep" aria-hidden="true" />
         <Skills />
         <div className="section-sep" aria-hidden="true" />
+        <WhatIBuild />
+        <div className="section-sep" aria-hidden="true" />
         <Experience />
         <div className="section-sep" aria-hidden="true" />
         <Projects />
-
-        <div className="section-sep" aria-hidden="true" />
-        <Philosophy />
       </main>
 
       <div className="section-sep" aria-hidden="true" />
