@@ -1,7 +1,7 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FaLinkedin, FaGithub } from 'react-icons/fa6';
-import { FiArrowRight, FiFileText } from 'react-icons/fi';
+import { FiArrowRight, FiDownload } from 'react-icons/fi';
 import AstronautScene from '../components/AstronautScene';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
@@ -29,89 +29,65 @@ class CanvasErrorBoundary extends React.Component<{ children: React.ReactNode },
   }
 }
 
-const roles = ['Full-Stack Developer', 'Software Engineer', 'React & Node.js Developer', 'IoT Systems Builder'];
-
-function useTyping(phrases: string[]) {
-  const [text, setText] = useState('');
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const phrase = phrases[phraseIdx];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (!deleting) {
-      if (text.length < phrase.length) {
-        timeout = setTimeout(() => setText(phrase.slice(0, text.length + 1)), 60);
-      } else {
-        timeout = setTimeout(() => setDeleting(true), 2200);
-      }
-    } else {
-      if (text.length > 0) {
-        timeout = setTimeout(() => setText(phrase.slice(0, text.length - 1)), 30);
-      } else {
-        setDeleting(false);
-        setPhraseIdx((i) => (i + 1) % phrases.length);
-      }
-    }
-    return () => clearTimeout(timeout);
-  }, [text, deleting, phraseIdx, phrases]);
-
-  return text;
-}
-
 export default function Hero() {
-  const typed = useTyping(roles);
+  const technologies = ['React', 'JavaScript', 'Node.js', 'Express', 'MongoDB'];
 
   return (
     <section className="hero" id="hero">
       <div className="hero-grid" />
-      <div className="hero-orb orb-1" />
-      <div className="hero-orb orb-2" />
 
       <div className="hero-inner">
         <div className="hero-left">
-          <div className="hero-badge fade-up" style={{ '--d': '0ms' } as React.CSSProperties}>
+          {/* 1. Eyebrow */}
+          <div className="hero-eyebrow-tag fade-up" style={{ '--d': '0ms' } as React.CSSProperties}>
             <span className="badge-dot" />
-            <span>Available for Full-Stack & Engineering Roles</span>
+            <span>MERN STACK DEVELOPER</span>
           </div>
 
-          <h1 className="hero-name fade-up" style={{ '--d': '100ms' } as React.CSSProperties}>
+          {/* 2. Main Heading */}
+          <h1 className="hero-name fade-up" style={{ '--d': '80ms' } as React.CSSProperties}>
             Raj Bhokare
           </h1>
 
-          <div className="hero-role-title fade-up" style={{ '--d': '200ms' } as React.CSSProperties}>
-            <span className="role-typed">{typed}</span>
-            <span className="role-cursor" aria-hidden="true" />
-          </div>
+          {/* 3. Value Proposition */}
+          <h2 className="hero-value-prop fade-up" style={{ '--d': '160ms' } as React.CSSProperties}>
+            Building modern, responsive web applications with React, Node.js, Express and MongoDB.
+          </h2>
 
-          <p className="hero-bio fade-up" style={{ '--d': '300ms' } as React.CSSProperties}>
-            IT Engineering student at Dr. D. Y. Patil Institute of Technology, Pune. Specializing in responsive React UIs, Node.js & Express REST APIs, cloud workflows (AWS / GCP), and real-time IoT hardware telemetry.
+          {/* 4. Supporting Paragraph */}
+          <p className="hero-bio fade-up" style={{ '--d': '240ms' } as React.CSSProperties}>
+            Passionate about developing practical, high-performance web solutions with intuitive user experiences, clean architecture, and reliable APIs.
           </p>
 
-          <div className="hero-actions fade-up" style={{ '--d': '400ms' } as React.CSSProperties}>
+          {/* 5 & 6. Primary and Secondary CTAs */}
+          <div className="hero-actions fade-up" style={{ '--d': '320ms' } as React.CSSProperties}>
             <MagneticButton>
               <a href="#projects" className="btn-primary">
-                View Featured Projects <FiArrowRight style={{ marginLeft: 4 }} />
+                View My Projects <FiArrowRight style={{ marginLeft: 6 }} />
               </a>
             </MagneticButton>
             <MagneticButton>
-              <a href="#contact" className="btn-secondary">
-                Get in Touch
+              <a
+                href="#contact"
+                className="btn-secondary"
+              >
+                <FiDownload style={{ marginRight: 6 }} /> Download Resume
               </a>
             </MagneticButton>
           </div>
 
-          <div className="hero-socials fade-up" style={{ '--d': '500ms' } as React.CSSProperties}>
+          {/* 7. Subtle GitHub and LinkedIn links/icons */}
+          <div className="hero-socials fade-up" style={{ '--d': '400ms' } as React.CSSProperties}>
             <MagneticButton>
               <a
                 href="https://github.com/RajBhokare"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="icon-link"
+                aria-label="GitHub Profile"
               >
-                <FaGithub size={15} />
-                GitHub
+                <FaGithub size={16} />
+                <span>GitHub</span>
               </a>
             </MagneticButton>
             <MagneticButton>
@@ -120,30 +96,28 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="icon-link"
+                aria-label="LinkedIn Profile"
               >
-                <FaLinkedin size={15} />
-                LinkedIn
+                <FaLinkedin size={16} />
+                <span>LinkedIn</span>
               </a>
             </MagneticButton>
           </div>
 
-          <div className="hero-stats fade-up" style={{ '--d': '600ms' } as React.CSSProperties}>
-            <div className="hero-stat">
-              <span className="stat-num">4</span>
-              <span className="stat-label">Production Projects</span>
-            </div>
-            <div className="hero-stat">
-              <span className="stat-num">2026</span>
-              <span className="stat-label">B.Tech Candidate</span>
-            </div>
-            <div className="hero-stat">
-              <span className="stat-num">React & Node</span>
-              <span className="stat-label">Core Stack</span>
+          {/* 8. Small technology row below the hero */}
+          <div className="hero-tech-row fade-up" style={{ '--d': '480ms' } as React.CSSProperties}>
+            <div className="tech-row-items">
+              {technologies.map((tech, i) => (
+                <React.Fragment key={tech}>
+                  <span className="tech-pill">{tech}</span>
+                  {i < technologies.length - 1 && <span className="tech-dot">•</span>}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="hero-right fade-up" style={{ '--d': '250ms' } as React.CSSProperties}>
+        <div className="hero-right fade-up" style={{ '--d': '200ms' } as React.CSSProperties}>
           <div className="canvas-card">
             <div className="canvas-card-header">
               <span className="canvas-dot green" />

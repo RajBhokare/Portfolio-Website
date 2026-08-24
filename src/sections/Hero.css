@@ -1,8 +1,8 @@
 .hero {
-  min-height: 90vh;
+  min-height: 88vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 6.5rem 2rem 4.5rem;
+  padding: 6rem 2rem 4rem;
   position: relative; overflow: hidden;
   background: transparent;
 }
@@ -15,102 +15,83 @@
   mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 10%, transparent 90%);
 }
 
-/* Ambient glow orbs */
-.hero-orb {
-  position: absolute; border-radius: 50%; filter: blur(90px);
-  pointer-events: none; opacity: 0.6;
-}
-.orb-1 { width: 450px; height: 450px; background: radial-gradient(circle, var(--cyan-dim), transparent 70%); top: -10%; left: -5%; }
-.orb-2 { width: 380px; height: 380px; background: radial-gradient(circle, var(--violet-dim), transparent 70%); bottom: 0%; right: -5%; }
-
 /* Hero inner layout */
 .hero-inner {
   max-width: 1180px; width: 100%;
-  display: grid; grid-template-columns: 1fr 460px;
+  display: grid; grid-template-columns: 1fr 440px;
   gap: 3.5rem; align-items: center; position: relative; z-index: 2;
 }
 
-/* Badge */
-.hero-badge {
+/* Eyebrow Tag */
+.hero-eyebrow-tag {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--green-dim); border: 1px solid rgba(16, 185, 129, 0.25);
+  background: var(--cyan-dim); border: 1px solid var(--border-h);
   border-radius: 100px; padding: 5px 14px 5px 10px;
-  font-family: var(--mono); font-size: .75rem; color: var(--green);
-  margin-bottom: 1.5rem; font-weight: 500; width: fit-content;
+  font-family: var(--mono); font-size: .75rem; color: var(--cyan);
+  margin-bottom: 1.25rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; width: fit-content;
 }
 .badge-dot {
-  width: 7px; height: 7px; background: var(--green);
+  width: 7px; height: 7px; background: var(--cyan);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--green);
 }
 
-/* Headline */
+/* Main Heading */
 .hero-name {
   font-family: var(--display);
   font-size: clamp(2.8rem, 5vw, 4.2rem);
   font-weight: 800; line-height: 1.05;
-  letter-spacing: -.03em; margin-bottom: 0.6rem; color: var(--text);
+  letter-spacing: -.03em; margin-bottom: 0.8rem; color: var(--text);
 }
 
-/* Role / typed */
-.hero-role-title {
-  display: flex; align-items: center; gap: .4rem;
-  margin-bottom: 1.4rem; font-family: var(--mono);
-  font-size: clamp(1rem, 2vw, 1.25rem); color: var(--cyan); min-height: 1.6em;
-  font-weight: 600;
+/* Value Proposition */
+.hero-value-prop {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  font-weight: 700; color: var(--text);
+  line-height: 1.35; margin-bottom: 1rem;
+  letter-spacing: -.01em; max-width: 620px;
 }
-.role-typed { color: var(--cyan); }
-.role-cursor {
-  width: 2px; height: 1.1em; background: var(--cyan);
-  animation: blink .9s step-end infinite; flex-shrink: 0;
-}
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
+/* Supporting Paragraph */
 .hero-bio {
-  font-size: 1.02rem; color: var(--text-2); max-width: 520px;
-  margin-bottom: 2rem; line-height: 1.7;
+  font-size: 1.02rem; color: var(--text-2); max-width: 540px;
+  margin-bottom: 1.8rem; line-height: 1.7;
 }
 
-.hero-actions { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+/* CTA Buttons */
+.hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
 
-/* Socials */
-.hero-socials { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+/* Social Links */
+.hero-socials { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .icon-link {
   display: inline-flex; align-items: center; gap: .45rem;
   padding: .45rem .95rem; border: 1px solid var(--border);
   border-radius: var(--r-sm); color: var(--text-2);
-  font-family: var(--display); font-size: .8rem; font-weight: 600;
+  font-family: var(--display); font-size: .82rem; font-weight: 600;
   background: var(--bg-card);
   box-shadow: var(--card-shadow);
-  transition: all var(--t); cursor: pointer;
+  transition: all var(--t); cursor: pointer; text-decoration: none;
 }
 .icon-link:hover {
   border-color: var(--border-h); color: var(--cyan);
   background: var(--bg-card-h); transform: translateY(-1px);
 }
 
-/* Stats */
-.hero-stats {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--r-sm); overflow: hidden;
-  box-shadow: var(--card-shadow);
+/* Small Technology Row Below Hero */
+.hero-tech-row {
+  display: flex; align-items: center; gap: .6rem;
+  padding-top: 1rem; border-top: 1px solid var(--border);
+  max-width: 540px;
 }
-.hero-stat {
-  display: flex; flex-direction: column; align-items: center;
-  padding: 1rem .8rem; gap: 2px; position: relative;
+.tech-row-items {
+  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
 }
-.hero-stat:not(:last-child)::after {
-  content: ''; position: absolute; right: 0; top: 20%; bottom: 20%;
-  width: 1px; background: var(--border);
+.tech-pill {
+  font-family: var(--mono); font-size: .8rem; font-weight: 600;
+  color: var(--text-2); letter-spacing: .02em;
 }
-.stat-num {
-  font-family: var(--display); font-size: 1.15rem; font-weight: 800;
-  color: var(--cyan);
-}
-.stat-label {
-  font-family: var(--mono); font-size: .65rem; color: var(--text-3);
-  letter-spacing: .05em; text-align: center; text-transform: uppercase;
+.tech-dot {
+  color: var(--cyan); font-size: .75rem; opacity: 0.7;
 }
 
 /* Three.js Canvas Container Card */
@@ -152,10 +133,10 @@
   width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
 }
 
-/* Fade-up animation */
+/* Subtle Fade-up animation */
 .fade-up {
-  opacity: 0; transform: translateY(20px);
-  animation: fu .7s var(--ease) forwards;
+  opacity: 0; transform: translateY(16px);
+  animation: fu .6s var(--ease) forwards;
   animation-delay: var(--d, 0ms);
 }
 @keyframes fu { to { opacity: 1; transform: translateY(0); } }
@@ -164,8 +145,11 @@
   .hero-inner { grid-template-columns: 1fr 380px; gap: 2.5rem; }
 }
 @media (max-width: 768px) {
+  .hero { padding: 5rem 1.25rem 3.5rem; min-height: auto; }
   .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: left; }
   .hero-right { max-width: 420px; margin: 0 auto; width: 100%; }
   .canvas-wrapper { aspect-ratio: 1 / 0.85; }
-  .hero-orb { display: none; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: .75rem; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+  .hero-tech-row { justify-content: flex-start; }
 }
