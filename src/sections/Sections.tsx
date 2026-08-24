@@ -722,6 +722,10 @@ export function ResumeCTA() {
 /* ── CONTACT / FOOTER ── */
 export function Contact() {
   const [copied, setCopied] = useState(false)
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
   const email = 'rajbhokare1@gmail.com'
 
   const copyEmail = () => {
@@ -730,49 +734,169 @@ export function Contact() {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    if (errorMessage) setErrorMessage('')
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setErrorMessage('Please fill out all fields before sending.')
+      return
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage('Please enter a valid email address.')
+      return
+    }
+
+    setStatus('submitting')
+    setTimeout(() => {
+      setStatus('success')
+      setFormData({ name: '', email: '', message: '' })
+    }, 600)
+  }
+
   return (
     <footer className="footer" id="contact">
       <div className="container">
-        <div className="footer-main reveal">
-          <div className="footer-cta">
-            <p className="footer-eyebrow">Direct Contact</p>
-            <h2 className="footer-heading">Let's Connect &<br/><em>Build Together.</em></h2>
-            <p className="footer-sub">Open to full-stack developer roles, software engineering internships, and technical collaborations.</p>
-          </div>
-          <div className="footer-links">
-            <MagneticButton>
-              <a href={`mailto:${email}`} className="footer-social-link primary-contact-btn">
-                <FiMail size={16} />
-                <span>{email}</span>
-                <span className="link-arrow"><FiArrowUpRight size={14} /></span>
+        <div className="section-header reveal">
+          <span className="section-eyebrow">Get In Touch</span>
+          <h2 className="section-title">Let's Connect</h2>
+        </div>
+
+        <div className="contact-grid reveal">
+          {/* Left Column: Direct Links */}
+          <div className="contact-info">
+            <p className="contact-lead">
+              If you're looking for a motivated developer for an internship or junior software development opportunity, I'd be happy to connect.
+            </p>
+
+            <div className="contact-direct-links">
+              <a href={`mailto:${email}`} className="contact-card primary-contact">
+                <div className="contact-card-icon"><FiMail size={18} color="var(--cyan)" /></div>
+                <div>
+                  <span className="contact-card-label">Email Address</span>
+                  <strong className="contact-card-val">{email}</strong>
+                </div>
+                <FiArrowUpRight className="contact-card-arrow" size={16} />
               </a>
-            </MagneticButton>
-            <MagneticButton>
-              <button onClick={copyEmail} className="footer-social-link copy-btn">
-                {copied ? <FiCheck size={16} color="var(--green)" /> : <FiCopy size={16} />}
-                <span>{copied ? 'Email Copied!' : 'Copy Email Address'}</span>
+
+              <button onClick={copyEmail} className="contact-card contact-card-button" type="button">
+                <div className="contact-card-icon">
+                  {copied ? <FiCheck size={18} color="var(--green)" /> : <FiCopy size={18} color="var(--cyan)" />}
+                </div>
+                <div>
+                  <span className="contact-card-label">Quick Copy</span>
+                  <strong className="contact-card-val">{copied ? 'Copied to Clipboard!' : 'Copy Email Address'}</strong>
+                </div>
               </button>
-            </MagneticButton>
-            <MagneticButton>
-              <a href="https://linkedin.com/in/rajbhokare1" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-                <FaLinkedin size={16} />
-                <span>LinkedIn Profile</span>
-                <span className="link-arrow"><FiArrowUpRight size={14} /></span>
+
+              <a href="https://linkedin.com/in/rajbhokare1" target="_blank" rel="noopener noreferrer" className="contact-card">
+                <div className="contact-card-icon"><FaLinkedin size={18} color="var(--cyan)" /></div>
+                <div>
+                  <span className="contact-card-label">LinkedIn</span>
+                  <strong className="contact-card-val">linkedin.com/in/rajbhokare1</strong>
+                </div>
+                <FiArrowUpRight className="contact-card-arrow" size={16} />
               </a>
-            </MagneticButton>
-            <MagneticButton>
-              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-                <FaGithub size={16} />
-                <span>GitHub Repositories</span>
-                <span className="link-arrow"><FiArrowUpRight size={14} /></span>
+
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="contact-card">
+                <div className="contact-card-icon"><FaGithub size={18} color="var(--cyan)" /></div>
+                <div>
+                  <span className="contact-card-label">GitHub</span>
+                  <strong className="contact-card-val">github.com/RajBhokare</strong>
+                </div>
+                <FiArrowUpRight className="contact-card-arrow" size={16} />
               </a>
-            </MagneticButton>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <div className="contact-form-wrap">
+            {status === 'success' ? (
+              <div className="contact-success-box">
+                <div className="success-icon"><FiCheckCircle size={32} color="var(--green)" /></div>
+                <h3>Message Sent!</h3>
+                <p>Thank you for reaching out. I’ll review your message and get back to you shortly.</p>
+                <button onClick={() => setStatus('idle')} className="ps-btn ps-btn-github" type="button">
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleSubmit} noValidate>
+                <h3 className="form-title">Send a Direct Message</h3>
+
+                {errorMessage && (
+                  <div className="form-error-banner" role="alert">
+                    {errorMessage}
+                  </div>
+                )}
+
+                <div className="form-group">
+                  <label htmlFor="contact-name">Name <span className="req">*</span></label>
+                  <input
+                    type="text"
+                    id="contact-name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Name or Organization"
+                    required
+                    aria-required="true"
+                    className="form-input"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="contact-email">Email <span className="req">*</span></label>
+                  <input
+                    type="email"
+                    id="contact-email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="recruiter@company.com"
+                    required
+                    aria-required="true"
+                    className="form-input"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="contact-message">Message <span className="req">*</span></label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Hello Raj, we are interested in discussing an opportunity..."
+                    required
+                    aria-required="true"
+                    className="form-input form-textarea"
+                  />
+                </div>
+
+                <MagneticButton>
+                  <button
+                    type="submit"
+                    className="ps-btn ps-btn-demo form-submit-btn"
+                    disabled={status === 'submitting'}
+                  >
+                    {status === 'submitting' ? 'Sending Message…' : 'Send Message'}
+                  </button>
+                </MagneticButton>
+              </form>
+            )}
           </div>
         </div>
+
         <div className="footer-bottom">
           <p className="footer-copy">© 2026 Raj Bhokare. All rights reserved.</p>
           <p className="footer-built">
-            Full-Stack Software Engineer · React, TypeScript, Three.js & Node.js
+            MERN Stack Developer · React, Node.js, Express & MongoDB
           </p>
         </div>
       </div>
