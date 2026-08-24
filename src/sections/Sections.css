@@ -165,8 +165,14 @@
 .ps-highlights li { display: flex; align-items: flex-start; gap: .6rem; font-size: .88rem; color: var(--text-2); line-height: 1.5; }
 .ps-hi-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; margin-top: .5em; }
 
-.ps-stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
-.ps-stack span { font-family: var(--mono); font-size: .7rem; padding: .2rem .55rem; border-radius: 4px; background: var(--bg-2); border: 1px solid var(--border); color: var(--text-3); font-weight: 500; }
+.ps-features-block { margin-bottom: 1.2rem; }
+.ps-features-label { font-family: var(--display); font-size: .8rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .4rem; display: block; }
+
+.ps-tech-row { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.ps-tech-label { font-family: var(--display); font-size: .8rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; }
+
+.ps-stack { display: flex; flex-wrap: wrap; gap: .4rem; }
+.ps-stack span { font-family: var(--mono); font-size: .72rem; padding: .2rem .55rem; border-radius: 4px; background: var(--bg-2); border: 1px solid var(--border); color: var(--text-2); font-weight: 500; }
 
 .ps-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
 .ps-btn {
@@ -177,9 +183,26 @@
   color: var(--text); transition: all var(--t);
   cursor: pointer; text-decoration: none;
 }
-.ps-btn:hover {
-  background: var(--bg-card-h); border-color: var(--border-h);
-  color: var(--cyan); transform: translateY(-1px);
+.ps-btn-demo {
+  background: var(--cyan-dim);
+  border-color: var(--border-h);
+  color: var(--cyan);
+}
+.ps-btn-demo:hover {
+  background: var(--cyan-dim);
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+.ps-btn-github {
+  background: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-2);
+}
+.ps-btn-github:hover {
+  background: var(--bg-card-h);
+  border-color: var(--border-h);
+  color: var(--text);
+  transform: translateY(-1px);
 }
 
 /* Briefly mockup */

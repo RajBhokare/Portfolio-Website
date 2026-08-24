@@ -273,28 +273,28 @@ export function Experience() {
   )
 }
 
-/* ── PROJECTS ── */
+/* ── FEATURED PROJECTS ── */
 export function Projects() {
   return (
     <section className="section" id="projects">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">Case Studies</span>
+          <span className="section-eyebrow">Practical Software Applications</span>
           <h2 className="section-title">Featured Projects</h2>
         </div>
 
         {/* Project 1: Briefly */}
-        <div className="project-showcase reveal" data-accent="violet">
+        <div className="project-showcase reveal" data-accent="cyan">
           <div className="ps-visual">
             <div className="ps-mockup ps-mockup-briefly">
               <div className="briefly-ui">
                 <div className="briefly-header">
                   <span className="briefly-logo">Briefly AI</span>
-                  <span className="briefly-status">● Live Engine</span>
+                  <span className="briefly-status">● Speech Pipeline Active</span>
                 </div>
                 <div className="briefly-audio">
                   <div className="briefly-title">
-                    <FiMic color="var(--violet)" /> Executive_Sync_2026.mp3
+                    <FiMic color="var(--cyan)" /> Meeting_Transcription_Sync.mp3
                   </div>
                   <div className="briefly-wave">
                     <div className="briefly-bar" style={{ height: '40%' }} />
@@ -307,9 +307,9 @@ export function Projects() {
                   </div>
                 </div>
                 <div className="briefly-summary">
-                  <div className="briefly-label">AI Extraction Summary</div>
-                  <div className="briefly-item"><span><FiCheck size={12} /></span> Whisper Speech-to-Text transcribed</div>
-                  <div className="briefly-item"><span><FiCheck size={12} /></span> Key decision points & action items ready</div>
+                  <div className="briefly-label">AI Extraction Result</div>
+                  <div className="briefly-item"><span><FiCheck size={12} /></span> Whisper API speech-to-text complete</div>
+                  <div className="briefly-item"><span><FiCheck size={12} /></span> Key decision points & action items extracted</div>
                 </div>
               </div>
             </div>
@@ -317,25 +317,40 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">01</span>
-              <span className="ps-badge ps-badge-ai">AI · Full-Stack</span>
+              <span className="ps-badge ps-badge-ai">Full-Stack · AI</span>
             </div>
             <h3 className="ps-title">Briefly</h3>
-            <p className="ps-tagline">AI Powered Meeting Assistant & Speech Transcriber</p>
-            <p className="ps-desc">An intelligent web application that processes audio recordings into structured executive summaries and action items. Automates transcription using OpenAI Whisper API to streamline team workflows.</p>
-            <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Audio payload upload and asynchronous processing pipeline</li>
-              <li><span className="ps-hi-dot"/>High-accuracy speech transcription via OpenAI Whisper API</li>
-              <li><span className="ps-hi-dot"/>Automated action item extraction & key takeaways generation</li>
-              <li><span className="ps-hi-dot"/>Fast, responsive user dashboard built with Node.js and Express</li>
-            </ul>
-            <div className="ps-stack">
-              <span>Node.js</span><span>Express.js</span><span>OpenAI Whisper API</span><span>JavaScript</span><span>EJS</span><span>CSS3</span>
+            <p className="ps-tagline">AI-powered meeting assistant that converts audio recordings into structured summaries and action items.</p>
+            <p className="ps-desc">Built an automated speech-to-text pipeline using Node.js, Express, and OpenAI Whisper API to extract key decision points and action items from team meeting recordings.</p>
+            
+            <div className="ps-features-block">
+              <span className="ps-features-label">Key Features:</span>
+              <ul className="ps-highlights">
+                <li><span className="ps-hi-dot">•</span> Asynchronous audio payload upload and processing pipeline</li>
+                <li><span className="ps-hi-dot">•</span> Automated speech transcription via OpenAI Whisper API</li>
+                <li><span className="ps-hi-dot">•</span> Extraction of key action items and executive summary points</li>
+                <li><span className="ps-hi-dot">•</span> Responsive user interface for playback and transcript review</li>
+              </ul>
             </div>
+
+            <div className="ps-tech-row">
+              <span className="ps-tech-label">Tech:</span>
+              <div className="ps-stack">
+                <span>React</span><span>Node.js</span><span>Express.js</span><span>OpenAI Whisper API</span><span>JavaScript</span>
+              </div>
+            </div>
+
             <div className="ps-actions">
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FaGithub size={15} />
-                  Source Code
+                <a href="#contact" className="ps-btn ps-btn-demo">
+                  <FiExternalLink size={14} />
+                  Live Demo
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                  <FaGithub size={14} />
+                  GitHub
                 </a>
               </MagneticButton>
             </div>
@@ -349,14 +364,14 @@ export function Projects() {
               <div className="app-chrome">
                 <div className="app-chrome-bar">
                   <div className="app-dots"><span/><span/><span/></div>
-                  <div className="app-url">quizzer.app/generate</div>
+                  <div className="app-url">quizzer.app/assessment</div>
                 </div>
                 <div className="app-body">
                   <div className="app-card">
                     <div className="app-card-icon"><FiVideo color="var(--cyan)" size={18} /></div>
-                    <div><div className="app-card-label">Media Ingested</div><div className="app-card-val">Lecture_03_ML.mp4</div></div>
+                    <div><div className="app-card-label">Media Processed</div><div className="app-card-val">Lecture_ML_Overview.mp4</div></div>
                   </div>
-                  <div className="app-progress-row"><span className="app-prog-label">Generating Assessment…</span><span className="app-prog-pct">100%</span></div>
+                  <div className="app-progress-row"><span className="app-prog-label">Generating Quiz…</span><span className="app-prog-pct">100%</span></div>
                   <div className="app-prog-bar"><div className="app-prog-fill" style={{width:'100%'}}/></div>
                   <div className="app-quiz-preview">
                     <div className="app-q">Q1. What is gradient descent?</div>
@@ -370,24 +385,42 @@ export function Projects() {
             </div>
           </div>
           <div className="ps-content">
-            <div className="ps-meta"><span className="ps-num">02</span><span className="ps-badge ps-badge-ai">AI · EdTech</span></div>
-            <h3 className="ps-title">Quizzer</h3>
-            <p className="ps-tagline">Video Summarizer & Interactive Assessment Generator</p>
-            <p className="ps-desc">An educational web platform that converts video content into readable transcript summaries and automated interactive quizzes using AI speech analysis.</p>
-            <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Seamless media upload and automated transcript extraction</li>
-              <li><span className="ps-hi-dot"/>Speech-to-text integration utilizing AssemblyAI REST API</li>
-              <li><span className="ps-hi-dot"/>AI-generated topic digests and multiple-choice self-assessments</li>
-              <li><span className="ps-hi-dot"/>Clean, accessible UI built for student and educator usability</li>
-            </ul>
-            <div className="ps-stack">
-              <span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span><span>JavaScript</span><span>Bootstrap</span><span>CSS3</span>
+            <div className="ps-meta">
+              <span className="ps-num">02</span>
+              <span className="ps-badge ps-badge-ai">EdTech · Full-Stack</span>
             </div>
+            <h3 className="ps-title">Quizzer</h3>
+            <p className="ps-tagline">Educational web platform that analyzes video transcripts to generate interactive self-assessments.</p>
+            <p className="ps-desc">Developed an EdTech web application using AssemblyAI REST API for automated transcript processing and dynamic multiple-choice quiz generation.</p>
+
+            <div className="ps-features-block">
+              <span className="ps-features-label">Key Features:</span>
+              <ul className="ps-highlights">
+                <li><span className="ps-hi-dot">•</span> Automated media transcript extraction using AssemblyAI API</li>
+                <li><span className="ps-hi-dot">•</span> Instant generation of multiple-choice quizzes and topic digests</li>
+                <li><span className="ps-hi-dot">•</span> Interactive assessment interface with real-time score feedback</li>
+                <li><span className="ps-hi-dot">•</span> Clean student dashboard for performance tracking</li>
+              </ul>
+            </div>
+
+            <div className="ps-tech-row">
+              <span className="ps-tech-label">Tech:</span>
+              <div className="ps-stack">
+                <span>React</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span><span>Bootstrap</span>
+              </div>
+            </div>
+
             <div className="ps-actions">
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FaGithub size={15} />
-                  Source Code
+                <a href="#contact" className="ps-btn ps-btn-demo">
+                  <FiExternalLink size={14} />
+                  Live Demo
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                  <FaGithub size={14} />
+                  GitHub
                 </a>
               </MagneticButton>
             </div>
@@ -399,7 +432,7 @@ export function Projects() {
           <div className="ps-visual">
             <div className="ps-mockup ps-mockup-edu">
               <div className="edu-ui">
-                <div className="edu-nav">EduQuest <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><FiBookOpen size={12} /> LMS Platform</span></div>
+                <div className="edu-nav">EduQuest <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><FiBookOpen size={12} /> LMS Portal</span></div>
                 <div className="edu-hero-text">Digital Learning Engine</div>
                 <div className="edu-cards">
                   <div className="edu-card"><FiBookOpen size={14} /><span>Courses</span></div>
@@ -415,24 +448,42 @@ export function Projects() {
             </div>
           </div>
           <div className="ps-content">
-            <div className="ps-meta"><span className="ps-num">03</span><span className="ps-badge ps-badge-web">Full-Stack · Education</span></div>
-            <h3 className="ps-title">EduQuest</h3>
-            <p className="ps-tagline">Learning Management System & Student Portal</p>
-            <p className="ps-desc">A full-stack Learning Management System supporting student course participation, educator content management, and performance tracking backed by relational databases.</p>
-            <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Role-based authentication system for students and instructors</li>
-              <li><span className="ps-hi-dot"/>Relational database schema design in MySQL for course data integrity</li>
-              <li><span className="ps-hi-dot"/>RESTful API controllers for CRUD operations on quizzes and courses</li>
-              <li><span className="ps-hi-dot"/>Progress analytics & interactive score tracking dashboards</li>
-            </ul>
-            <div className="ps-stack">
-              <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>REST APIs</span><span>EJS</span><span>Bootstrap</span>
+            <div className="ps-meta">
+              <span className="ps-num">03</span>
+              <span className="ps-badge ps-badge-web">Full-Stack · Education</span>
             </div>
+            <h3 className="ps-title">EduQuest</h3>
+            <p className="ps-tagline">Full-stack Learning Management System supporting course management and student analytics.</p>
+            <p className="ps-desc">Architected a full-stack learning platform with relational MySQL database schemas, role-based authentication, and RESTful API controllers.</p>
+
+            <div className="ps-features-block">
+              <span className="ps-features-label">Key Features:</span>
+              <ul className="ps-highlights">
+                <li><span className="ps-hi-dot">•</span> Role-based authentication for instructors and students</li>
+                <li><span className="ps-hi-dot">•</span> Relational database schema design in MySQL for data integrity</li>
+                <li><span className="ps-hi-dot">•</span> RESTful CRUD API endpoints for course and quiz management</li>
+                <li><span className="ps-hi-dot">•</span> Student performance analytics and score tracking dashboard</li>
+              </ul>
+            </div>
+
+            <div className="ps-tech-row">
+              <span className="ps-tech-label">Tech:</span>
+              <div className="ps-stack">
+                <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>REST APIs</span><span>JavaScript</span>
+              </div>
+            </div>
+
             <div className="ps-actions">
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FaGithub size={15} />
-                  Source Code
+                <a href="#contact" className="ps-btn ps-btn-demo">
+                  <FiExternalLink size={14} />
+                  Live Demo
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                  <FaGithub size={14} />
+                  GitHub
                 </a>
               </MagneticButton>
             </div>
@@ -454,7 +505,7 @@ export function Projects() {
                 </div>
                 <div className="iot-chips">
                   <span className="iot-chip"><span>●</span> ESP8266 Wi-Fi</span>
-                  <span className="iot-chip"><span>●</span> Sharp Dust Sensor</span>
+                  <span className="iot-chip"><span>●</span> Optical Dust Sensor</span>
                   <span className="iot-chip"><span>●</span> MQTT Protocol</span>
                 </div>
               </div>
@@ -463,25 +514,40 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">04</span>
-              <span className="ps-badge ps-badge-iot">Hardware · Systems</span>
+              <span className="ps-badge ps-badge-iot">IoT · Hardware</span>
             </div>
             <h3 className="ps-title">DustSense</h3>
-            <p className="ps-tagline">Real-Time IoT Air Quality Telemetry System</p>
-            <p className="ps-desc">An end-to-end IoT monitoring solution leveraging a Sharp optical dust sensor and ESP8266 microcontroller to sample particulate matter (PM2.5) and stream live metrics via MQTT to a web dashboard.</p>
-            <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Real-time optical PM2.5 particulate concentration sensing</li>
-              <li><span className="ps-hi-dot"/>Lightweight MQTT publish-subscribe messaging architecture</li>
-              <li><span className="ps-hi-dot"/>Wi-Fi micro-controller firmware written in C++ (Arduino IDE)</li>
-              <li><span className="ps-hi-dot"/>Live web metrics visualization dashboard for historical analytics</li>
-            </ul>
-            <div className="ps-stack">
-              <span>ESP8266</span><span>Arduino C++</span><span>MQTT</span><span>Sensors</span><span>JavaScript</span><span>HTML/CSS</span>
+            <p className="ps-tagline">IoT air quality telemetry system streaming real-time PM2.5 sensor readings to a web dashboard.</p>
+            <p className="ps-desc">Designed an embedded IoT telemetry system using ESP8266, C++, and MQTT protocol to transmit live environmental data to a monitoring web dashboard.</p>
+
+            <div className="ps-features-block">
+              <span className="ps-features-label">Key Features:</span>
+              <ul className="ps-highlights">
+                <li><span className="ps-hi-dot">•</span> Real-time PM2.5 air quality monitoring with optical sensors</li>
+                <li><span className="ps-hi-dot">•</span> Lightweight MQTT protocol for live telemetry streaming</li>
+                <li><span className="ps-hi-dot">•</span> Wi-Fi microcontroller firmware written in Arduino C++</li>
+                <li><span className="ps-hi-dot">•</span> Live web analytics dashboard for particulate tracking</li>
+              </ul>
             </div>
+
+            <div className="ps-tech-row">
+              <span className="ps-tech-label">Tech:</span>
+              <div className="ps-stack">
+                <span>ESP8266</span><span>Arduino C++</span><span>MQTT</span><span>JavaScript</span><span>HTML/CSS</span>
+              </div>
+            </div>
+
             <div className="ps-actions">
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FaGithub size={15} />
-                  Source Code
+                <a href="#contact" className="ps-btn ps-btn-demo">
+                  <FiExternalLink size={14} />
+                  Live Demo
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                  <FaGithub size={14} />
+                  GitHub
                 </a>
               </MagneticButton>
             </div>
