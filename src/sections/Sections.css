@@ -715,29 +715,56 @@
 }
 .footer-copy { font-family: var(--mono); font-size: .75rem; color: var(--text-3); margin: 0; }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE AUDIT ── */
 @media (max-width: 1024px) {
-  .about-layout { grid-template-columns: 1fr 300px; gap: 2.5rem; }
-  .build-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-layout { grid-template-columns: 1fr 320px; gap: 2.5rem; }
+  .build-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
 }
+
 @media (max-width: 900px) {
-  .skills-layout { grid-template-columns: 1fr; }
+  .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .skills-layout { grid-template-columns: 1fr; gap: 1.25rem; }
   .project-showcase { grid-template-columns: 1fr; }
   .project-showcase-flip .ps-visual { order: 0; }
   .project-showcase-flip .ps-content { order: 0; }
-  .ps-visual { border-right: none !important; border-left: none !important; border-bottom: 1px solid var(--border); min-height: 260px; }
-  .footer-main { grid-template-columns: 1fr; gap: 2.5rem; }
-  .footer-links { flex-direction: row; flex-wrap: wrap; }
+  .ps-visual {
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid var(--border);
+    min-height: auto;
+    padding: 2rem 1.25rem;
+  }
+  .site-footer-top { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
 }
-@media (max-width: 640px) {
-  .build-grid { grid-template-columns: 1fr; }
-}
+
 @media (max-width: 768px) {
-  .about-layout { grid-template-columns: 1fr; gap: 2rem; }
-  .exp-item { grid-template-columns: 28px 1fr; gap: 0 1rem; }
-  .ps-content { padding: 1.8rem 1.25rem; }
-  .ps-title { font-size: 1.5rem; }
-  .footer-links { flex-direction: column; }
-  .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
+  .exp-item { grid-template-columns: 24px 1fr; gap: 0 1rem; }
+  .ps-content { padding: 1.75rem 1.25rem; }
+  .ps-title { font-size: 1.45rem; }
+  .ps-actions { flex-direction: column; width: 100%; }
+  .ps-actions .ps-btn { width: 100%; justify-content: center; min-height: 44px; }
+  .resume-cta-card { padding: 2.2rem 1.25rem; }
+  .resume-cta-title { font-size: 1.5rem; }
+  .resume-cta-actions { flex-direction: column; width: 100%; }
+  .resume-cta-actions .ps-btn, .resume-cta-actions .btn-primary, .resume-cta-actions .btn-secondary {
+    width: 100%; justify-content: center; min-height: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .build-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .education-card, .about-focus-card, .contact-form-wrap { padding: 1.35rem 1rem; }
+  .contact-card { padding: .85rem 1rem; }
+  .contact-card-val { font-size: .85rem; word-break: break-all; }
+  .site-footer-nav { flex-direction: column; align-items: flex-start; gap: .75rem; }
+  .site-footer-links { flex-direction: column; align-items: flex-start; gap: .75rem; }
+  .site-footer-bottom { flex-direction: column; gap: .5rem; text-align: left; align-items: flex-start; }
+}
+
+@media (max-width: 380px) {
+  .container { padding: 0 1rem; }
+  .section { padding: 4rem 0; }
+  .section-header { margin-bottom: 2rem; }
+  .section-title { font-size: 1.6rem; }
 }
