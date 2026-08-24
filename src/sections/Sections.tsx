@@ -320,23 +320,26 @@ export function Projects() {
               <span className="ps-badge ps-badge-ai">Full-Stack · AI</span>
             </div>
             <h3 className="ps-title">Briefly</h3>
-            <p className="ps-tagline">AI-powered meeting assistant that converts audio recordings into structured summaries and action items.</p>
-            <p className="ps-desc">Built an automated speech-to-text pipeline using Node.js, Express, and OpenAI Whisper API to extract key decision points and action items from team meeting recordings.</p>
-            
-            <div className="ps-features-block">
-              <span className="ps-features-label">Key Features:</span>
+
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT IT IS</span>
+              <p className="ps-tagline">An automated meeting assistant and audio transcription platform for generating structured notes from recorded discussions.</p>
+            </div>
+
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT I BUILT</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Asynchronous audio payload upload and processing pipeline</li>
-                <li><span className="ps-hi-dot">•</span> Automated speech transcription via OpenAI Whisper API</li>
-                <li><span className="ps-hi-dot">•</span> Extraction of key action items and executive summary points</li>
-                <li><span className="ps-hi-dot">•</span> Responsive user interface for playback and transcript review</li>
+                <li><span className="ps-hi-dot">•</span> Engineered an asynchronous audio upload pipeline to process recorded meeting files.</li>
+                <li><span className="ps-hi-dot">•</span> Integrated OpenAI Whisper REST API for high-accuracy speech-to-text transcription.</li>
+                <li><span className="ps-hi-dot">•</span> Implemented automated text processing logic to extract key action items and executive decision points.</li>
+                <li><span className="ps-hi-dot">•</span> Developed a responsive web interface for managing audio playback, viewing transcripts, and exporting notes.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">Tech:</span>
+              <span className="ps-tech-label">TECHNOLOGIES</span>
               <div className="ps-stack">
-                <span>React</span><span>Node.js</span><span>Express.js</span><span>OpenAI Whisper API</span><span>JavaScript</span>
+                <span>React</span><span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>OpenAI Whisper API</span>
               </div>
             </div>
 
@@ -390,23 +393,26 @@ export function Projects() {
               <span className="ps-badge ps-badge-ai">EdTech · Full-Stack</span>
             </div>
             <h3 className="ps-title">Quizzer</h3>
-            <p className="ps-tagline">Educational web platform that analyzes video transcripts to generate interactive self-assessments.</p>
-            <p className="ps-desc">Developed an EdTech web application using AssemblyAI REST API for automated transcript processing and dynamic multiple-choice quiz generation.</p>
 
-            <div className="ps-features-block">
-              <span className="ps-features-label">Key Features:</span>
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT IT IS</span>
+              <p className="ps-tagline">An educational assessment generator that processes video content to produce interactive multiple-choice quizzes and summaries.</p>
+            </div>
+
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT I BUILT</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Automated media transcript extraction using AssemblyAI API</li>
-                <li><span className="ps-hi-dot">•</span> Instant generation of multiple-choice quizzes and topic digests</li>
-                <li><span className="ps-hi-dot">•</span> Interactive assessment interface with real-time score feedback</li>
-                <li><span className="ps-hi-dot">•</span> Clean student dashboard for performance tracking</li>
+                <li><span className="ps-hi-dot">•</span> Built an automated media processing workflow using AssemblyAI REST API for video transcript extraction.</li>
+                <li><span className="ps-hi-dot">•</span> Developed server-side controllers in Node.js to generate structured assessment questions from extracted text.</li>
+                <li><span className="ps-hi-dot">•</span> Created interactive client-side quiz interfaces with state management for instant score calculation.</li>
+                <li><span className="ps-hi-dot">•</span> Implemented student progress tracking and assessment performance summaries.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">Tech:</span>
+              <span className="ps-tech-label">TECHNOLOGIES</span>
               <div className="ps-stack">
-                <span>React</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span><span>Bootstrap</span>
+                <span>React</span><span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span><span>Bootstrap</span>
               </div>
             </div>
 
@@ -453,23 +459,26 @@ export function Projects() {
               <span className="ps-badge ps-badge-web">Full-Stack · Education</span>
             </div>
             <h3 className="ps-title">EduQuest</h3>
-            <p className="ps-tagline">Full-stack Learning Management System supporting course management and student analytics.</p>
-            <p className="ps-desc">Architected a full-stack learning platform with relational MySQL database schemas, role-based authentication, and RESTful API controllers.</p>
 
-            <div className="ps-features-block">
-              <span className="ps-features-label">Key Features:</span>
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT IT IS</span>
+              <p className="ps-tagline">A full-stack Learning Management System providing course administration, quiz delivery, and student analytics.</p>
+            </div>
+
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT I BUILT</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Role-based authentication for instructors and students</li>
-                <li><span className="ps-hi-dot">•</span> Relational database schema design in MySQL for data integrity</li>
-                <li><span className="ps-hi-dot">•</span> RESTful CRUD API endpoints for course and quiz management</li>
-                <li><span className="ps-hi-dot">•</span> Student performance analytics and score tracking dashboard</li>
+                <li><span className="ps-hi-dot">•</span> Architected relational database schemas in MySQL with foreign key relationships for course, quiz, and user data.</li>
+                <li><span className="ps-hi-dot">•</span> Implemented role-based authentication and authorization for student and instructor permissions.</li>
+                <li><span className="ps-hi-dot">•</span> Developed RESTful CRUD API endpoints in Express to handle course enrollment and quiz submissions.</li>
+                <li><span className="ps-hi-dot">•</span> Built responsive analytical dashboards to display student progress metrics and course completion data.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">Tech:</span>
+              <span className="ps-tech-label">TECHNOLOGIES</span>
               <div className="ps-stack">
-                <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>REST APIs</span><span>JavaScript</span>
+                <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>JavaScript</span><span>REST APIs</span><span>HTML/CSS</span>
               </div>
             </div>
 
@@ -517,23 +526,26 @@ export function Projects() {
               <span className="ps-badge ps-badge-iot">IoT · Hardware</span>
             </div>
             <h3 className="ps-title">DustSense</h3>
-            <p className="ps-tagline">IoT air quality telemetry system streaming real-time PM2.5 sensor readings to a web dashboard.</p>
-            <p className="ps-desc">Designed an embedded IoT telemetry system using ESP8266, C++, and MQTT protocol to transmit live environmental data to a monitoring web dashboard.</p>
 
-            <div className="ps-features-block">
-              <span className="ps-features-label">Key Features:</span>
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT IT IS</span>
+              <p className="ps-tagline">A real-time IoT air quality telemetry system streaming PM2.5 particulate concentration metrics to a web dashboard.</p>
+            </div>
+
+            <div className="ps-section-block">
+              <span className="ps-section-label">WHAT I BUILT</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Real-time PM2.5 air quality monitoring with optical sensors</li>
-                <li><span className="ps-hi-dot">•</span> Lightweight MQTT protocol for live telemetry streaming</li>
-                <li><span className="ps-hi-dot">•</span> Wi-Fi microcontroller firmware written in Arduino C++</li>
-                <li><span className="ps-hi-dot">•</span> Live web analytics dashboard for particulate tracking</li>
+                <li><span className="ps-hi-dot">•</span> Programmed ESP8266 microcontroller firmware in C++ to sample optical dust sensor readings.</li>
+                <li><span className="ps-hi-dot">•</span> Implemented lightweight MQTT publish-subscribe messaging for real-time sensor payload transmission over Wi-Fi.</li>
+                <li><span className="ps-hi-dot">•</span> Developed a backend service to parse incoming telemetry metrics and log historical air quality data.</li>
+                <li><span className="ps-hi-dot">•</span> Built a live monitoring web dashboard with dynamic status indicators for real-time environmental tracking.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">Tech:</span>
+              <span className="ps-tech-label">TECHNOLOGIES</span>
               <div className="ps-stack">
-                <span>ESP8266</span><span>Arduino C++</span><span>MQTT</span><span>JavaScript</span><span>HTML/CSS</span>
+                <span>ESP8266</span><span>Arduino C++</span><span>MQTT</span><span>JavaScript</span><span>HTML/CSS</span><span>REST APIs</span>
               </div>
             </div>
 
