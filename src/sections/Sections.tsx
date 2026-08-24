@@ -188,47 +188,47 @@ export function Skills() {
   )
 }
 
-/* ── EXPERIENCE ── */
+/* ── EXPERIENCE & DEVELOPMENT ── */
 const experiences = [
   {
-    period: '2025 — Present', badge: 'Club Role', active: true,
-    role: 'Web Developer', org: 'Binary Brains Club, Dr. D. Y. Patil Institute of Technology',
+    period: '2025 — Present', badge: 'Technical Club', active: true,
+    role: 'Web Developer', org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology',
     bullets: [
-      'Engineered responsive full-stack web modules using HTML, CSS, JavaScript, and Node.js.',
-      'Collaborated within an Agile engineering team on feature rollouts, API integration, and peer code reviews.',
-      'Optimized UI layouts for cross-browser accessibility and mobile responsiveness.',
+      'Developed responsive full-stack web components using HTML, CSS, JavaScript, and Node.js.',
+      'Collaborated with peer engineering members on feature implementation, code reviews, and API testing.',
+      'Optimized interface layouts for cross-device mobile responsiveness and browser accessibility.',
     ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git'],
   },
   {
-    period: '2025 — Present', badge: 'Open Source', active: true,
-    role: 'Full-Stack Software Developer', org: 'Self-Initiated & Open Source Projects',
+    period: '2025 — Present', badge: 'Independent / Open Source', active: true,
+    role: 'Full-Stack Developer', org: 'Independent & Open Source Development',
     bullets: [
-      'Architected production-ready frontend applications using React and Node.js RESTful APIs.',
-      'Designed relational MySQL database schemas and securely implemented session authentication workflows.',
-      'Integrated third-party AI REST APIs (OpenAI Whisper, AssemblyAI) for high-throughput media transcription.',
+      'Built web applications using React for frontend UIs and Express/Node.js for backend services.',
+      'Designed database schemas in MySQL and MongoDB for application data persistence.',
+      'Integrated RESTful APIs and implemented user authentication workflows.',
     ],
-    stack: ['React', 'JavaScript', 'Node.js', 'Express.js', 'MySQL', 'REST APIs'],
+    stack: ['React', 'JavaScript', 'Node.js', 'Express.js', 'MySQL', 'MongoDB'],
   },
   {
-    period: '2025', badge: 'AI Systems', active: false,
-    role: 'AI Application Developer', org: 'Academic & Project Engineering',
+    period: '2025', badge: 'Academic Project', active: false,
+    role: 'AI Application Engineering', org: 'Academic & Applied Software Development',
     bullets: [
-      'Developed Briefly, an automated meeting recording summarizer using OpenAI Whisper API.',
-      'Created Quizzer, an EdTech video analysis tool that extracts transcripts via AssemblyAI to auto-generate quizzes.',
-      'Built clean server-side rendered interfaces in EJS with Node.js backend controllers.',
+      'Developed Briefly, an automated meeting assistant incorporating OpenAI Whisper API for speech-to-text.',
+      'Built Quizzer, an EdTech application leveraging AssemblyAI API for transcript analysis and quiz generation.',
+      'Created server-side controllers and view templates for processing media uploads.',
     ],
-    stack: ['OpenAI Whisper', 'AssemblyAI', 'Node.js', 'Express.js', 'EJS', 'REST APIs'],
+    stack: ['React', 'Node.js', 'Express.js', 'OpenAI Whisper', 'AssemblyAI API'],
   },
   {
-    period: '2024 — 2025', badge: 'Hardware / IoT', active: false,
-    role: 'IoT & Telemetry Developer', org: 'Embedded Hardware Projects',
+    period: '2024 — 2025', badge: 'Hardware & Systems', active: false,
+    role: 'IoT Systems Developer', org: 'Embedded Engineering Projects',
     bullets: [
-      'Designed DustSense, a real-time PM2.5 air quality telemetry device using ESP8266 & Sharp optical sensors.',
-      'Implemented lightweight MQTT messaging protocol for continuous telemetry payload transmission.',
-      'Constructed a live web analytical dashboard for real-time sensor metrics visualization.',
+      'Built DustSense, an environmental monitoring device using ESP8266 microcontroller and optical sensors.',
+      'Implemented lightweight MQTT messaging protocol to stream live PM2.5 telemetry over Wi-Fi.',
+      'Constructed a web-based analytical dashboard for real-time sensor metrics visualization.',
     ],
-    stack: ['ESP8266', 'Arduino C++', 'Embedded Systems', 'MQTT', 'Web Dashboards'],
+    stack: ['ESP8266', 'Arduino C++', 'MQTT', 'JavaScript', 'HTML/CSS'],
   },
 ]
 
@@ -237,8 +237,8 @@ export function Experience() {
     <section className="section" id="experience">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">Engineering History</span>
-          <h2 className="section-title exp-title">Experience & Leadership</h2>
+          <span className="section-eyebrow">Real-World Software Engineering</span>
+          <h2 className="section-title exp-title">Experience & Development</h2>
         </div>
         <div className="experience-layout">
           {experiences.map((e, i) => (
