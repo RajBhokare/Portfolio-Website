@@ -38,6 +38,7 @@ import {
   FiGlobe,
   FiLock,
   FiGrid,
+  FiDownload,
 } from 'react-icons/fi'
 import { MagneticButton } from '../components/MagneticButton/MagneticButton'
 import './Sections.css'
@@ -660,6 +661,58 @@ export function WhatIBuild() {
               <p className="build-card-desc">{item.desc}</p>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ── RESUME CTA ── */
+export function ResumeCTA() {
+  return (
+    <section className="section" id="resume-cta">
+      <div className="container">
+        <div className="resume-cta-card reveal">
+          <span className="section-eyebrow">Opportunities & Collaboration</span>
+          <h2 className="resume-cta-title">Interested in working together?</h2>
+          <p className="resume-cta-desc">
+            I'm currently open to internship and junior developer opportunities.
+          </p>
+
+          <div className="resume-cta-actions">
+            {/* Note: Place your resume PDF file (e.g. resume.pdf) into the public/ folder and update href below to "/resume.pdf" */}
+            <MagneticButton>
+              <a
+                href="#contact"
+                className="ps-btn ps-btn-demo resume-btn-primary"
+              >
+                <FiDownload size={15} />
+                Download Resume
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a
+                href="https://github.com/RajBhokare"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ps-btn ps-btn-github"
+              >
+                <FaGithub size={15} />
+                View GitHub
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a
+                href="https://linkedin.com/in/raj-bhokare"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ps-btn ps-btn-github"
+              >
+                <FaLinkedin size={15} />
+                Connect on LinkedIn
+              </a>
+            </MagneticButton>
+          </div>
         </div>
       </div>
     </section>

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
-import { About, Skills, Experience, Education, Projects, WhatIBuild, Contact } from './sections/Sections';
+import { About, Skills, Experience, Education, Projects, WhatIBuild, ResumeCTA, Contact } from './sections/Sections';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
 
 function Cursor() {
@@ -172,6 +172,8 @@ export default function App() {
         <Education />
         <div className="section-sep" aria-hidden="true" />
         <Projects />
+        <div className="section-sep" aria-hidden="true" />
+        <ResumeCTA />
       </main>
 
       <div className="section-sep" aria-hidden="true" />
