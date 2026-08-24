@@ -893,11 +893,37 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="footer-bottom">
-          <p className="footer-copy">© 2026 Raj Bhokare. All rights reserved.</p>
-          <p className="footer-built">
-            MERN Stack Developer · React, Node.js, Express & MongoDB
-          </p>
+        <div className="site-footer">
+          <div className="site-footer-top">
+            <div className="site-footer-brand">
+              <h3 className="site-footer-name">Raj Bhokare</h3>
+              <p className="site-footer-role">MERN Stack Developer</p>
+            </div>
+
+            <nav className="site-footer-nav" aria-label="Footer Navigation">
+              <a href="#hero">Home</a>
+              <a href="#about">About</a>
+              <a href="#projects">Projects</a>
+              <a href="#skills">Skills</a>
+              <a href="#contact">Contact</a>
+            </nav>
+
+            <div className="site-footer-links">
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                <FaGithub size={14} /> GitHub
+              </a>
+              <a href="https://linkedin.com/in/rajbhokare1" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                <FaLinkedin size={14} /> LinkedIn
+              </a>
+              <a href={`mailto:${email}`} aria-label="Send Email">
+                <FiMail size={14} /> Email
+              </a>
+            </div>
+          </div>
+
+          <div className="site-footer-bottom">
+            <p className="footer-copy">© 2026 Raj Bhokare. All rights reserved.</p>
+          </div>
         </div>
       </div>
     </footer>
