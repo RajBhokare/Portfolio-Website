@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   SiReact,
   SiJavascript,
@@ -14,7 +14,7 @@ import {
   SiGooglecloud,
   SiJupyter,
 } from 'react-icons/si'
-import { FaJava, FaAws, FaLinkedin, FaQuoteLeft } from 'react-icons/fa6'
+import { FaJava, FaAws, FaLinkedin, FaGithub, FaQuoteLeft } from 'react-icons/fa6'
 import {
   FiCode,
   FiServer,
@@ -25,7 +25,6 @@ import {
   FiExternalLink,
   FiBookOpen,
   FiMapPin,
-  FiBriefcase,
   FiCalendar,
   FiCheckCircle,
   FiCheck,
@@ -34,6 +33,8 @@ import {
   FiFileText,
   FiHeart,
   FiZap,
+  FiMail,
+  FiCopy,
 } from 'react-icons/fi'
 import { MagneticButton } from '../components/MagneticButton/MagneticButton'
 import './Sections.css'
@@ -44,30 +45,26 @@ export function About() {
     <section className="section" id="about">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">get to know me</span>
+          <span className="section-eyebrow">Background & Focus</span>
           <h2 className="section-title">About Me</h2>
         </div>
         <div className="about-layout">
           <div className="about-text reveal">
             <p className="about-lead">
-              I'm a <mark>Full Stack Developer</mark> who loves turning ideas into polished
-              digital experiences — from pixel-perfect UIs to cloud-connected backend systems.
+              I am a <mark>Full-Stack Developer & Software Engineer</mark> dedicated to building responsive web applications, scalable backend APIs, and real-time hardware telemetry systems.
             </p>
             <p>
-              Currently in my third year at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>,
-              I specialise in building clean, responsive web interfaces while also exploring cloud computing,
-              Data Structures & Algorithms, and backend services. I believe great engineering starts with curiosity, discipline, and a
-              deep love for the craft.
+              Currently in my third year of Information Technology engineering at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong>, I combine core computer science fundamentals (Data Structures & Algorithms, Object-Oriented Design) with hands-on full-stack development in React, Node.js, and MySQL.
             </p>
             <p>
-              When I'm not coding, I'm probably solving algorithmic challenges or exploring cloud architecture on AWS and Google Cloud.
+              Beyond traditional web stack development, I am actively expanding my knowledge in cloud architecture (AWS & Google Cloud Platform), AI API integration (speech-to-text, LLM summaries), and IoT telemetry.
             </p>
           </div>
           <div className="about-cards reveal">
             {[
-              { icon: <FiBookOpen size={20} color="var(--cyan)" />, label: 'Education',  value: '3rd Year, IT Engineering' },
-              { icon: <FiMapPin size={20} color="var(--violet)" />, label: 'Location',   value: 'Pune, India' },
-              { icon: <FiCloud size={20} color="var(--gold)" />, label: 'Focus',      value: 'Full Stack & Cloud Computing' },
+              { icon: <FiBookOpen size={18} color="var(--cyan)" />, label: 'Education',  value: 'B.Tech IT (3rd Year)' },
+              { icon: <FiMapPin size={18} color="var(--violet)" />, label: 'Location',   value: 'Pune, India' },
+              { icon: <FiCloud size={18} color="var(--gold)" />, label: 'Core Specialization', value: 'Full-Stack & Cloud Computing' },
             ].map(c => (
               <div className="info-card" key={c.label}>
                 <div className="info-card-icon">{c.icon}</div>
@@ -78,11 +75,11 @@ export function About() {
               </div>
             ))}
             <div className="info-card info-card-highlight">
-              <div className="info-card-icon"><FiZap size={20} color="var(--green)" /></div>
+              <div className="info-card-icon"><FiZap size={18} color="var(--green)" /></div>
               <div>
                 <div className="info-card-label">Status</div>
                 <div className="info-card-value">
-                  <span className="status-dot" />Open to opportunities
+                  <span className="status-dot" />Available for Engineering Opportunities
                 </div>
               </div>
             </div>
@@ -112,62 +109,34 @@ const SKILL_ICONS: Record<string, { icon: React.ReactElement; color: string }> =
   'Jupyter Notebook': { icon: <SiJupyter />, color: '#F37626' },
 }
 
-const marqueeSkillsRow1 = [
-  'HTML5',
-  'CSS3',
-  'JavaScript',
-  'React',
-  'Bootstrap',
-  'Node.js',
-  'Express.js',
-  'MySQL',
-]
-
-const marqueeSkillsRow2 = [
-  'C++',
-  'Java',
-  'Python',
-  'AWS',
-  'Google Cloud',
-  'Git',
-  'Jupyter Notebook',
-]
-
 const skillGroups = [
   {
     icon: <FiCode size={18} />,
-    title: 'Web & Frontend Development',
-    pills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Bootstrap'],
+    title: 'Frontend Development',
+    pills: ['React', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap'],
     span: false,
     accent: 'cyan',
   },
   {
     icon: <FiServer size={18} />,
-    title: 'Backend & Programming Languages',
-    pills: ['Node.js', 'Express.js', 'C++', 'Java', 'Python'],
+    title: 'Backend & Database Engineering',
+    pills: ['Node.js', 'Express.js', 'MySQL', 'REST APIs'],
     span: false,
     accent: 'violet',
   },
   {
-    icon: <FiCloud size={18} />,
-    title: 'Cloud Computing',
-    pills: ['AWS', 'Google Cloud'],
-    span: false,
-    accent: 'gold',
-  },
-  {
-    icon: <FiDatabase size={18} />,
-    title: 'Databases & Storage',
-    pills: ['MySQL'],
+    icon: <FiTool size={18} />,
+    title: 'Programming Languages & DSA',
+    pills: ['C++', 'Java', 'Python', 'JavaScript'],
     span: false,
     accent: 'green',
   },
   {
-    icon: <FiTool size={18} />,
-    title: 'Developer Tools & Environments',
-    pills: ['Git', 'Jupyter Notebook'],
-    span: true,
-    accent: 'coral',
+    icon: <FiCloud size={18} />,
+    title: 'Cloud & Developer Tools',
+    pills: ['AWS', 'Google Cloud', 'Git', 'Jupyter Notebook'],
+    span: false,
+    accent: 'gold',
   },
 ]
 
@@ -176,49 +145,18 @@ export function Skills() {
     <section className="section section-dark" id="skills">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">technical expertise</span>
+          <span className="section-eyebrow">Technical Capability</span>
           <h2 className="section-title">Skills & Technologies</h2>
         </div>
 
-        {/* Infinite Continuous Marquee Banner */}
-        <div className="skills-marquee-container reveal">
-          <div className="skills-marquee-track">
-            {[...marqueeSkillsRow1, ...marqueeSkillsRow1, ...marqueeSkillsRow1].map((name, idx) => {
-              const item = SKILL_ICONS[name] || { icon: <FiCode />, color: 'var(--cyan)' }
-              return (
-                <div className="skill-logo-card" key={`r1-${idx}`}>
-                  <span className="skill-logo-icon" style={{ color: item.color }}>
-                    {item.icon}
-                  </span>
-                  <span>{name}</span>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="skills-marquee-track-reverse">
-            {[...marqueeSkillsRow2, ...marqueeSkillsRow2, ...marqueeSkillsRow2].map((name, idx) => {
-              const item = SKILL_ICONS[name] || { icon: <FiCode />, color: 'var(--cyan)' }
-              return (
-                <div className="skill-logo-card" key={`r2-${idx}`}>
-                  <span className="skill-logo-icon" style={{ color: item.color }}>
-                    {item.icon}
-                  </span>
-                  <span>{name}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Categorized Professional Skill Cards */}
+        {/* Categorized Professional Skill Grids */}
         <div className="skills-layout">
           {skillGroups.map((g, i) => (
             <div
               key={g.title}
               className={`skill-group reveal${g.span ? ' skill-group-span' : ''}`}
               data-accent={g.accent}
-              style={{ '--d': `${i * 100}ms` } as React.CSSProperties}
+              style={{ '--d': `${i * 80}ms` } as React.CSSProperties}
             >
               <div className="skill-group-header">
                 <span className="skill-icon-wrap">{g.icon}</span>
@@ -248,34 +186,44 @@ export function Skills() {
 /* ── EXPERIENCE ── */
 const experiences = [
   {
-    period: '2025 — Present', badge: 'Club', active: true,
+    period: '2025 — Present', badge: 'Club Role', active: true,
     role: 'Web Developer', org: 'Binary Brains Club, Dr. D. Y. Patil Institute of Technology',
-    desc: 'Developing responsive web applications and collaborating on full-stack projects using HTML, CSS, JavaScript, Node.js, and Git. Working in an Agile team environment, contributing to feature development, debugging, API integration, and code reviews.',
+    bullets: [
+      'Engineered responsive full-stack web modules using HTML, CSS, JavaScript, and Node.js.',
+      'Collaborated within an Agile engineering team on feature rollouts, API integration, and peer code reviews.',
+      'Optimized UI layouts for cross-browser accessibility and mobile responsiveness.',
+    ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git'],
   },
   {
     period: '2025 — Present', badge: 'Open Source', active: true,
-    role: 'Full-Stack Developer', org: 'Self-Initiated Projects & Open Source',
-    desc: 'Building production-ready frontend and full-stack applications using React, Node.js, Express.js, and MySQL. Developing responsive user interfaces, REST APIs, authentication workflows, and deploying applications using modern development tools.',
-    stack: ['React', 'JavaScript', 'HTML', 'CSS', 'Node.js', 'Express.js', 'MySQL', 'REST APIs'],
+    role: 'Full-Stack Software Developer', org: 'Self-Initiated & Open Source Projects',
+    bullets: [
+      'Architected production-ready frontend applications using React and Node.js RESTful APIs.',
+      'Designed relational MySQL database schemas and securely implemented session authentication workflows.',
+      'Integrated third-party AI REST APIs (OpenAI Whisper, AssemblyAI) for high-throughput media transcription.',
+    ],
+    stack: ['React', 'JavaScript', 'Node.js', 'Express.js', 'MySQL', 'REST APIs'],
   },
   {
-    period: '2025', badge: 'AI', active: false,
-    role: 'AI Application Developer', org: 'Academic & Hackathon Projects',
-    desc: 'Built AI-powered web applications including Briefly, an AI meeting assistant using OpenAI Whisper API, and Quizzer, an educational platform leveraging AssemblyAI for transcript generation, summarization, and quiz creation.',
-    stack: ['OpenAI Whisper', 'AssemblyAI', 'Node.js', 'Express.js', 'JavaScript', 'AI APIs'],
+    period: '2025', badge: 'AI Systems', active: false,
+    role: 'AI Application Developer', org: 'Academic & Project Engineering',
+    bullets: [
+      'Developed Briefly, an automated meeting recording summarizer using OpenAI Whisper API.',
+      'Created Quizzer, an EdTech video analysis tool that extracts transcripts via AssemblyAI to auto-generate quizzes.',
+      'Built clean server-side rendered interfaces in EJS with Node.js backend controllers.',
+    ],
+    stack: ['OpenAI Whisper', 'AssemblyAI', 'Node.js', 'Express.js', 'EJS', 'REST APIs'],
   },
   {
-    period: '2024 — 2025', badge: 'Hardware', active: false,
-    role: 'IoT & Hardware Developer', org: 'Dr. D. Y. Patil Institute of Technology',
-    desc: 'Designed and developed IoT systems using ESP8266 and Arduino, including DustSense, a real-time PM2.5 air quality monitoring system using MQTT with live web-based dashboards for sensor visualization.',
-    stack: ['ESP8266', 'Arduino', 'Embedded C', 'MQTT', 'Sensors', 'Dashboards'],
-  },
-  {
-    period: '2024 — Present', badge: 'Academic', active: true,
-    role: 'Full-Stack Developer', org: 'Academic Projects',
-    desc: 'Developed end-to-end web applications using React, Node.js, Express.js, and MySQL. Designed relational database schemas, implemented RESTful APIs, integrated AI services, and deployed scalable web solutions.',
-    stack: ['React', 'Node.js', 'Express.js', 'MySQL', 'REST APIs', 'Git'],
+    period: '2024 — 2025', badge: 'Hardware / IoT', active: false,
+    role: 'IoT & Telemetry Developer', org: 'Embedded Hardware Projects',
+    bullets: [
+      'Designed DustSense, a real-time PM2.5 air quality telemetry device using ESP8266 & Sharp optical sensors.',
+      'Implemented lightweight MQTT messaging protocol for continuous telemetry payload transmission.',
+      'Constructed a live web analytical dashboard for real-time sensor metrics visualization.',
+    ],
+    stack: ['ESP8266', 'Arduino C++', 'Embedded Systems', 'MQTT', 'Web Dashboards'],
   },
 ]
 
@@ -284,8 +232,8 @@ export function Experience() {
     <section className="section" id="experience">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">my journey</span>
-          <h2 className="section-title exp-title">Experience</h2>
+          <span className="section-eyebrow">Engineering History</span>
+          <h2 className="section-title exp-title">Experience & Leadership</h2>
         </div>
         <div className="experience-layout">
           {experiences.map((e, i) => (
@@ -296,14 +244,18 @@ export function Experience() {
               </div>
               <div className="exp-content">
                 <div className="exp-meta">
-                  <span className="exp-period" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                    <FiCalendar size={13} /> {e.period}
+                  <span className="exp-period">
+                    <FiCalendar size={13} style={{ marginRight: 4, display: 'inline' }} /> {e.period}
                   </span>
                   <span className={`exp-badge${e.active ? ' exp-badge-active' : ''}`}>{e.badge}</span>
                 </div>
                 <h3 className="exp-role">{e.role}</h3>
                 <p className="exp-org">{e.org}</p>
-                <p className="exp-desc">{e.desc}</p>
+                <ul className="exp-bullet-list">
+                  {e.bullets.map((b, idx) => (
+                    <li key={idx}><span className="bullet-dash">•</span> {b}</li>
+                  ))}
+                </ul>
                 <div className="exp-stack">
                   {e.stack.map(s => <span key={s}>{s}</span>)}
                 </div>
@@ -322,7 +274,7 @@ export function Projects() {
     <section className="section" id="projects">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">things I've built</span>
+          <span className="section-eyebrow">Case Studies</span>
           <h2 className="section-title">Featured Projects</h2>
         </div>
 
@@ -333,11 +285,11 @@ export function Projects() {
               <div className="briefly-ui">
                 <div className="briefly-header">
                   <span className="briefly-logo">Briefly AI</span>
-                  <span className="briefly-status">● Live Assistant</span>
+                  <span className="briefly-status">● Live Engine</span>
                 </div>
                 <div className="briefly-audio">
-                  <div className="briefly-title" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <FiMic color="var(--violet)" /> Meeting_Recording.mp3
+                  <div className="briefly-title">
+                    <FiMic color="var(--violet)" /> Executive_Sync_2026.mp3
                   </div>
                   <div className="briefly-wave">
                     <div className="briefly-bar" style={{ height: '40%' }} />
@@ -350,10 +302,9 @@ export function Projects() {
                   </div>
                 </div>
                 <div className="briefly-summary">
-                  <div className="briefly-label">AI Key Insights</div>
-                  <div className="briefly-item"><span><FiCheck size={12} /></span> Whisper speech-to-text transcribed</div>
-                  <div className="briefly-item"><span><FiCheck size={12} /></span> 4 action items extracted</div>
-                  <div className="briefly-item"><span><FiCheck size={12} /></span> Executive summary ready</div>
+                  <div className="briefly-label">AI Extraction Summary</div>
+                  <div className="briefly-item"><span><FiCheck size={12} /></span> Whisper Speech-to-Text transcribed</div>
+                  <div className="briefly-item"><span><FiCheck size={12} /></span> Key decision points & action items ready</div>
                 </div>
               </div>
             </div>
@@ -361,33 +312,27 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">01</span>
-              <span className="ps-badge ps-badge-iot" style={{ background: 'var(--violet-dim)', color: 'var(--violet)', borderColor: 'rgba(176,105,255,.2)' }}>AI · Full Stack</span>
-              <span className="ps-badge ps-badge-new">Featured</span>
+              <span className="ps-badge ps-badge-ai">AI · Full-Stack</span>
             </div>
             <h3 className="ps-title">Briefly</h3>
-            <p className="ps-tagline">AI Powered Meeting Assistant</p>
-            <p className="ps-desc">Built an AI-powered meeting assistant that converts meeting recordings into structured summaries and actionable tasks. The application automates speech transcription and summarization using OpenAI Whisper, enabling users to quickly review important discussion points.</p>
+            <p className="ps-tagline">AI Powered Meeting Assistant & Speech Transcriber</p>
+            <p className="ps-desc">An intelligent web application that processes audio recordings into structured executive summaries and action items. Automates transcription using OpenAI Whisper API to streamline team workflows.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Upload audio recordings for instant processing</li>
-              <li><span className="ps-hi-dot"/>Automatic speech-to-text transcription via Whisper API</li>
-              <li><span className="ps-hi-dot"/>AI-generated meeting summaries & executive digests</li>
-              <li><span className="ps-hi-dot"/>Action item extraction with task assignment</li>
-              <li><span className="ps-hi-dot"/>Fast and responsive user interface</li>
+              <li><span className="ps-hi-dot"/>Audio payload upload and asynchronous processing pipeline</li>
+              <li><span className="ps-hi-dot"/>High-accuracy speech transcription via OpenAI Whisper API</li>
+              <li><span className="ps-hi-dot"/>Automated action item extraction & key takeaways generation</li>
+              <li><span className="ps-hi-dot"/>Fast, responsive user dashboard built with Node.js and Express</li>
             </ul>
             <div className="ps-stack">
-              <span>HTML</span><span>CSS</span><span>Bootstrap</span><span>JavaScript</span><span>EJS</span><span>Node.js</span><span>Express.js</span><span>Whisper API</span>
+              <span>Node.js</span><span>Express.js</span><span>OpenAI Whisper API</span><span>JavaScript</span><span>EJS</span><span>CSS3</span>
             </div>
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FiCode size={16} />
-                  Code
+                  <FaGithub size={15} />
+                  Source Code
                 </a>
               </MagneticButton>
-              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
-                <FiExternalLink size={16} />
-                Live Demo
-              </span>
             </div>
           </div>
         </div>
@@ -404,15 +349,14 @@ export function Projects() {
                 <div className="app-body">
                   <div className="app-card">
                     <div className="app-card-icon"><FiVideo color="var(--cyan)" size={18} /></div>
-                    <div><div className="app-card-label">Video Processed</div><div className="app-card-val">Lecture_03_ML.mp4</div></div>
+                    <div><div className="app-card-label">Media Ingested</div><div className="app-card-val">Lecture_03_ML.mp4</div></div>
                   </div>
-                  <div className="app-progress-row"><span className="app-prog-label">Generating Quiz…</span><span className="app-prog-pct">87%</span></div>
-                  <div className="app-prog-bar"><div className="app-prog-fill" style={{width:'87%'}}/></div>
+                  <div className="app-progress-row"><span className="app-prog-label">Generating Assessment…</span><span className="app-prog-pct">100%</span></div>
+                  <div className="app-prog-bar"><div className="app-prog-fill" style={{width:'100%'}}/></div>
                   <div className="app-quiz-preview">
                     <div className="app-q">Q1. What is gradient descent?</div>
                     <div className="app-opts">
                       <span className="app-opt app-opt-correct">◉ An optimization algorithm</span>
-                      <span className="app-opt">○ A data structure</span>
                       <span className="app-opt">○ A sorting method</span>
                     </div>
                   </div>
@@ -423,29 +367,24 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta"><span className="ps-num">02</span><span className="ps-badge ps-badge-ai">AI · EdTech</span></div>
             <h3 className="ps-title">Quizzer</h3>
-            <p className="ps-tagline">Video Summarizer & Quiz Generator</p>
-            <p className="ps-desc">Developed a web application that extracts transcripts from uploaded videos, generates concise summaries, and creates quizzes automatically using AI-powered speech recognition and content analysis.</p>
+            <p className="ps-tagline">Video Summarizer & Interactive Assessment Generator</p>
+            <p className="ps-desc">An educational web platform that converts video content into readable transcript summaries and automated interactive quizzes using AI speech analysis.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Upload educational videos seamlessly</li>
-              <li><span className="ps-hi-dot"/>Automatic transcript generation via AssemblyAI API</li>
-              <li><span className="ps-hi-dot"/>AI-generated summaries & key concept digests</li>
-              <li><span className="ps-hi-dot"/>Interactive quiz generation for self-assessment</li>
-              <li><span className="ps-hi-dot"/>Responsive user interface</li>
+              <li><span className="ps-hi-dot"/>Seamless media upload and automated transcript extraction</li>
+              <li><span className="ps-hi-dot"/>Speech-to-text integration utilizing AssemblyAI REST API</li>
+              <li><span className="ps-hi-dot"/>AI-generated topic digests and multiple-choice self-assessments</li>
+              <li><span className="ps-hi-dot"/>Clean, accessible UI built for student and educator usability</li>
             </ul>
             <div className="ps-stack">
-              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span><span>EJS</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span>
+              <span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span><span>JavaScript</span><span>Bootstrap</span><span>CSS3</span>
             </div>
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FiCode size={16} />
-                  Code
+                  <FaGithub size={15} />
+                  Source Code
                 </a>
               </MagneticButton>
-              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
-                <FiExternalLink size={16} />
-                Live Demo
-              </span>
             </div>
           </div>
         </div>
@@ -456,7 +395,7 @@ export function Projects() {
             <div className="ps-mockup ps-mockup-edu">
               <div className="edu-ui">
                 <div className="edu-nav">EduQuest <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><FiBookOpen size={12} /> LMS Platform</span></div>
-                <div className="edu-hero-text">Learn. Grow. Succeed.</div>
+                <div className="edu-hero-text">Digital Learning Engine</div>
                 <div className="edu-cards">
                   <div className="edu-card"><FiBookOpen size={14} /><span>Courses</span></div>
                   <div className="edu-card edu-card-active"><FiFileText size={14} /><span>Quizzes</span></div>
@@ -471,31 +410,26 @@ export function Projects() {
             </div>
           </div>
           <div className="ps-content">
-            <div className="ps-meta"><span className="ps-num">03</span><span className="ps-badge ps-badge-web">Full Stack · Education</span></div>
+            <div className="ps-meta"><span className="ps-num">03</span><span className="ps-badge ps-badge-web">Full-Stack · Education</span></div>
             <h3 className="ps-title">EduQuest</h3>
-            <p className="ps-tagline">Digital Learning Platform</p>
-            <p className="ps-desc">Built a full-stack Learning Management System supporting students and educators. Designed relational database schemas, developed RESTful APIs, and implemented quiz management and progress tracking.</p>
+            <p className="ps-tagline">Learning Management System & Student Portal</p>
+            <p className="ps-desc">A full-stack Learning Management System supporting student course participation, educator content management, and performance tracking backed by relational databases.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Student & educator authentication system</li>
-              <li><span className="ps-hi-dot"/>Comprehensive course & curriculum management</li>
-              <li><span className="ps-hi-dot"/>Interactive quiz management module</li>
-              <li><span className="ps-hi-dot"/>Student progress tracking & performance analytics</li>
-              <li><span className="ps-hi-dot"/>RESTful CRUD API architecture</li>
+              <li><span className="ps-hi-dot"/>Role-based authentication system for students and instructors</li>
+              <li><span className="ps-hi-dot"/>Relational database schema design in MySQL for course data integrity</li>
+              <li><span className="ps-hi-dot"/>RESTful API controllers for CRUD operations on quizzes and courses</li>
+              <li><span className="ps-hi-dot"/>Progress analytics & interactive score tracking dashboards</li>
             </ul>
             <div className="ps-stack">
-              <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>EJS</span><span>HTML</span><span>CSS</span><span>Bootstrap</span>
+              <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>REST APIs</span><span>EJS</span><span>Bootstrap</span>
             </div>
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FiCode size={16} />
-                  Code
+                  <FaGithub size={15} />
+                  Source Code
                 </a>
               </MagneticButton>
-              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
-                <FiExternalLink size={16} />
-                Live Demo
-              </span>
             </div>
           </div>
         </div>
@@ -505,25 +439,18 @@ export function Projects() {
           <div className="ps-visual">
             <div className="ps-mockup ps-mockup-iot">
               <div className="iot-dashboard">
-                <div className="iot-header"><span className="iot-status-dot"/><span>DustSense · LIVE</span></div>
+                <div className="iot-header"><span className="iot-status-dot"/><span>DustSense · TELEMETRY ONLINE</span></div>
                 <div className="iot-reading">
-                  <div className="iot-metric"><span className="iot-val">247</span><span className="iot-unit">µg/m³</span></div>
-                  <div className="iot-bar-label">Air Quality Index (PM2.5)</div>
+                  <div className="iot-metric"><span className="iot-val">247</span><span className="iot-unit">µg/m³ PM2.5</span></div>
+                  <div className="iot-bar-label">Air Quality Level</div>
                   <div className="iot-bar-track">
                     <div className="iot-bar-fill" style={{width:'62%'}}/>
                   </div>
-                  <div className="iot-bar-labels"><span>Good</span><span>Moderate</span><span>Poor</span><span>Bad</span></div>
-                </div>
-                <div className="iot-sparkline">
-                  <svg viewBox="0 0 200 50" preserveAspectRatio="none">
-                    <polyline points="0,40 25,35 50,38 75,20 100,28 125,15 150,22 175,10 200,18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <polyline points="0,40 25,35 50,38 75,20 100,28 125,15 150,22 175,10 200,18 200,50 0,50" fill="currentColor" opacity="0.08"/>
-                  </svg>
                 </div>
                 <div className="iot-chips">
-                  <span className="iot-chip"><span>●</span> GP2Y1010AU0F</span>
-                  <span className="iot-chip"><span>●</span> ESP8266</span>
-                  <span className="iot-chip"><span>●</span> MQTT</span>
+                  <span className="iot-chip"><span>●</span> ESP8266 Wi-Fi</span>
+                  <span className="iot-chip"><span>●</span> Sharp Dust Sensor</span>
+                  <span className="iot-chip"><span>●</span> MQTT Protocol</span>
                 </div>
               </div>
             </div>
@@ -531,33 +458,27 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">04</span>
-              <span className="ps-badge ps-badge-iot">Hardware · IoT</span>
-              <span className="ps-badge ps-badge-new">Featured</span>
+              <span className="ps-badge ps-badge-iot">Hardware · Systems</span>
             </div>
             <h3 className="ps-title">DustSense</h3>
-            <p className="ps-tagline">Real-Time Air Quality Monitoring System</p>
-            <p className="ps-desc">Designed an IoT-based air quality monitoring system using a Sharp GP2Y1010AU0F optical dust sensor and ESP8266 microcontroller. The system measures PM2.5 concentration in real time, transmits data over MQTT, and displays live analytics through a web dashboard.</p>
+            <p className="ps-tagline">Real-Time IoT Air Quality Telemetry System</p>
+            <p className="ps-desc">An end-to-end IoT monitoring solution leveraging a Sharp optical dust sensor and ESP8266 microcontroller to sample particulate matter (PM2.5) and stream live metrics via MQTT to a web dashboard.</p>
             <ul className="ps-highlights">
-              <li><span className="ps-hi-dot"/>Real-time PM2.5 particulate monitoring</li>
-              <li><span className="ps-hi-dot"/>Optical dust sensing with signal processing</li>
-              <li><span className="ps-hi-dot"/>MQTT messaging for lightweight IoT telemetry</li>
-              <li><span className="ps-hi-dot"/>Wi-Fi enabled ESP8266 microcontroller integration</li>
-              <li><span className="ps-hi-dot"/>Live web dashboard & historical trend visualization</li>
+              <li><span className="ps-hi-dot"/>Real-time optical PM2.5 particulate concentration sensing</li>
+              <li><span className="ps-hi-dot"/>Lightweight MQTT publish-subscribe messaging architecture</li>
+              <li><span className="ps-hi-dot"/>Wi-Fi micro-controller firmware written in C++ (Arduino IDE)</li>
+              <li><span className="ps-hi-dot"/>Live web metrics visualization dashboard for historical analytics</li>
             </ul>
             <div className="ps-stack">
-              <span>ESP8266</span><span>MQTT</span><span>Embedded C</span><span>Arduino IDE</span><span>HTML</span><span>JavaScript</span><span>Dashboard</span>
+              <span>ESP8266</span><span>Arduino C++</span><span>MQTT</span><span>Sensors</span><span>JavaScript</span><span>HTML/CSS</span>
             </div>
             <div className="ps-actions">
               <MagneticButton>
                 <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn">
-                  <FiCode size={16} />
-                  Code
+                  <FaGithub size={15} />
+                  Source Code
                 </a>
               </MagneticButton>
-              <span className="ps-btn ps-btn-disabled" title="Live Demo Coming Soon">
-                <FiExternalLink size={16} />
-                Live Demo
-              </span>
             </div>
           </div>
         </div>
@@ -566,12 +487,12 @@ export function Projects() {
   )
 }
 
-/* ── PHILOSOPHY ── */
+/* ── PHILOSOPHY / ENGINEERING APPROACH ── */
 const principles = [
-  { num: '01', title: 'Make it work, then make it right', body: "Start simple. Don't over-engineer before you understand the problem. Ship, then refine." },
-  { num: '02', title: 'Write code for humans', body: 'Readability beats cleverness. Your future self — and teammates — will thank you.' },
-  { num: '03', title: 'Small steps, big results', body: 'Consistent 1% improvements compound into mastery. Progress over perfection, always.' },
-  { num: '04', title: 'Debug to understand, not just to fix', body: 'The best learning happens in the trenches. Every bug is a lesson waiting to be claimed.' },
+  { num: '01', title: 'Pragmatic Architecture', body: 'Build clean, reliable solutions first. Understand constraints before introducing complexity, and refine iteratively based on measurements.' },
+  { num: '02', title: 'Code Readability & Standards', body: 'Write clean, self-documenting code with clear variable naming and structured modularity so teammates can seamlessly collaborate.' },
+  { num: '03', title: 'Systematic Learning', body: 'Compound technical growth through daily deliberate practice — exploring algorithm efficiency, cloud services, and system design.' },
+  { num: '04', title: 'Root-Cause Debugging', body: 'Investigate error logs and tracebacks deeply to resolve core systemic issues rather than masking symptoms.' },
 ]
 
 export function Philosophy() {
@@ -579,8 +500,8 @@ export function Philosophy() {
     <section className="section section-dark" id="philosophy">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">my mindset</span>
-          <h2 className="section-title">How I Think</h2>
+          <span className="section-eyebrow">Engineering Mindset</span>
+          <h2 className="section-title">Engineering Approach</h2>
         </div>
         <div className="philosophy-layout">
           <div className="principles reveal">
@@ -595,8 +516,8 @@ export function Philosophy() {
             ))}
           </div>
           <div className="quote-block reveal">
-            <FaQuoteLeft className="quote-svg" size={36} color="var(--cyan)" style={{ opacity: 0.2 }} />
-            <blockquote>I value consistency<br/>over intensity.</blockquote>
+            <FaQuoteLeft className="quote-svg" size={32} color="var(--cyan)" style={{ opacity: 0.25 }} />
+            <blockquote>Prioritize clean architecture, reliability, and continuous iteration.</blockquote>
             <cite>— Raj Bhokare</cite>
           </div>
         </div>
@@ -607,36 +528,58 @@ export function Philosophy() {
 
 /* ── CONTACT / FOOTER ── */
 export function Contact() {
-  const socials = [
-    { href: 'https://linkedin.com/in/rajbhokare1', label: 'LinkedIn', icon: <FaLinkedin size={18} /> },
-  ]
+  const [copied, setCopied] = useState(false)
+  const email = 'rajbhokare1@gmail.com'
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText(email)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <footer className="footer" id="contact">
       <div className="container">
         <div className="footer-main reveal">
           <div className="footer-cta">
-            <p className="footer-eyebrow">Let's connect</p>
-            <h2 className="footer-heading">Got an idea?<br/><em>Let's build it.</em></h2>
-            <p className="footer-sub">Open to internships, collaborations, and interesting projects.</p>
+            <p className="footer-eyebrow">Direct Contact</p>
+            <h2 className="footer-heading">Let's Connect &<br/><em>Build Together.</em></h2>
+            <p className="footer-sub">Open to full-stack developer roles, software engineering internships, and technical collaborations.</p>
           </div>
           <div className="footer-links">
-            {socials.map(s => (
-              <MagneticButton key={s.label}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="footer-social-link">
-                  {s.icon}
-                  <span>{s.label}</span>
-                  <span className="link-arrow"><FiArrowUpRight size={14} /></span>
-                </a>
-              </MagneticButton>
-            ))}
+            <MagneticButton>
+              <a href={`mailto:${email}`} className="footer-social-link primary-contact-btn">
+                <FiMail size={16} />
+                <span>{email}</span>
+                <span className="link-arrow"><FiArrowUpRight size={14} /></span>
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <button onClick={copyEmail} className="footer-social-link copy-btn">
+                {copied ? <FiCheck size={16} color="var(--green)" /> : <FiCopy size={16} />}
+                <span>{copied ? 'Email Copied!' : 'Copy Email Address'}</span>
+              </button>
+            </MagneticButton>
+            <MagneticButton>
+              <a href="https://linkedin.com/in/rajbhokare1" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FaLinkedin size={16} />
+                <span>LinkedIn Profile</span>
+                <span className="link-arrow"><FiArrowUpRight size={14} /></span>
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FaGithub size={16} />
+                <span>GitHub Repositories</span>
+                <span className="link-arrow"><FiArrowUpRight size={14} /></span>
+              </a>
+            </MagneticButton>
           </div>
         </div>
         <div className="footer-bottom">
-          <p className="footer-copy">© 2026 Raj Bhokare</p>
+          <p className="footer-copy">© 2026 Raj Bhokare. All rights reserved.</p>
           <p className="footer-built">
-            Full Stack Developer · Built with React, Vite, Three.js & Lenis{' '}
-            <FiHeart size={14} color="#ff4d4d" style={{ display: 'inline', marginLeft: 4, fill: '#ff4d4d', verticalAlign: 'middle' }} />
+            Full-Stack Software Engineer · React, TypeScript, Three.js & Node.js
           </p>
         </div>
       </div>
