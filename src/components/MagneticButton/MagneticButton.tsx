@@ -11,12 +11,17 @@ export function MagneticButton({ children, className = '', style = {}, onClick }
   const ref = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!ref.current || window.matchMedia('(pointer: coarse)').matches) return;
+    if (
+      !ref.current ||
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
     const x = e.clientX - (left + width / 2);
     const y = e.clientY - (top + height / 2);
 
-    ref.current.style.transform = `translate3d(${x * 0.3}px, ${y * 0.3}px, 0px)`;
+    ref.current.style.transform = `translate3d(${x * 0.15}px, ${y * 0.15}px, 0px)`;
   };
 
   const handleMouseLeave = () => {
@@ -30,7 +35,7 @@ export function MagneticButton({ children, className = '', style = {}, onClick }
       className={`magnetic-wrap ${className}`}
       style={{
         display: 'inline-block',
-        transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
+        transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
         ...style,
       }}
       onMouseMove={handleMouseMove}
