@@ -284,10 +284,10 @@ export default function Navbar() {
           {/* Download Resume Button */}
           <MagneticButton>
             <a
-              href="#contact"
+              href="#resume-cta"
               onClick={(e) => {
                 e.preventDefault();
-                go('#contact');
+                go('#resume-cta');
               }}
               className="btn-resume"
               style={{

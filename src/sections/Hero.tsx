@@ -1,33 +1,8 @@
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React from 'react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa6';
-import { FiArrowRight, FiDownload } from 'react-icons/fi';
-import AstronautScene from '../components/AstronautScene';
+import { FiArrowRight, FiDownload, FiMapPin, FiZap, FiCode } from 'react-icons/fi';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
-
-class CanvasErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  componentDidCatch(error: any) {
-    console.warn('3D Canvas failed to load or WebGL is disabled:', error);
-  }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-3)', fontFamily: 'var(--mono)', fontSize: '0.8rem' }}>
-          <span>[ 3D View Unavailable ]</span>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
 
 export default function Hero() {
   const technologies = ['React', 'JavaScript', 'Node.js', 'Express', 'MongoDB'];
@@ -68,7 +43,7 @@ export default function Hero() {
             </MagneticButton>
             <MagneticButton>
               <a
-                href="#contact"
+                href="#resume-cta"
                 className="btn-secondary"
               >
                 <FiDownload style={{ marginRight: 6 }} /> Download Resume
@@ -118,25 +93,63 @@ export default function Hero() {
         </div>
 
         <div className="hero-right fade-up" style={{ '--d': '200ms' } as React.CSSProperties}>
-          <div className="canvas-card">
-            <div className="canvas-card-header">
-              <span className="canvas-dot green" />
-              <span className="canvas-dot yellow" />
-              <span className="canvas-dot red" />
-              <span className="canvas-title">Interactive 3D Viewport</span>
-            </div>
-            <div className="canvas-wrapper">
-              <CanvasErrorBoundary>
-                <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
-                  <Suspense fallback={null}>
-                    <AstronautScene />
-                  </Suspense>
-                </Canvas>
-              </CanvasErrorBoundary>
-            </div>
-            <div className="canvas-footer">
-              <span className="caption-dot" />
-              <span>Three.js / React Three Fiber Renderer</span>
+          <div className="hero-profile-wrapper">
+            <div className="profile-ambient-glow" />
+            <div className="profile-card">
+              <div className="profile-card-header">
+                <div className="profile-card-dots">
+                  <span className="profile-dot red" />
+                  <span className="profile-dot yellow" />
+                  <span className="profile-dot green" />
+                </div>
+                <span className="profile-card-title">raj_bhokare.dev</span>
+                <div className="profile-status-pill">
+                  <span className="status-live-dot" />
+                  <span>Available</span>
+                </div>
+              </div>
+
+              <div className="profile-img-frame">
+                <img
+                  src="/raj.png"
+                  alt="Raj Bhokare - MERN Stack Developer"
+                  className="profile-photo"
+                  loading="eager"
+                />
+                <div className="profile-img-overlay" />
+
+                {/* Floating modern glass badges */}
+                <div className="floating-badge badge-top-right">
+                  <div className="badge-icon-wrap">
+                    <FiZap className="badge-icon" />
+                  </div>
+                  <div className="badge-text-group">
+                    <span className="badge-title">Full-Stack</span>
+                    <span className="badge-sub">MERN Specialist</span>
+                  </div>
+                </div>
+
+                <div className="floating-badge badge-bottom-left">
+                  <div className="badge-icon-wrap code-wrap">
+                    <FiCode className="badge-icon" />
+                  </div>
+                  <div className="badge-text-group">
+                    <span className="badge-title">Clean Code</span>
+                    <span className="badge-sub">High Performance</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="profile-card-footer">
+                <div className="footer-status">
+                  <span className="caption-dot" />
+                  <span>Solapur / Pune, India</span>
+                </div>
+                <div className="footer-location">
+                  <FiMapPin size={12} style={{ marginRight: 4, color: 'var(--cyan)' }} />
+                  <span>Open to Relocate / Remote</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

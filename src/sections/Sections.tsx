@@ -703,7 +703,7 @@ export function ResumeCTA() {
             </MagneticButton>
             <MagneticButton>
               <a
-                href="https://linkedin.com/in/raj-bhokare"
+                href="https://linkedin.com/in/rajbhokare1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ps-btn ps-btn-github"
