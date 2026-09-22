@@ -43,7 +43,10 @@ export default function Hero() {
             </MagneticButton>
             <MagneticButton>
               <a
-                href="#resume-cta"
+                href="/Raj_Bhokare_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="Raj_Bhokare_Resume.pdf"
                 className="btn-secondary"
               >
                 <FiDownload style={{ marginRight: 6 }} /> Download Resume

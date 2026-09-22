@@ -284,11 +284,10 @@ export default function Navbar() {
           {/* Download Resume Button */}
           <MagneticButton>
             <a
-              href="#resume-cta"
-              onClick={(e) => {
-                e.preventDefault();
-                go('#resume-cta');
-              }}
+              href="/Raj_Bhokare_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Raj_Bhokare_Resume.pdf"
               className="btn-resume"
               style={{
                 fontFamily: 'var(--display)',

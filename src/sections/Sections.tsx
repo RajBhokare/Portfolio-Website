@@ -709,10 +709,12 @@ export function ResumeCTA() {
           </p>
 
           <div className="resume-cta-actions">
-            {/* Note: Place your resume PDF file (e.g. resume.pdf) into the public/ folder and update href below to "/resume.pdf" */}
             <MagneticButton>
               <a
-                href="#contact"
+                href="/Raj_Bhokare_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="Raj_Bhokare_Resume.pdf"
                 className="ps-btn ps-btn-demo resume-btn-primary"
               >
                 <FiDownload size={15} />
