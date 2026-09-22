@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
+import { FiSun, FiMoon, FiMenu, FiX, FiCode, FiDownload } from 'react-icons/fi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { MagneticButton } from './MagneticButton/MagneticButton';
 

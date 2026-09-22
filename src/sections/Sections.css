@@ -181,17 +181,89 @@
 }
 .edu-badge {
   font-family: var(--mono);
-  font-size: .7rem;
-  padding: .2rem .65rem;
-  border-radius: 4px;
+  font-size: .75rem;
+  padding: .3rem .8rem;
+  border-radius: 6px;
   background: var(--cyan-dim);
   color: var(--cyan);
-  border: 1px solid var(--border);
-  font-weight: 600;
+  border: 1px solid var(--border-h);
+  font-weight: 700;
   white-space: nowrap;
 }
+.edu-gpa-section {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+}
+.edu-section-subtitle {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .8rem;
+  display: block;
+}
+.edu-gpa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.edu-gpa-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: .85rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  transition: border-color var(--t), background var(--t);
+}
+.edu-gpa-card:hover {
+  border-color: var(--border-h);
+  background: var(--bg-card-h);
+}
+.edu-gpa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: .45rem;
+  border-bottom: 1px solid var(--border);
+}
+.edu-gpa-year {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: .92rem;
+  color: var(--text);
+}
+.edu-gpa-cgpa {
+  font-family: var(--mono);
+  font-size: .74rem;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border: 1px solid var(--border-h);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.edu-sem-list {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.edu-sem-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--text-2);
+}
+.edu-sem-sgpa strong {
+  color: var(--text);
+  font-weight: 700;
+}
 .edu-coursework {
-  padding-top: 1rem;
+  padding-top: 1.1rem;
   border-top: 1px solid var(--border);
 }
 .edu-coursework-title {

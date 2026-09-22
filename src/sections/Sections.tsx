@@ -258,6 +258,25 @@ export function Experience() {
 
 /* ── EDUCATION ── */
 export function Education() {
+  const academicYears = [
+    {
+      year: '1st Year',
+      cgpa: '8.84',
+      semesters: [
+        { name: '1st Sem', sgpa: '8.68' },
+        { name: '2nd Sem', sgpa: '9.00' },
+      ],
+    },
+    {
+      year: '2nd Year',
+      cgpa: '8.57',
+      semesters: [
+        { name: '3rd Sem', sgpa: '8.64' },
+        { name: '4th Sem', sgpa: '8.50' },
+      ],
+    },
+  ]
+
   return (
     <section className="section" id="education">
       <div className="container">
@@ -273,7 +292,30 @@ export function Education() {
               <h3 className="edu-degree">Bachelor of Technology (B.Tech) in Information Technology</h3>
               <p className="edu-institution">Dr. D. Y. Patil Institute of Technology · Pune, India</p>
             </div>
-            <span className="edu-badge">CGPA: 8.71</span>
+            <span className="edu-badge">Overall CGPA: 8.71</span>
+          </div>
+
+          {/* Continuous GPA Consistency Breakdown */}
+          <div className="edu-gpa-section">
+            <span className="edu-section-subtitle">Academic Consistency & Semester GPAs:</span>
+            <div className="edu-gpa-grid">
+              {academicYears.map((yr) => (
+                <div key={yr.year} className="edu-gpa-card">
+                  <div className="edu-gpa-header">
+                    <span className="edu-gpa-year">{yr.year}</span>
+                    <span className="edu-gpa-cgpa">CGPA: <strong>{yr.cgpa}</strong></span>
+                  </div>
+                  <div className="edu-sem-list">
+                    {yr.semesters.map((sem) => (
+                      <div key={sem.name} className="edu-sem-item">
+                        <span className="edu-sem-name">{sem.name} SGPA</span>
+                        <span className="edu-sem-sgpa"><strong>{sem.sgpa}</strong></span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="edu-coursework">
@@ -285,6 +327,10 @@ export function Education() {
               <span>Data Structures & Algorithms</span>
               <span>Database Management Systems (DBMS)</span>
               <span>Object-Oriented Programming (OOP)</span>
+              <span>Basics of Computer Networks</span>
+              <span>Processor Architecture</span>
+              <span>Digital Marketing</span>
+              <span>Entrepreneurship</span>
             </div>
           </div>
         </div>
