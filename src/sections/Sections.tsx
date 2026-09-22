@@ -46,9 +46,7 @@ import './Sections.css'
 /* ── ABOUT ── */
 export function About() {
   const coreStrengths = [
-    { name: 'Frontend Development', desc: 'Building responsive, accessible interfaces with React & CSS.' },
     { name: 'Full-Stack Development', desc: 'Connecting dynamic frontend apps with server-side logic.' },
-    { name: 'REST API Development', desc: 'Creating structured, reliable API endpoints with Express & Node.' },
     { name: 'Responsive UI', desc: 'Ensuring seamless experiences across mobile, tablet, and desktop.' },
     { name: 'Database Integration', desc: 'Managing application data with MongoDB and relational databases.' },
   ]
@@ -63,7 +61,7 @@ export function About() {
         <div className="about-layout">
           <div className="about-text reveal">
             <p className="about-lead">
-              Hi, I’m <strong>Raj Bhokare</strong> — a dedicated <strong>MERN Stack Developer</strong> focused on building clean, practical, and responsive web applications.
+              Hi, I’m <strong>Raj Bhokare</strong> — a dedicated <strong>Full-Stack Developer</strong> focused on building clean, practical, and responsive web applications.
             </p>
             <p>
               My primary core stack includes <strong>React, JavaScript, Node.js, Express, and MongoDB</strong>. I enjoy crafting software that solves real-world problems through clean code structure, intuitive interfaces, and reliable API architecture.
@@ -192,44 +190,30 @@ export function Skills() {
 /* ── EXPERIENCE & DEVELOPMENT ── */
 const experiences = [
   {
-    period: '2025 — Present', badge: 'Technical Club', active: true,
-    role: 'Web Developer', org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology',
+    period: 'Sept 2026 — Present',
+    badge: 'Current Role · Promoted',
+    active: true,
+    role: 'Team Lead — Web Development',
+    org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology',
+    bullets: [
+      'Leading the web development team, overseeing project architecture, sprint delivery, and coordinating technical initiatives.',
+      'Promoted from Member of the Web Development Team following consistent contributions to club applications.',
+      'Conducting code reviews, mentoring junior developers, and ensuring high code quality and responsive standards.',
+    ],
+    stack: ['React', 'JavaScript', 'Node.js', 'Express.js', 'Git', 'Team Leadership'],
+  },
+  {
+    period: '2025 — Sept 2026',
+    badge: 'Previous Role',
+    active: false,
+    role: 'Member — Web Development Team',
+    org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology',
     bullets: [
       'Developed responsive full-stack web components using HTML, CSS, JavaScript, and Node.js.',
       'Collaborated with peer engineering members on feature implementation, code reviews, and API testing.',
       'Optimized interface layouts for cross-device mobile responsiveness and browser accessibility.',
     ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git'],
-  },
-  {
-    period: '2025 — Present', badge: 'Independent / Open Source', active: true,
-    role: 'Full-Stack Developer', org: 'Independent & Open Source Development',
-    bullets: [
-      'Built web applications using React for frontend UIs and Express/Node.js for backend services.',
-      'Designed database schemas in MySQL and MongoDB for application data persistence.',
-      'Integrated RESTful APIs and implemented user authentication workflows.',
-    ],
-    stack: ['React', 'JavaScript', 'Node.js', 'Express.js', 'MySQL', 'MongoDB'],
-  },
-  {
-    period: '2025', badge: 'Academic Project', active: false,
-    role: 'AI Application Engineering', org: 'Academic & Applied Software Development',
-    bullets: [
-      'Developed Briefly, an automated meeting assistant incorporating OpenAI Whisper API for speech-to-text.',
-      'Built Quizzer, an EdTech application leveraging AssemblyAI API for transcript analysis and quiz generation.',
-      'Created server-side controllers and view templates for processing media uploads.',
-    ],
-    stack: ['React', 'Node.js', 'Express.js', 'OpenAI Whisper', 'AssemblyAI API'],
-  },
-  {
-    period: '2024 — 2025', badge: 'Hardware & Systems', active: false,
-    role: 'IoT Systems Developer', org: 'Embedded Engineering Projects',
-    bullets: [
-      'Built DustSense, an environmental monitoring device using ESP8266 microcontroller and optical sensors.',
-      'Implemented lightweight MQTT messaging protocol to stream live PM2.5 telemetry over Wi-Fi.',
-      'Constructed a web-based analytical dashboard for real-time sensor metrics visualization.',
-    ],
-    stack: ['ESP8266', 'Arduino C++', 'MQTT', 'JavaScript', 'HTML/CSS'],
   },
 ]
 
@@ -287,21 +271,22 @@ export function Education() {
         <div className="education-card reveal">
           <div className="edu-main-info">
             <div>
-              <span className="edu-year">2022 — 2026 (Expected)</span>
+              <span className="edu-year">2024 — 2028</span>
               <h3 className="edu-degree">Bachelor of Technology (B.Tech) in Information Technology</h3>
               <p className="edu-institution">Dr. D. Y. Patil Institute of Technology · Pune, India</p>
             </div>
-            <span className="edu-badge">3rd Year Student</span>
+            <span className="edu-badge">CGPA: 8.71</span>
           </div>
 
           <div className="edu-coursework">
             <span className="edu-coursework-title">Relevant Technical Coursework:</span>
             <div className="edu-coursework-tags">
+              <span>AIML</span>
+              <span>Theory of Computation</span>
+              <span>Operating Systems</span>
               <span>Data Structures & Algorithms</span>
-              <span>Object-Oriented Programming (OOP)</span>
               <span>Database Management Systems (DBMS)</span>
-              <span>Web Development</span>
-              <span>Software Engineering</span>
+              <span>Object-Oriented Programming (OOP)</span>
             </div>
           </div>
         </div>
@@ -726,7 +711,7 @@ export function Contact() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const email = 'rajbhokare1@gmail.com'
+  const email = 'bhokareraj281@gmail.com'
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email)
@@ -897,7 +882,7 @@ export function Contact() {
           <div className="site-footer-top">
             <div className="site-footer-brand">
               <h3 className="site-footer-name">Raj Bhokare</h3>
-              <p className="site-footer-role">MERN Stack Developer</p>
+              <p className="site-footer-role">Full-Stack Developer</p>
             </div>
 
             <nav className="site-footer-nav" aria-label="Footer Navigation">

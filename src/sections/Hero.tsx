@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa6';
-import { FiArrowRight, FiDownload, FiMapPin, FiZap, FiCode } from 'react-icons/fi';
+import { FiArrowRight, FiDownload, FiMapPin } from 'react-icons/fi';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
 
@@ -16,7 +16,7 @@ export default function Hero() {
           {/* 1. Eyebrow */}
           <div className="hero-eyebrow-tag fade-up" style={{ '--d': '0ms' } as React.CSSProperties}>
             <span className="badge-dot" />
-            <span>MERN STACK DEVELOPER</span>
+            <span>FULL STACK DEVELOPER</span>
           </div>
 
           {/* 2. Main Heading */}
@@ -26,7 +26,7 @@ export default function Hero() {
 
           {/* 3. Value Proposition */}
           <h2 className="hero-value-prop fade-up" style={{ '--d': '160ms' } as React.CSSProperties}>
-            Building modern, responsive web applications with React, Node.js, Express and MongoDB.
+            Building modern, responsive, and scalable web applications with clean architecture.
           </h2>
 
           {/* 4. Supporting Paragraph */}
@@ -105,39 +105,18 @@ export default function Hero() {
                 <span className="profile-card-title">raj_bhokare.dev</span>
                 <div className="profile-status-pill">
                   <span className="status-live-dot" />
-                  <span>Available</span>
+                  <span>Open for Opportunities</span>
                 </div>
               </div>
 
               <div className="profile-img-frame">
                 <img
                   src="/raj.png"
-                  alt="Raj Bhokare - MERN Stack Developer"
+                  alt="Raj Bhokare - Full Stack Developer"
                   className="profile-photo"
                   loading="eager"
                 />
                 <div className="profile-img-overlay" />
-
-                {/* Floating modern glass badges */}
-                <div className="floating-badge badge-top-right">
-                  <div className="badge-icon-wrap">
-                    <FiZap className="badge-icon" />
-                  </div>
-                  <div className="badge-text-group">
-                    <span className="badge-title">Full-Stack</span>
-                    <span className="badge-sub">MERN Specialist</span>
-                  </div>
-                </div>
-
-                <div className="floating-badge badge-bottom-left">
-                  <div className="badge-icon-wrap code-wrap">
-                    <FiCode className="badge-icon" />
-                  </div>
-                  <div className="badge-text-group">
-                    <span className="badge-title">Clean Code</span>
-                    <span className="badge-sub">High Performance</span>
-                  </div>
-                </div>
               </div>
 
               <div className="profile-card-footer">
