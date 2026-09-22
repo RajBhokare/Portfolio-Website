@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa6';
-import { FiArrowRight, FiDownload, FiMapPin } from 'react-icons/fi';
+import { FiArrowRight, FiDownload } from 'react-icons/fi';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
 
@@ -122,11 +122,10 @@ export default function Hero() {
               <div className="profile-card-footer">
                 <div className="footer-status">
                   <span className="caption-dot" />
-                  <span>Solapur / Pune, India</span>
+                  <span>Full-Stack Web Development</span>
                 </div>
                 <div className="footer-location">
-                  <FiMapPin size={12} style={{ marginRight: 4, color: 'var(--cyan)' }} />
-                  <span>Open to Relocate / Remote</span>
+                  <span>Available for Hire</span>
                 </div>
               </div>
             </div>
