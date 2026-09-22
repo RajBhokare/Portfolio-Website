@@ -1,15 +1,20 @@
 .hero {
   min-height: 88vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 6rem 2rem 4rem;
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
   background: transparent;
 }
 
 /* Grid background */
 .hero-grid {
-  position: absolute; inset: 0; pointer-events: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background-image: radial-gradient(circle, var(--grid-pattern) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 10%, transparent 90%);
@@ -17,21 +22,38 @@
 
 /* Hero inner layout */
 .hero-inner {
-  max-width: 1180px; width: 100%;
-  display: grid; grid-template-columns: 1fr 440px;
-  gap: 3.5rem; align-items: center; position: relative; z-index: 2;
+  max-width: 1180px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 430px;
+  gap: 3.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 /* Eyebrow Tag */
 .hero-eyebrow-tag {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--cyan-dim); border: 1px solid var(--border-h);
-  border-radius: 100px; padding: 5px 14px 5px 10px;
-  font-family: var(--mono); font-size: .75rem; color: var(--cyan);
-  margin-bottom: 1.25rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cyan-dim);
+  border: 1px solid var(--border-h);
+  border-radius: 100px;
+  padding: 5px 14px 5px 10px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--cyan);
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: fit-content;
 }
 .badge-dot {
-  width: 7px; height: 7px; background: var(--cyan);
+  width: 7px;
+  height: 7px;
+  background: var(--cyan);
   border-radius: 50%;
 }
 
@@ -39,59 +61,100 @@
 .hero-name {
   font-family: var(--display);
   font-size: clamp(2.4rem, 4.2vw, 3.6rem);
-  font-weight: 800; line-height: 1.1;
-  letter-spacing: -.03em; margin-bottom: 0.8rem; color: var(--text);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.8rem;
+  color: var(--text);
 }
 
 /* Value Proposition */
 .hero-value-prop {
   font-family: var(--display);
   font-size: clamp(1.2rem, 2.2vw, 1.5rem);
-  font-weight: 700; color: var(--text);
-  line-height: 1.35; margin-bottom: 1rem;
-  letter-spacing: -.01em; max-width: 620px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+  max-width: 620px;
 }
 
 /* Supporting Paragraph */
 .hero-bio {
-  font-size: 1.02rem; color: var(--text-2); max-width: 540px;
-  margin-bottom: 1.8rem; line-height: 1.7;
+  font-size: 1.02rem;
+  color: var(--text-2);
+  max-width: 540px;
+  margin-bottom: 1.8rem;
+  line-height: 1.7;
 }
 
 /* CTA Buttons */
-.hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+}
 
 /* Social Links */
-.hero-socials { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.hero-socials {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
 .icon-link {
-  display: inline-flex; align-items: center; gap: .45rem;
-  padding: .45rem .95rem; border: 1px solid var(--border);
-  border-radius: var(--r-sm); color: var(--text-2);
-  font-family: var(--display); font-size: .82rem; font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  font-family: var(--display);
+  font-size: 0.82rem;
+  font-weight: 600;
   background: var(--bg-card);
   box-shadow: var(--card-shadow);
-  transition: all var(--t); cursor: pointer; text-decoration: none;
+  transition: all var(--t);
+  cursor: pointer;
+  text-decoration: none;
 }
 .icon-link:hover {
-  border-color: var(--border-h); color: var(--cyan);
-  background: var(--bg-card-h); transform: translateY(-1px);
+  border-color: var(--border-h);
+  color: var(--cyan);
+  background: var(--bg-card-h);
+  transform: translateY(-1px);
 }
 
 /* Small Technology Row Below Hero */
 .hero-tech-row {
-  display: flex; align-items: center; gap: .6rem;
-  padding-top: 1rem; border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
   max-width: 540px;
 }
 .tech-row-items {
-  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 .tech-pill {
-  font-family: var(--mono); font-size: .8rem; font-weight: 600;
-  color: var(--text-2); letter-spacing: .02em;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
 }
 .tech-dot {
-  color: var(--cyan); font-size: .75rem; opacity: 0.7;
+  color: var(--cyan);
+  font-size: 0.75rem;
+  opacity: 0.7;
 }
 
 /* Profile Showcase Card & Ambient Glow */
@@ -103,7 +166,6 @@
   align-items: center;
 }
 
-/* Ambient dynamic back glow */
 .profile-ambient-glow {
   position: absolute;
   inset: -15px;
@@ -126,7 +188,6 @@
   transform: scale(1.04);
 }
 
-/* Main Profile Card */
 .profile-card {
   position: relative;
   z-index: 1;
@@ -149,7 +210,6 @@
   transform: translateY(-4px);
 }
 
-/* Card Header */
 .profile-card-header {
   background: var(--bg-2);
   padding: 0.7rem 1.1rem;
@@ -216,7 +276,6 @@
   50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-/* Photo Frame */
 .profile-img-frame {
   position: relative;
   width: 100%;
@@ -241,7 +300,6 @@
   transform: scale(1.03);
 }
 
-/* Subtle Gradient overlay at bottom for smooth readability */
 .profile-img-overlay {
   position: absolute;
   inset: 0;
@@ -263,87 +321,6 @@
   );
 }
 
-/* Floating Badges */
-.floating-badge {
-  position: absolute;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(13, 19, 34, 0.78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 14px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.45), 0 0 15px rgba(56, 189, 248, 0.12);
-  transition: transform var(--t), border-color var(--t);
-  animation: floatBadge 4s ease-in-out infinite alternate;
-}
-
-[data-theme="light"] .floating-badge {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.12);
-}
-
-.badge-top-right {
-  top: 18px;
-  right: 18px;
-  animation-delay: 0s;
-}
-
-.badge-bottom-left {
-  bottom: 22px;
-  left: 18px;
-  animation-delay: 2s;
-}
-
-@keyframes floatBadge {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-6px); }
-}
-
-.badge-icon-wrap {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(129, 140, 248, 0.25));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--cyan);
-  font-size: 1rem;
-  border: 1px solid rgba(56, 189, 248, 0.35);
-}
-
-.badge-icon-wrap.code-wrap {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(56, 189, 248, 0.25));
-  color: var(--green);
-  border-color: rgba(16, 185, 129, 0.35);
-}
-
-.badge-text-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.badge-title {
-  font-family: var(--display);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.2;
-}
-
-.badge-sub {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  color: var(--text-2);
-  line-height: 1.2;
-}
-
-/* Card Footer */
 .profile-card-footer {
   padding: 0.75rem 1.1rem;
   background: var(--bg-2);

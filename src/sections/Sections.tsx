@@ -14,7 +14,7 @@ import {
   SiGooglecloud,
   SiJupyter,
 } from 'react-icons/si'
-import { FaJava, FaAws, FaLinkedin, FaGithub, FaQuoteLeft } from 'react-icons/fa6'
+import { FaJava, FaAws, FaLinkedin, FaGithub } from 'react-icons/fa6'
 import {
   FiCode,
   FiServer,
@@ -24,14 +24,12 @@ import {
   FiArrowUpRight,
   FiExternalLink,
   FiBookOpen,
-  FiMapPin,
   FiCalendar,
   FiCheckCircle,
   FiCheck,
   FiMic,
   FiVideo,
   FiFileText,
-  FiHeart,
   FiZap,
   FiMail,
   FiCopy,

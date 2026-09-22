@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiSun, FiMoon, FiMenu, FiX, FiCode, FiDownload } from 'react-icons/fi';
+import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { MagneticButton } from './MagneticButton/MagneticButton';
 
@@ -14,7 +14,7 @@ const navLinks: NavItem[] = [
   { href: '#skills',     label: 'Skills' },
   { href: '#projects',   label: 'Projects' },
   { href: '#experience', label: 'Experience' },
-  { href: '#about',      label: 'Education' },
+  { href: '#education',  label: 'Education' },
   { href: '#contact',    label: 'Contact' },
 ];
 
