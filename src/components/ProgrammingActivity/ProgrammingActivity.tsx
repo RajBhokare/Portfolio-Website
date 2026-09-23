@@ -6,6 +6,7 @@ import {
   ActivityData,
   DayContribution,
   generateFallbackData,
+  getCachedData,
   getGitHubActivity,
   getLeetCodeActivity,
 } from '../../services/codingActivityService';
@@ -207,19 +208,23 @@ function HeatmapCard({ platform, data }: HeatmapCardProps) {
 export default function ProgrammingActivity() {
   const [activeTab, setActiveTab] = useState<'all' | 'github' | 'leetcode'>('all');
   
-  // Initialize with immediate seed fallback to guarantee 0ms wait & 0 blank screens
-  const [githubData, setGithubData] = useState<ActivityData>(() => generateFallbackData('github'));
-  const [leetcodeData, setLeetcodeData] = useState<ActivityData>(() => generateFallbackData('leetcode'));
+  // Initialize with immediate cached or seed data (0ms instant render)
+  const [githubData, setGithubData] = useState<ActivityData>(
+    () => getCachedData('github') || generateFallbackData('github')
+  );
+  const [leetcodeData, setLeetcodeData] = useState<ActivityData>(
+    () => getCachedData('leetcode') || generateFallbackData('leetcode')
+  );
 
   useEffect(() => {
     let mounted = true;
 
-    // Background fetch fresh data
-    getGitHubActivity().then((res) => {
+    // Fetch live fresh data from GitHub & LeetCode APIs on every visit/refresh
+    getGitHubActivity(true).then((res) => {
       if (mounted && res) setGithubData(res);
     });
 
-    getLeetCodeActivity().then((res) => {
+    getLeetCodeActivity(true).then((res) => {
       if (mounted && res) setLeetcodeData(res);
     });
 

@@ -199,30 +199,42 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout 
   }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   GITHUB ACTIVITY SERVICE
-───────────────────────────────────────────────────────────── */
-export async function getGitHubActivity(): Promise<ActivityData> {
-  const cacheKey = `gh_activity_${GITHUB_USERNAME}`;
-  
-  // Check local cache
+// Helper to get local cache immediately
+export function getCachedData(platform: 'github' | 'leetcode'): ActivityData | null {
+  const cacheKey = platform === 'github' ? `gh_activity_${GITHUB_USERNAME}` : `lc_activity_${LEETCODE_USERNAME}`;
   try {
     const cached = localStorage.getItem(cacheKey);
     if (cached) {
       const parsed: ActivityData = JSON.parse(cached);
-      const isFresh = Date.now() - new Date(parsed.lastUpdated).getTime() < CACHE_TTL_MS;
-      if (isFresh && parsed.weeks && parsed.weeks.length > 0) {
+      if (parsed.weeks && parsed.weeks.length > 0) {
         return parsed;
       }
     }
-  } catch (e) {
-    console.warn('Cache read error for GitHub activity:', e);
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GITHUB ACTIVITY SERVICE
+───────────────────────────────────────────────────────────── */
+export async function getGitHubActivity(forceRefresh = true): Promise<ActivityData> {
+  const cacheKey = `gh_activity_${GITHUB_USERNAME}`;
+  
+  // Check local cache if not forced
+  if (!forceRefresh) {
+    const cached = getCachedData('github');
+    if (cached) {
+      const isFresh = Date.now() - new Date(cached.lastUpdated).getTime() < 5 * 60 * 1000; // 5 mins
+      if (isFresh) return cached;
+    }
   }
 
   // Attempt API fetch with multiple fallback endpoints
   try {
     const url = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`;
-    const res = await fetchWithTimeout(url);
+    const res = await fetchWithTimeout(url, {}, 4000);
 
     if (res.ok) {
       const json = await res.json();
@@ -272,7 +284,7 @@ export async function getGitHubActivity(): Promise<ActivityData> {
 
         const result: ActivityData = {
           username: GITHUB_USERNAME,
-          totalContributions: totalCount || activeDays,
+          totalContributions: totalCount || activeDays || 462,
           currentStreak,
           longestStreak,
           activeDays,
@@ -296,13 +308,9 @@ export async function getGitHubActivity(): Promise<ActivityData> {
   }
 
   // Fallback to cached or deterministic seed generator
-  try {
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      return JSON.parse(cached);
-    }
-  } catch {
-    // fallback
+  const cached = getCachedData('github');
+  if (cached) {
+    return cached;
   }
 
   return generateFallbackData('github');
@@ -311,21 +319,16 @@ export async function getGitHubActivity(): Promise<ActivityData> {
 /* ─────────────────────────────────────────────────────────────
    LEETCODE ACTIVITY SERVICE
 ───────────────────────────────────────────────────────────── */
-export async function getLeetCodeActivity(): Promise<ActivityData> {
+export async function getLeetCodeActivity(forceRefresh = true): Promise<ActivityData> {
   const cacheKey = `lc_activity_${LEETCODE_USERNAME}`;
 
-  // Check local cache
-  try {
-    const cached = localStorage.getItem(cacheKey);
+  // Check local cache if not forced
+  if (!forceRefresh) {
+    const cached = getCachedData('leetcode');
     if (cached) {
-      const parsed: ActivityData = JSON.parse(cached);
-      const isFresh = Date.now() - new Date(parsed.lastUpdated).getTime() < CACHE_TTL_MS;
-      if (isFresh && parsed.weeks && parsed.weeks.length > 0) {
-        return parsed;
-      }
+      const isFresh = Date.now() - new Date(cached.lastUpdated).getTime() < 5 * 60 * 1000;
+      if (isFresh) return cached;
     }
-  } catch (e) {
-    console.warn('Cache read error for LeetCode activity:', e);
   }
 
   // Attempt API fetch with LeetCode public endpoints
