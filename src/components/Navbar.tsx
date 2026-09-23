@@ -107,10 +107,10 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 64,
-          maxWidth: 1180,
+          height: 68,
+          maxWidth: 'min(1380px, 94vw)',
           margin: '0 auto',
-          padding: '0 1.5rem',
+          padding: '0 1.75rem',
         }}
       >
         {/* Brand Logo */}
@@ -123,13 +123,13 @@ export default function Navbar() {
           aria-label="Raj Bhokare Developer Portfolio Home"
           style={{
             fontFamily: 'var(--display)',
-            fontSize: '1rem',
+            fontSize: '1.02rem',
             fontWeight: 800,
             color: 'var(--text)',
             letterSpacing: '-.02em',
             display: 'flex',
             alignItems: 'center',
-            gap: '.45rem',
+            gap: '.5rem',
             textDecoration: 'none',
           }}
         >
@@ -137,14 +137,14 @@ export default function Navbar() {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: 28,
-            height: 28,
-            borderRadius: '6px',
+            width: 30,
+            height: 30,
+            borderRadius: '7px',
             background: 'var(--cyan-dim)',
             color: 'var(--cyan)',
             border: '1px solid var(--border-h)',
           }}>
-            <FiCode size={14} />
+            <FiCode size={15} />
           </span>
           <span>Raj Bhokare</span>
           <span style={{
@@ -152,7 +152,7 @@ export default function Navbar() {
             fontSize: '.62rem',
             color: 'var(--cyan)',
             background: 'var(--cyan-dim)',
-            padding: '2px 6px',
+            padding: '2px 7px',
             borderRadius: '4px',
             fontWeight: 600,
           }}>dev</span>
@@ -164,7 +164,7 @@ export default function Navbar() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '.25rem',
+            gap: '.35rem',
             margin: 0,
             padding: 0,
             listStyle: 'none',
@@ -186,9 +186,9 @@ export default function Navbar() {
                     aria-current={isActive ? 'page' : undefined}
                     style={{
                       fontFamily: 'var(--display)',
-                      fontSize: '.82rem',
+                      fontSize: '.84rem',
                       fontWeight: 600,
-                      padding: '.4rem .75rem',
+                      padding: '.42rem .82rem',
                       borderRadius: 'var(--r-sm)',
                       color: isActive ? 'var(--cyan)' : 'var(--text-2)',
                       background: isActive ? 'var(--cyan-dim)' : 'transparent',
@@ -212,7 +212,7 @@ export default function Navbar() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '.5rem',
+            gap: '.6rem',
           }}
         >
           {/* GitHub Icon Link */}
@@ -523,7 +523,7 @@ export default function Navbar() {
       )}
 
       <style>{`
-        @media (max-width: 900px) {
+        @media (max-width: 1060px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: flex !important; }
         }

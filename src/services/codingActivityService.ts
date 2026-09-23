@@ -7,6 +7,7 @@ export interface DayContribution {
 export interface ActivityData {
   username: string;
   totalContributions: number;
+  totalSolved?: number;
   currentStreak: number;
   longestStreak: number;
   activeDays: number;
@@ -138,7 +139,8 @@ export function generateFallbackData(platform: 'github' | 'leetcode'): ActivityD
 
   return {
     username: platform === 'github' ? GITHUB_USERNAME : LEETCODE_USERNAME,
-    totalContributions: totalContributions || (platform === 'github' ? 486 : 248),
+    totalContributions: totalContributions || (platform === 'github' ? 462 : 330),
+    totalSolved: platform === 'leetcode' ? 123 : undefined,
     currentStreak: Math.max(currentStreak, platform === 'github' ? 4 : 6),
     longestStreak: Math.max(longestStreak, platform === 'github' ? 19 : 24),
     activeDays: Math.max(activeDays, platform === 'github' ? 142 : 118),
@@ -329,13 +331,14 @@ export async function getLeetCodeActivity(): Promise<ActivityData> {
   // Attempt API fetch with LeetCode public endpoints
   try {
     const endpoints = [
+      `https://alfa-leetcode-api.onrender.com/userProfile/${LEETCODE_USERNAME}`,
       `https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/calendar`,
       `https://leetcode-stats-api.herokuapp.com/${LEETCODE_USERNAME}`,
     ];
 
     for (const ep of endpoints) {
       try {
-        const res = await fetchWithTimeout(ep, {}, 3000);
+        const res = await fetchWithTimeout(ep, {}, 4000);
         if (res.ok) {
           const json = await res.json();
           let submissionCalendar: Record<string, number> = {};
@@ -414,9 +417,14 @@ export async function getLeetCodeActivity(): Promise<ActivityData> {
 
             const { weeks, months } = organizeIntoWeeksAndMonths(days);
 
+            // Extract total submissions from profile stats if available
+            const apiTotalSubmissions = json.totalSubmissions?.[0]?.submissions || totalSubmissions || 330;
+            const solvedCount = json.totalSolved || json.solvedProblem || 123;
+
             const result: ActivityData = {
               username: LEETCODE_USERNAME,
-              totalContributions: totalSubmissions || json.totalSolved || 180,
+              totalContributions: apiTotalSubmissions,
+              totalSolved: solvedCount,
               currentStreak,
               longestStreak,
               activeDays,

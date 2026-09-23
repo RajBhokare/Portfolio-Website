@@ -53,7 +53,14 @@ function HeatmapCard({ platform, data }: HeatmapCardProps) {
             {isGitHub ? <FaGithub /> : <SiLeetcode />}
           </span>
           <div>
-            <h3>{title}</h3>
+            <h3>
+              {title}
+              {!isGitHub && (
+                <span className="lc-title-solved-num">
+                  Problem Solved : {data.totalSolved || 123}
+                </span>
+              )}
+            </h3>
             <span className="platform-handle">{subtitle}</span>
           </div>
         </div>
@@ -84,10 +91,21 @@ function HeatmapCard({ platform, data }: HeatmapCardProps) {
 
         <div className="metric-badge">
           <span className="metric-label">
-            <FiZap size={12} style={{ display: 'inline', marginRight: 4 }} />
-            Current Streak
+            {isGitHub ? (
+              <>
+                <FiZap size={12} style={{ display: 'inline', marginRight: 4 }} />
+                Current Streak
+              </>
+            ) : (
+              <>
+                <FiCheckCircle size={12} style={{ display: 'inline', marginRight: 4 }} />
+                Problem Solved
+              </>
+            )}
           </span>
-          <span className="metric-val">{data.currentStreak} Days</span>
+          <span className="metric-val">
+            {isGitHub ? `${data.currentStreak} Days` : (data.totalSolved || 123)}
+          </span>
         </div>
 
         <div className="metric-badge">
