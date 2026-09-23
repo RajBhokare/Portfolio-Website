@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa6';
+import { SiLeetcode } from 'react-icons/si';
 import { FiArrowRight, FiDownload } from 'react-icons/fi';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
@@ -54,7 +55,7 @@ export default function Hero() {
             </MagneticButton>
           </div>
 
-          {/* 7. Subtle GitHub and LinkedIn links/icons */}
+          {/* 7. GitHub, LinkedIn, and LeetCode links/icons */}
           <div className="hero-socials fade-up" style={{ '--d': '400ms' } as React.CSSProperties}>
             <MagneticButton>
               <a
@@ -78,6 +79,18 @@ export default function Hero() {
               >
                 <FaLinkedin size={16} />
                 <span>LinkedIn</span>
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a
+                href="https://leetcode.com/Rajbhokare"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-link icon-link-lc"
+                aria-label="LeetCode Profile"
+              >
+                <SiLeetcode size={16} color="#fbbf24" />
+                <span>LeetCode</span>
               </a>
             </MagneticButton>
           </div>

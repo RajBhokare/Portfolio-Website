@@ -13,6 +13,7 @@ import {
   SiGit,
   SiGooglecloud,
   SiJupyter,
+  SiLeetcode,
 } from 'react-icons/si'
 import { FaJava, FaAws, FaLinkedin, FaGithub } from 'react-icons/fa6'
 import {
@@ -743,6 +744,17 @@ export function ResumeCTA() {
                 Connect on LinkedIn
               </a>
             </MagneticButton>
+            <MagneticButton>
+              <a
+                href="https://leetcode.com/Rajbhokare"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ps-btn ps-btn-github"
+              >
+                <SiLeetcode size={15} color="#fbbf24" />
+                LeetCode Profile
+              </a>
+            </MagneticButton>
           </div>
         </div>
       </div>
@@ -841,6 +853,15 @@ export function Contact() {
                 </div>
                 <FiArrowUpRight className="contact-card-arrow" size={16} />
               </a>
+
+              <a href="https://leetcode.com/Rajbhokare" target="_blank" rel="noopener noreferrer" className="contact-card">
+                <div className="contact-card-icon"><SiLeetcode size={18} color="var(--gold)" /></div>
+                <div>
+                  <span className="contact-card-label">LeetCode</span>
+                  <strong className="contact-card-val">leetcode.com/Rajbhokare</strong>
+                </div>
+                <FiArrowUpRight className="contact-card-arrow" size={16} />
+              </a>
             </div>
           </div>
 
@@ -934,8 +955,9 @@ export function Contact() {
             <nav className="site-footer-nav" aria-label="Footer Navigation">
               <a href="#hero">Home</a>
               <a href="#about">About</a>
-              <a href="#projects">Projects</a>
               <a href="#skills">Skills</a>
+              <a href="#programming">Programming</a>
+              <a href="#projects">Projects</a>
               <a href="#contact">Contact</a>
             </nav>
 
@@ -945,6 +967,9 @@ export function Contact() {
               </a>
               <a href="https://linkedin.com/in/rajbhokare1" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
                 <FaLinkedin size={14} /> LinkedIn
+              </a>
+              <a href="https://leetcode.com/Rajbhokare" target="_blank" rel="noopener noreferrer" aria-label="LeetCode Profile">
+                <SiLeetcode size={14} /> LeetCode
               </a>
               <a href={`mailto:${email}`} aria-label="Send Email">
                 <FiMail size={14} /> Email

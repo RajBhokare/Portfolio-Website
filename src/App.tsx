@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
+import ProgrammingActivity from './components/ProgrammingActivity/ProgrammingActivity';
 import { About, Skills, Experience, Education, Projects, WhatIBuild, ResumeCTA, Contact } from './sections/Sections';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
 
@@ -164,6 +165,8 @@ export default function App() {
         <About />
         <div className="section-sep" aria-hidden="true" />
         <Skills />
+        <div className="section-sep" aria-hidden="true" />
+        <ProgrammingActivity />
         <div className="section-sep" aria-hidden="true" />
         <WhatIBuild />
         <div className="section-sep" aria-hidden="true" />

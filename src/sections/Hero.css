@@ -128,6 +128,10 @@
   background: var(--bg-card-h);
   transform: translateY(-1px);
 }
+.icon-link-lc:hover {
+  border-color: rgba(251, 191, 36, 0.45);
+  color: var(--gold);
+}
 
 /* Small Technology Row Below Hero */
 .hero-tech-row {

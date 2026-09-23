@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { FiSun, FiMoon, FiMenu, FiX, FiCode, FiDownload } from 'react-icons/fi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
+import { SiLeetcode } from 'react-icons/si';
 import { MagneticButton } from './MagneticButton/MagneticButton';
 
 interface NavItem {
@@ -9,13 +10,14 @@ interface NavItem {
 }
 
 const navLinks: NavItem[] = [
-  { href: '#hero',       label: 'Home' },
-  { href: '#about',      label: 'About' },
-  { href: '#skills',     label: 'Skills' },
-  { href: '#projects',   label: 'Projects' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#education',  label: 'Education' },
-  { href: '#contact',    label: 'Contact' },
+  { href: '#hero',        label: 'Home' },
+  { href: '#about',       label: 'About' },
+  { href: '#skills',      label: 'Skills' },
+  { href: '#programming', label: 'Programming' },
+  { href: '#projects',    label: 'Projects' },
+  { href: '#experience',  label: 'Experience' },
+  { href: '#education',   label: 'Education' },
+  { href: '#contact',     label: 'Contact' },
 ];
 
 export default function Navbar() {
@@ -281,6 +283,40 @@ export default function Navbar() {
             </a>
           </MagneticButton>
 
+          {/* LeetCode Icon Link */}
+          <MagneticButton>
+            <a
+              href="https://leetcode.com/Rajbhokare"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LeetCode Profile"
+              title="LeetCode Profile"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 34,
+                height: 34,
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-2)',
+                transition: 'all .2s ease',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
+                e.currentTarget.style.color = 'var(--gold)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.color = 'var(--text-2)';
+              }}
+            >
+              <SiLeetcode size={14} />
+            </a>
+          </MagneticButton>
+
           {/* Download Resume Button */}
           <MagneticButton>
             <a
@@ -412,29 +448,28 @@ export default function Navbar() {
             );
           })}
 
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '.5rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
             <a
               href="https://github.com/RajBhokare"
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                flex: 1,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '.5rem',
-                padding: '.75rem',
+                gap: '.4rem',
+                padding: '.65rem .4rem',
                 borderRadius: 'var(--r-sm)',
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 color: 'var(--text)',
                 fontFamily: 'var(--display)',
-                fontSize: '.9rem',
+                fontSize: '.82rem',
                 fontWeight: 600,
                 textDecoration: 'none',
               }}
             >
-              <FaGithub size={16} />
+              <FaGithub size={15} />
               <span>GitHub</span>
             </a>
             <a
@@ -442,24 +477,46 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                flex: 1,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '.5rem',
-                padding: '.75rem',
+                gap: '.4rem',
+                padding: '.65rem .4rem',
                 borderRadius: 'var(--r-sm)',
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 color: 'var(--text)',
                 fontFamily: 'var(--display)',
-                fontSize: '.9rem',
+                fontSize: '.82rem',
                 fontWeight: 600,
                 textDecoration: 'none',
               }}
             >
-              <FaLinkedin size={16} />
+              <FaLinkedin size={15} />
               <span>LinkedIn</span>
+            </a>
+            <a
+              href="https://leetcode.com/Rajbhokare"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '.4rem',
+                padding: '.65rem .4rem',
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                color: 'var(--gold)',
+                fontFamily: 'var(--display)',
+                fontSize: '.82rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              <SiLeetcode size={14} color="var(--gold)" />
+              <span>LeetCode</span>
             </a>
           </div>
         </div>
