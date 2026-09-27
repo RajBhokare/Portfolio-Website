@@ -412,13 +412,13 @@ export function Projects() {
 
             <div className="ps-actions">
               <MagneticButton>
-                <a href="#contact" className="ps-btn ps-btn-demo">
+                <a href="https://brieflyai-three.vercel.app/" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-demo">
                   <FiExternalLink size={14} />
                   Live Demo
                 </a>
               </MagneticButton>
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                <a href="https://github.com/RajBhokare/briefly_ai" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
                   <FaGithub size={14} />
                   GitHub
                 </a>
@@ -434,7 +434,7 @@ export function Projects() {
               <div className="app-chrome">
                 <div className="app-chrome-bar">
                   <div className="app-dots"><span/><span/><span/></div>
-                  <div className="app-url">quizzer.app/assessment</div>
+                  <div className="app-url">quizzer-7t6k.onrender.com</div>
                 </div>
                 <div className="app-body">
                   <div className="app-card">
@@ -485,13 +485,13 @@ export function Projects() {
 
             <div className="ps-actions">
               <MagneticButton>
-                <a href="#contact" className="ps-btn ps-btn-demo">
+                <a href="https://quizzer-7t6k.onrender.com/" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-demo">
                   <FiExternalLink size={14} />
                   Live Demo
                 </a>
               </MagneticButton>
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                <a href="https://github.com/RajBhokare/Quizzer" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
                   <FaGithub size={14} />
                   GitHub
                 </a>
@@ -500,22 +500,44 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Project 3: EduQuest */}
-        <div className="project-showcase reveal" data-accent="coral">
+        {/* Project 3: SevaConnect */}
+        <div className="project-showcase reveal" data-accent="green">
           <div className="ps-visual">
-            <div className="ps-mockup ps-mockup-edu">
-              <div className="edu-ui">
-                <div className="edu-nav">EduQuest <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><FiBookOpen size={12} /> LMS Portal</span></div>
-                <div className="edu-hero-text">Digital Learning Engine</div>
-                <div className="edu-cards">
-                  <div className="edu-card"><FiBookOpen size={14} /><span>Courses</span></div>
-                  <div className="edu-card edu-card-active"><FiFileText size={14} /><span>Quizzes</span></div>
-                  <div className="edu-card"><FiCheckCircle size={14} /><span>Analytics</span></div>
+            <div className="ps-mockup ps-mockup-seva">
+              <div className="seva-ui">
+                <div className="seva-header">
+                  <span className="seva-logo"><FiZap size={13} color="var(--green)" /> SevaConnect</span>
+                  <span className="seva-status">● SIH 2026</span>
                 </div>
-                <div className="edu-stat-row">
-                  <div className="edu-stat"><span className="edu-stat-n">MySQL</span><span className="edu-stat-l">Database</span></div>
-                  <div className="edu-stat"><span className="edu-stat-n">REST</span><span className="edu-stat-l">APIs</span></div>
-                  <div className="edu-stat"><span className="edu-stat-n">Auth</span><span className="edu-stat-l">Role-based</span></div>
+                <div className="seva-card">
+                  <div className="seva-card-title">
+                    <span>FairMatch Dispatch</span>
+                    <span className="seva-badge-match">98.4% Match</span>
+                  </div>
+                  <div className="seva-worker-row">
+                    <span className="seva-worker-name">Verified Professional #418</span>
+                    <span style={{ color: 'var(--green)', fontSize: '0.6rem', fontWeight: 600 }}>● Active Dispatch</span>
+                  </div>
+                  <div className="seva-metrics">
+                    <div className="seva-metric-item">
+                      <span style={{ color: 'var(--text-3)', display: 'block', fontSize: '0.52rem' }}>AI RANKING</span>
+                      <span style={{ fontWeight: 700, color: 'var(--text)' }}>4.92 ★ Bayesian</span>
+                    </div>
+                    <div className="seva-metric-item">
+                      <span style={{ color: 'var(--text-3)', display: 'block', fontSize: '0.52rem' }}>SENTIMENT</span>
+                      <span style={{ fontWeight: 700, color: 'var(--green)' }}>96% Positive</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="seva-forecast-row">
+                  <span style={{ color: 'var(--text-2)' }}>Demand Forecast Engine</span>
+                  <span className="seva-forecast-val">HIGH DEMAND</span>
+                </div>
+                <div className="seva-tags">
+                  <span className="seva-tag">FastAPI AI</span>
+                  <span className="seva-tag">Node.js REST</span>
+                  <span className="seva-tag">Coop Hub</span>
+                  <span className="seva-tag">Welfare Track</span>
                 </div>
               </div>
             </div>
@@ -523,41 +545,41 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">03</span>
-              <span className="ps-badge ps-badge-web">Full-Stack · Education</span>
+              <span className="ps-badge ps-badge-sih">SIH 2026 · Full-Stack & AI</span>
             </div>
-            <h3 className="ps-title">EduQuest</h3>
+            <h3 className="ps-title">SevaConnect</h3>
 
             <div className="ps-section-block">
               <span className="ps-section-label">WHAT IT IS</span>
-              <p className="ps-tagline">A full-stack Learning Management System providing course administration, quiz delivery, and student analytics.</p>
+              <p className="ps-tagline">A cooperative-owned, independent-worker service marketplace engineered for blue-collar professionals with FairMatch allocation, AI-powered multi-factor provider ranking, emergency dispatch, welfare tracking, and demand forecasting.</p>
             </div>
 
             <div className="ps-section-block">
               <span className="ps-section-label">WHAT I BUILT</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Architected relational database schemas in MySQL with foreign key relationships for course, quiz, and user data.</li>
-                <li><span className="ps-hi-dot">•</span> Implemented role-based authentication and authorization for student and instructor permissions.</li>
-                <li><span className="ps-hi-dot">•</span> Developed RESTful CRUD API endpoints in Express to handle course enrollment and quiz submissions.</li>
-                <li><span className="ps-hi-dot">•</span> Built responsive analytical dashboards to display student progress metrics and course completion data.</li>
+                <li><span className="ps-hi-dot">•</span> Architected a multi-tier cooperative marketplace spanning a React/Tailwind frontend, Node.js/Express backend, and Python FastAPI microservice.</li>
+                <li><span className="ps-hi-dot">•</span> Engineered FairMatch workforce allocation and automated emergency dispatch workflows to ensure equitable job distribution.</li>
+                <li><span className="ps-hi-dot">•</span> Developed Scikit-Learn Bayesian provider ranking, review sentiment classification, and dynamic demand forecasting models.</li>
+                <li><span className="ps-hi-dot">•</span> Built role-guarded portals for Customers, Workers, and Cooperative AI Hub coordinators with persistent Zustand state management.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
               <span className="ps-tech-label">TECHNOLOGIES</span>
               <div className="ps-stack">
-                <span>Node.js</span><span>Express.js</span><span>MySQL</span><span>JavaScript</span><span>REST APIs</span><span>HTML/CSS</span>
+                <span>React</span><span>Vite</span><span>Tailwind CSS</span><span>Zustand</span><span>Node.js</span><span>Express.js</span><span>Python FastAPI</span><span>MongoDB</span><span>Scikit-Learn</span>
               </div>
             </div>
 
             <div className="ps-actions">
               <MagneticButton>
-                <a href="#contact" className="ps-btn ps-btn-demo">
+                <a href="https://seva-connect-three.vercel.app/customer/home" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-demo">
                   <FiExternalLink size={14} />
                   Live Demo
                 </a>
               </MagneticButton>
               <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
+                <a href="https://github.com/RajBhokare/SevaConnect-SIH-2026" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
                   <FaGithub size={14} />
                   GitHub
                 </a>
@@ -617,18 +639,9 @@ export function Projects() {
             </div>
 
             <div className="ps-actions">
-              <MagneticButton>
-                <a href="#contact" className="ps-btn ps-btn-demo">
-                  <FiExternalLink size={14} />
-                  Live Demo
-                </a>
-              </MagneticButton>
-              <MagneticButton>
-                <a href="https://github.com/RajBhokare" target="_blank" rel="noopener noreferrer" className="ps-btn ps-btn-github">
-                  <FaGithub size={14} />
-                  GitHub
-                </a>
-              </MagneticButton>
+              <span className="ps-status-note">
+                <span className="iot-status-dot" /> Embedded Hardware & IoT Telemetry System (R&D Prototype)
+              </span>
             </div>
           </div>
         </div>
