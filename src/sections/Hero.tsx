@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
-import { FiArrowRight, FiDownload } from 'react-icons/fi';
+import { FiArrowRight, FiDownload, FiExternalLink } from 'react-icons/fi';
 import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
 
@@ -42,17 +42,30 @@ export default function Hero() {
                 View My Projects <FiArrowRight style={{ marginLeft: 6 }} />
               </a>
             </MagneticButton>
-            <MagneticButton>
-              <a
-                href="/Raj_Bhokare_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Raj_Bhokare_Resume.pdf"
-                className="btn-secondary"
-              >
-                <FiDownload style={{ marginRight: 6 }} /> Download Resume
-              </a>
-            </MagneticButton>
+            <div className="btn-resume-group">
+              <MagneticButton>
+                <a
+                  href="/Raj_Bhokare_Resume.pdf"
+                  download="Raj_Bhokare_Resume.pdf"
+                  className="btn-secondary"
+                  title="Download Resume"
+                >
+                  <FiDownload style={{ marginRight: 6 }} /> Download Resume
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href="/Raj_Bhokare_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-square-open"
+                  aria-label="Open Resume in new tab"
+                  title="Open Resume in new tab"
+                >
+                  <FiExternalLink size={15} />
+                </a>
+              </MagneticButton>
+            </div>
           </div>
 
           {/* 7. GitHub, LinkedIn, and LeetCode links/icons */}

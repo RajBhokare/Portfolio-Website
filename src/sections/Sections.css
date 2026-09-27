@@ -837,7 +837,10 @@
   .resume-cta-card { padding: 2.2rem 1.25rem; }
   .resume-cta-title { font-size: 1.5rem; }
   .resume-cta-actions { flex-direction: column; width: 100%; }
-  .resume-cta-actions .ps-btn, .resume-cta-actions .btn-primary, .resume-cta-actions .btn-secondary {
+  .resume-cta-actions .btn-resume-group { width: 100%; display: flex; gap: 0.5rem; }
+  .resume-cta-actions .btn-resume-group .resume-btn-primary { flex: 1; width: auto; justify-content: center; min-height: 44px; }
+  .resume-cta-actions .btn-resume-group .btn-square-open { width: 44px; min-width: 44px; height: 44px; justify-content: center; }
+  .resume-cta-actions .ps-btn-github {
     width: 100%; justify-content: center; min-height: 44px;
   }
 }

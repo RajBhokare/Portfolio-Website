@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiSun, FiMoon, FiMenu, FiX, FiCode, FiDownload } from 'react-icons/fi';
+import { FiSun, FiMoon, FiMenu, FiX, FiCode, FiDownload, FiExternalLink } from 'react-icons/fi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
 import { MagneticButton } from './MagneticButton/MagneticButton';
@@ -317,35 +317,61 @@ export default function Navbar() {
             </a>
           </MagneticButton>
 
-          {/* Download Resume Button */}
-          <MagneticButton>
-            <a
-              href="/Raj_Bhokare_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Raj_Bhokare_Resume.pdf"
-              className="btn-resume"
-              style={{
-                fontFamily: 'var(--display)',
-                fontSize: '.78rem',
-                fontWeight: 700,
-                color: 'var(--cyan)',
-                border: '1px solid var(--border-h)',
-                padding: '.4rem .85rem',
-                borderRadius: 'var(--r-sm)',
-                background: 'var(--cyan-dim)',
-                transition: 'all .2s ease',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '.35rem',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <FiDownload size={13} />
-              <span>Resume</span>
-            </a>
-          </MagneticButton>
+          {/* Download & Open Resume Buttons */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem' }}>
+            <MagneticButton>
+              <a
+                href="/Raj_Bhokare_Resume.pdf"
+                download="Raj_Bhokare_Resume.pdf"
+                className="btn-resume"
+                title="Download Resume"
+                style={{
+                  fontFamily: 'var(--display)',
+                  fontSize: '.78rem',
+                  fontWeight: 700,
+                  color: 'var(--cyan)',
+                  border: '1px solid var(--border-h)',
+                  padding: '.4rem .85rem',
+                  borderRadius: 'var(--r-sm)',
+                  background: 'var(--cyan-dim)',
+                  transition: 'all .2s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '.35rem',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <FiDownload size={13} />
+                <span>Resume</span>
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a
+                href="/Raj_Bhokare_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Open Resume in new tab"
+                aria-label="Open Resume in new tab"
+                style={{
+                  background: 'var(--cyan-dim)',
+                  border: '1px solid var(--border-h)',
+                  borderRadius: 'var(--r-sm)',
+                  width: 32,
+                  height: 32,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--cyan)',
+                  transition: 'all .2s ease',
+                  textDecoration: 'none',
+                }}
+              >
+                <FiExternalLink size={13} />
+              </a>
+            </MagneticButton>
+          </div>
 
           {/* Theme Toggle */}
           <MagneticButton>
@@ -448,7 +474,55 @@ export default function Navbar() {
             );
           })}
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '.5rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', gap: '.5rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+            <a
+              href="/Raj_Bhokare_Resume.pdf"
+              download="Raj_Bhokare_Resume.pdf"
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '.4rem',
+                padding: '.65rem .75rem',
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--cyan-dim)',
+                border: '1px solid var(--border-h)',
+                color: 'var(--cyan)',
+                fontFamily: 'var(--display)',
+                fontSize: '.85rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              <FiDownload size={14} />
+              <span>Download Resume</span>
+            </a>
+            <a
+              href="/Raj_Bhokare_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open Resume in new tab"
+              aria-label="Open Resume in new tab"
+              style={{
+                width: 42,
+                height: 42,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 'var(--r-sm)',
+                background: 'var(--cyan-dim)',
+                border: '1px solid var(--border-h)',
+                color: 'var(--cyan)',
+                textDecoration: 'none',
+                flexShrink: 0,
+              }}
+            >
+              <FiExternalLink size={16} />
+            </a>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '.5rem', marginTop: '.6rem' }}>
             <a
               href="https://github.com/RajBhokare"
               target="_blank"

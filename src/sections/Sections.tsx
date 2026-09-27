@@ -723,18 +723,31 @@ export function ResumeCTA() {
           </p>
 
           <div className="resume-cta-actions">
-            <MagneticButton>
-              <a
-                href="/Raj_Bhokare_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Raj_Bhokare_Resume.pdf"
-                className="ps-btn ps-btn-demo resume-btn-primary"
-              >
-                <FiDownload size={15} />
-                Download Resume
-              </a>
-            </MagneticButton>
+            <div className="btn-resume-group">
+              <MagneticButton>
+                <a
+                  href="/Raj_Bhokare_Resume.pdf"
+                  download="Raj_Bhokare_Resume.pdf"
+                  className="ps-btn ps-btn-demo resume-btn-primary"
+                  title="Download Resume"
+                >
+                  <FiDownload size={15} />
+                  Download Resume
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href="/Raj_Bhokare_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-square-open ps-btn-demo"
+                  aria-label="Open Resume in new tab"
+                  title="Open Resume in new tab"
+                >
+                  <FiExternalLink size={15} />
+                </a>
+              </MagneticButton>
+            </div>
             <MagneticButton>
               <a
                 href="https://github.com/RajBhokare"
