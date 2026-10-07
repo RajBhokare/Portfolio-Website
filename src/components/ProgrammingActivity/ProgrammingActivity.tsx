@@ -58,7 +58,7 @@ function HeatmapCard({ platform, data }: HeatmapCardProps) {
               {title}
               {!isGitHub && (
                 <span className="lc-title-solved-num">
-                  Problem Solved : {data.totalSolved || 123}
+                  Problem Solved : {data.totalSolved ?? 136}
                 </span>
               )}
             </h3>
@@ -105,7 +105,7 @@ function HeatmapCard({ platform, data }: HeatmapCardProps) {
             )}
           </span>
           <span className="metric-val">
-            {isGitHub ? `${data.currentStreak} Days` : (data.totalSolved || 123)}
+            {isGitHub ? `${data.currentStreak} Days` : (data.totalSolved ?? 136)}
           </span>
         </div>
 
