@@ -25,3 +25,13 @@ A modern, high-performance developer portfolio built with React 18, Vite, TypeSc
    ```bash
    npm run preview
    ```
+
+---
+
+## 🌐 Netlify Deployment
+
+This project is configured for seamless deployment on **Netlify**:
+
+- **Build command**: `npm run build`
+- **Publish directory**: `dist`
+- **SPA Redirection**: Handled in [`netlify.toml`](./netlify.toml) and [`public/_redirects`](./public/_redirects) for client-side routing.
