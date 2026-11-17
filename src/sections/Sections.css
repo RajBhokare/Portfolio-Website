@@ -75,6 +75,7 @@
 
 /* ── SKILLS ── */
 .skills-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+.skill-group-span { grid-column: 1 / -1; }
 .skill-group {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: 1.6rem 1.8rem;
@@ -496,6 +497,187 @@
   line-height: 1.6;
 }
 
+/* ── ACHIEVEMENTS & HACKATHONS ── */
+#achievements { background: transparent; position: relative; }
+.achieve-block {
+  margin-bottom: 2.5rem;
+}
+.achieve-block-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.achieve-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+.achieve-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: all var(--t);
+  display: flex;
+  flex-direction: column;
+}
+.achieve-card:hover {
+  border-color: var(--border-h);
+  background: var(--bg-card-h);
+  transform: translateY(-2px);
+}
+.achieve-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+.achieve-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+.achieve-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid var(--border-h);
+}
+.achieve-card[data-accent="gold"] .achieve-badge {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--gold);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+.achieve-card[data-accent="green"] .achieve-badge {
+  background: var(--green-dim);
+  color: var(--green);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.achieve-card[data-accent="violet"] .achieve-badge {
+  background: var(--violet-dim);
+  color: var(--violet);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+.achieve-title {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.achieve-desc {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Hackathon Cards */
+.hackathon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.hackathon-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: all var(--t);
+  display: flex;
+  flex-direction: column;
+}
+.hackathon-card:hover {
+  border-color: var(--border-h);
+  background: var(--bg-card-h);
+  transform: translateY(-2px);
+}
+.hackathon-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  gap: 0.5rem;
+}
+.hackathon-name {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.hackathon-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+  background: var(--green-dim);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  white-space: nowrap;
+}
+.hackathon-desc {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 0.9rem;
+  flex-grow: 1;
+}
+.hackathon-tag-wrap {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.hackathon-tag {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  font-weight: 500;
+}
+.hackathon-tag-sub {
+  color: var(--cyan);
+  border-color: var(--border-h);
+  background: var(--cyan-dim);
+}
+.hackathon-summary-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-family: var(--display);
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 /* ── RESUME CTA ── */
 #resume-cta { background: transparent; position: relative; }
 .resume-cta-card {
@@ -829,6 +1011,10 @@
 }
 
 @media (max-width: 768px) {
+  .achieve-grid,
+  .hackathon-grid {
+    grid-template-columns: 1fr;
+  }
   .exp-item { grid-template-columns: 24px 1fr; gap: 0 1rem; }
   .ps-content { padding: 1.75rem 1.25rem; }
   .ps-title { font-size: 1.45rem; }

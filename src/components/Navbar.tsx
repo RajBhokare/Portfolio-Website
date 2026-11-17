@@ -17,6 +17,7 @@ const navLinks: NavItem[] = [
   { href: '#projects',    label: 'Projects' },
   { href: '#experience',  label: 'Experience' },
   { href: '#education',   label: 'Education' },
+  { href: '#achievements', label: 'Achievements' },
   { href: '#contact',     label: 'Contact' },
 ];
 

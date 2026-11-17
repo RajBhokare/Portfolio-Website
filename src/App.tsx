@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import ProgrammingActivity from './components/ProgrammingActivity/ProgrammingActivity';
-import { About, Skills, Experience, Education, Projects, WhatIBuild, ResumeCTA, Contact } from './sections/Sections';
+import { About, Skills, Experience, Education, Projects, Achievements, WhatIBuild, ResumeCTA, Contact } from './sections/Sections';
 import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
 
 function Cursor() {
@@ -168,13 +168,15 @@ export default function App() {
         <div className="section-sep" aria-hidden="true" />
         <ProgrammingActivity />
         <div className="section-sep" aria-hidden="true" />
-        <WhatIBuild />
+        <Projects />
         <div className="section-sep" aria-hidden="true" />
         <Experience />
         <div className="section-sep" aria-hidden="true" />
         <Education />
         <div className="section-sep" aria-hidden="true" />
-        <Projects />
+        <Achievements />
+        <div className="section-sep" aria-hidden="true" />
+        <WhatIBuild />
         <div className="section-sep" aria-hidden="true" />
         <ResumeCTA />
       </main>

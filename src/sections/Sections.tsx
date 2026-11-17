@@ -14,6 +14,14 @@ import {
   SiGooglecloud,
   SiJupyter,
   SiLeetcode,
+  SiMongodb,
+  SiTailwindcss,
+  SiFastapi,
+  SiPostman,
+  SiFirebase,
+  SiVercel,
+  SiRender,
+  SiLinux,
 } from 'react-icons/si'
 import { FaJava, FaAws, FaLinkedin, FaGithub } from 'react-icons/fa6'
 import {
@@ -38,6 +46,10 @@ import {
   FiLock,
   FiGrid,
   FiDownload,
+  FiAward,
+  FiTrendingUp,
+  FiUsers,
+  FiCpu,
 } from 'react-icons/fi'
 import { MagneticButton } from '../components/MagneticButton/MagneticButton'
 import './Sections.css'
@@ -45,9 +57,10 @@ import './Sections.css'
 /* ── ABOUT ── */
 export function About() {
   const coreStrengths = [
-    { name: 'Full-Stack Development', desc: 'Connecting dynamic frontend apps with server-side logic.' },
-    { name: 'Responsive UI', desc: 'Ensuring seamless experiences across mobile, tablet, and desktop.' },
-    { name: 'Database Integration', desc: 'Managing application data with MongoDB and relational databases.' },
+    { name: 'Full-Stack & Microservices', desc: 'React.js, Node.js, Express.js, MongoDB, MySQL & Python FastAPI microservices.' },
+    { name: 'AI Application Engineering', desc: 'Speech-to-text, meeting assistants & video summarization (Whisper API, AssemblyAI).' },
+    { name: 'Technical Leadership', desc: 'Web Development Team Lead at Binary Brains Club, directing 10+ engineers.' },
+    { name: 'Competitive Coding & Hackathons', desc: '250+ DSA problems solved (LeetCode/GFG); GDG 2026 Finalist; SIH & DevClash participant.' },
   ]
 
   return (
@@ -60,13 +73,16 @@ export function About() {
         <div className="about-layout">
           <div className="about-text reveal">
             <p className="about-lead">
-              Hi, I’m <strong>Raj Bhokare</strong> — a dedicated <strong>Full-Stack Developer</strong> focused on building clean, practical, and responsive web applications.
+              Hi, I’m <strong>Raj Bhokare</strong> — a <strong>Full Stack Developer</strong>, <strong>AI Application Developer</strong>, and <strong>Web Development Team Lead</strong> based in Pune, India.
             </p>
             <p>
-              My primary core stack includes <strong>React, JavaScript, Node.js, Express, and MongoDB</strong>. I enjoy crafting software that solves real-world problems through clean code structure, intuitive interfaces, and reliable API architecture.
+              Third-Year Information Technology Engineering student at <strong>Dr. D. Y. Patil Institute of Technology, Pune</strong> (CGPA: <strong>8.71/10</strong>), specializing in full-stack web development with <strong>React.js, Node.js, Express.js, MongoDB, and MySQL</strong>, alongside <strong>Python FastAPI microservices</strong>.
             </p>
             <p>
-              I am passionate about real-world software engineering and continuous technical learning. Currently, I am actively seeking <strong>internship and junior developer opportunities</strong> where I can contribute to engineering teams and build high-quality web applications.
+              I build AI-integrated applications using <strong>Whisper API</strong> (meeting transcription and structured summaries) and <strong>AssemblyAI</strong> (video transcription and automated quiz generation), delivering end-to-end solutions within intensive 12 to 24-hour hackathon timelines.
+            </p>
+            <p>
+              As <strong>Web Development Team Lead</strong> at <strong>Binary Brains Club, DIT Pune</strong>, I lead a 10+ member team through sprint planning, task allocation, technical mentoring, and code reviews, while regularly competing in national hackathons including SIH, DevClash, Vortexa, and Kurukshetra.
             </p>
           </div>
           <div className="about-focus-card reveal">
@@ -100,46 +116,94 @@ const SKILL_ICONS: Record<string, { icon: React.ReactElement; color: string }> =
   'JavaScript': { icon: <SiJavascript />, color: '#F7DF1E' },
   'Node.js': { icon: <SiNodedotjs />, color: '#5FA04E' },
   'Express.js': { icon: <SiExpress />, color: '#E1E1E1' },
-  'React': { icon: <SiReact />, color: '#61DAFB' },
+  'React.js': { icon: <SiReact />, color: '#61DAFB' },
+  'Tailwind CSS': { icon: <SiTailwindcss />, color: '#06B6D4' },
   'Bootstrap': { icon: <SiBootstrap />, color: '#7952B3' },
+  'EJS': { icon: <FiCode />, color: '#B4CA65' },
+  'FastAPI': { icon: <SiFastapi />, color: '#009688' },
+  'Microservices Architecture': { icon: <FiServer />, color: '#6366F1' },
+  'REST API Design': { icon: <FiServer />, color: '#38BDF8' },
+  'MongoDB': { icon: <SiMongodb />, color: '#47A248' },
+  'MySQL': { icon: <SiMysql />, color: '#4479A1' },
   'C++': { icon: <SiCplusplus />, color: '#00599C' },
   'Java': { icon: <FaJava />, color: '#ED8B00' },
   'Python': { icon: <SiPython />, color: '#3776AB' },
-  'MySQL': { icon: <SiMysql />, color: '#4479A1' },
-  'AWS': { icon: <FaAws />, color: '#FF9900' },
-  'Google Cloud': { icon: <SiGooglecloud />, color: '#4285F4' },
+  'SQL': { icon: <FiDatabase />, color: '#00758F' },
+  'Whisper API': { icon: <FiMic />, color: '#10B981' },
+  'AssemblyAI': { icon: <FiVideo />, color: '#6366F1' },
   'Git': { icon: <SiGit />, color: '#F05032' },
-  'Jupyter Notebook': { icon: <SiJupyter />, color: '#F37626' },
+  'GitHub': { icon: <FaGithub />, color: '#E6EDF3' },
+  'Postman': { icon: <SiPostman />, color: '#FF6C37' },
+  'Firebase': { icon: <SiFirebase />, color: '#FFCA28' },
+  'Vercel': { icon: <SiVercel />, color: '#FFFFFF' },
+  'Render': { icon: <SiRender />, color: '#46E3B7' },
+  'Linux': { icon: <SiLinux />, color: '#FCC624' },
+  'Data Structures & Algorithms': { icon: <SiLeetcode />, color: '#FFA116' },
+  'Object-Oriented Programming': { icon: <FiCode />, color: '#38BDF8' },
+  'DBMS': { icon: <FiDatabase />, color: '#4479A1' },
+  'Operating Systems': { icon: <FiCpu />, color: '#EC4899' },
+  'Computer Networks': { icon: <FiGlobe />, color: '#06B6D4' },
+  'SDLC': { icon: <FiTool />, color: '#A855F7' },
+  'Agile Development': { icon: <FiUsers />, color: '#10B981' },
 }
 
 const skillGroups = [
   {
     icon: <FiCode size={18} />,
     title: 'Frontend Development',
-    pills: ['React', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap'],
+    pills: ['React.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'EJS'],
     span: false,
     accent: 'cyan',
   },
   {
     icon: <FiServer size={18} />,
-    title: 'Backend & Database Engineering',
-    pills: ['Node.js', 'Express.js', 'MySQL', 'REST APIs'],
+    title: 'Backend Development',
+    pills: ['Node.js', 'Express.js', 'FastAPI', 'Microservices Architecture'],
     span: false,
     accent: 'violet',
   },
   {
-    icon: <FiTool size={18} />,
-    title: 'Programming Languages & DSA',
-    pills: ['C++', 'Java', 'Python', 'JavaScript'],
+    icon: <FiDatabase size={18} />,
+    title: 'Databases',
+    pills: ['MongoDB', 'MySQL'],
     span: false,
     accent: 'green',
   },
   {
-    icon: <FiCloud size={18} />,
-    title: 'Cloud & Developer Tools',
-    pills: ['AWS', 'Google Cloud', 'Git', 'Jupyter Notebook'],
+    icon: <FiTool size={18} />,
+    title: 'Programming Languages',
+    pills: ['Java', 'Python', 'C++', 'JavaScript', 'SQL'],
     span: false,
     accent: 'gold',
+  },
+  {
+    icon: <FiZap size={18} />,
+    title: 'APIs & Integrations',
+    pills: ['REST API Design', 'Whisper API', 'AssemblyAI'],
+    span: false,
+    accent: 'cyan',
+  },
+  {
+    icon: <FiCloud size={18} />,
+    title: 'Developer Tools & Platforms',
+    pills: ['Git', 'GitHub', 'Postman', 'Firebase', 'Vercel', 'Render', 'Linux'],
+    span: false,
+    accent: 'violet',
+  },
+  {
+    icon: <FiBookOpen size={18} />,
+    title: 'Computer Science Fundamentals',
+    pills: [
+      'Data Structures & Algorithms',
+      'Object-Oriented Programming',
+      'DBMS',
+      'Operating Systems',
+      'Computer Networks',
+      'SDLC',
+      'Agile Development',
+    ],
+    span: true,
+    accent: 'green',
   },
 ]
 
@@ -186,33 +250,32 @@ export function Skills() {
   )
 }
 
-/* ── EXPERIENCE & DEVELOPMENT ── */
+/* ── POSITION OF RESPONSIBILITY ── */
 const experiences = [
   {
-    period: 'Sept 2026 — Present',
+    period: 'September 2026 — Present',
     badge: 'Current Role · Promoted',
     active: true,
-    role: 'Team Lead — Web Development',
-    org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology',
+    role: 'Web Development Team Lead',
+    org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology, Pune',
     bullets: [
-      'Leading the web development team, overseeing project architecture, sprint delivery, and coordinating technical initiatives.',
-      'Promoted from Member of the Web Development Team following consistent contributions to club applications.',
-      'Conducting code reviews, mentoring junior developers, and ensuring high code quality and responsive standards.',
+      'Lead a 10+ member web development team: plan development activities, assign tasks and coordinate project execution.',
+      'Mentor junior developers in React.js, JavaScript, Node.js and Git through technical guidance and code reviews.',
+      'Collaborate with design, DSA and event teams to deliver web solutions for club initiatives, hackathons and technical events.',
     ],
-    stack: ['React', 'JavaScript', 'Node.js', 'Express.js', 'Git', 'Team Leadership'],
+    stack: ['React.js', 'JavaScript', 'Node.js', 'Git', 'Team Leadership', 'Sprint Delivery'],
   },
   {
-    period: '2025 — Sept 2026',
+    period: 'September 2025 — August 2026',
     badge: 'Previous Role',
     active: false,
-    role: 'Member — Web Development Team',
-    org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology',
+    role: 'Member, Web Development Team',
+    org: 'Binary Brains Club · Dr. D. Y. Patil Institute of Technology, Pune',
     bullets: [
-      'Developed responsive full-stack web components using HTML, CSS, JavaScript, and Node.js.',
-      'Collaborated with peer engineering members on feature implementation, code reviews, and API testing.',
-      'Optimized interface layouts for cross-device mobile responsiveness and browser accessibility.',
+      'Developed responsive full-stack web applications with modern JavaScript technologies for collaborative hackathons.',
+      'Organized DSA-focused coding events; volunteered at Hash It Out (Web Development Hackathon) and AlgoHeist (DSA Contest).',
     ],
-    stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Git'],
+    stack: ['HTML5', 'CSS3', 'JavaScript', 'Node.js', 'Express.js', 'Git', 'Hackathon Dev'],
   },
 ]
 
@@ -221,8 +284,8 @@ export function Experience() {
     <section className="section" id="experience">
       <div className="container">
         <div className="section-header reveal">
-          <span className="section-eyebrow">Real-World Software Engineering</span>
-          <h2 className="section-title exp-title">Experience & Development</h2>
+          <span className="section-eyebrow">Leadership & Engineering</span>
+          <h2 className="section-title exp-title">Position of Responsibility</h2>
         </div>
         <div className="experience-layout">
           {experiences.map((e, i) => (
@@ -289,11 +352,11 @@ export function Education() {
         <div className="education-card reveal">
           <div className="edu-main-info">
             <div>
-              <span className="edu-year">2024 — 2028</span>
-              <h3 className="edu-degree">Bachelor of Technology (B.Tech) in Information Technology</h3>
+              <span className="edu-year">September 2024 – May 2028 (Expected)</span>
+              <h3 className="edu-degree">Bachelor of Engineering in Information Technology</h3>
               <p className="edu-institution">Dr. D. Y. Patil Institute of Technology · Pune, India</p>
             </div>
-            <span className="edu-badge">Overall CGPA: 8.71</span>
+            <span className="edu-badge">CGPA: 8.71/10</span>
           </div>
 
           {/* Continuous GPA Consistency Breakdown */}
@@ -322,16 +385,16 @@ export function Education() {
           <div className="edu-coursework">
             <span className="edu-coursework-title">Relevant Technical Coursework:</span>
             <div className="edu-coursework-tags">
+              <span>Data Structures & Algorithms</span>
+              <span>Object-Oriented Programming (OOP)</span>
+              <span>Database Management Systems (DBMS)</span>
+              <span>Operating Systems</span>
+              <span>Computer Networks</span>
+              <span>Software Development Life Cycle (SDLC)</span>
+              <span>Agile Development</span>
               <span>AIML</span>
               <span>Theory of Computation</span>
-              <span>Operating Systems</span>
-              <span>Data Structures & Algorithms</span>
-              <span>Database Management Systems (DBMS)</span>
-              <span>Object-Oriented Programming (OOP)</span>
-              <span>Basics of Computer Networks</span>
               <span>Processor Architecture</span>
-              <span>Digital Marketing</span>
-              <span>Entrepreneurship</span>
             </div>
           </div>
         </div>
@@ -384,29 +447,28 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">01</span>
-              <span className="ps-badge ps-badge-ai">Full-Stack · AI</span>
+              <span className="ps-badge ps-badge-ai">DevClash 2026 · AI &amp; Full-Stack</span>
             </div>
             <h3 className="ps-title">Briefly</h3>
 
             <div className="ps-section-block">
               <span className="ps-section-label">WHAT IT IS</span>
-              <p className="ps-tagline">An automated meeting assistant and audio transcription platform for generating structured notes from recorded discussions.</p>
+              <p className="ps-tagline">AI-Powered Meeting Assistant developed during the DevClash 2026 24-hour hackathon to turn long meeting recordings into structured summaries, extracted action items and searchable transcripts.</p>
             </div>
 
             <div className="ps-section-block">
-              <span className="ps-section-label">WHAT I BUILT</span>
+              <span className="ps-section-label">KEY CONTRIBUTIONS</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Engineered an asynchronous audio upload pipeline to process recorded meeting files.</li>
-                <li><span className="ps-hi-dot">•</span> Integrated OpenAI Whisper REST API for high-accuracy speech-to-text transcription.</li>
-                <li><span className="ps-hi-dot">•</span> Implemented automated text processing logic to extract key action items and executive decision points.</li>
-                <li><span className="ps-hi-dot">•</span> Developed a responsive web interface for managing audio playback, viewing transcripts, and exporting notes.</li>
+                <li><span className="ps-hi-dot">•</span> Developed during the DevClash 2026 24-hour hackathon to turn long meeting recordings into structured summaries, extracted action items and searchable transcripts.</li>
+                <li><span className="ps-hi-dot">•</span> Integrated the Whisper API into the Node.js and Express.js backend for speech-to-text transcription of uploaded recordings.</li>
+                <li><span className="ps-hi-dot">•</span> Designed modular REST APIs to separate the transcription and summarization workflows.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">TECHNOLOGIES</span>
+              <span className="ps-tech-label">TECH STACK</span>
               <div className="ps-stack">
-                <span>React</span><span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>OpenAI Whisper API</span>
+                <span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>Whisper API</span>
               </div>
             </div>
 
@@ -457,29 +519,28 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">02</span>
-              <span className="ps-badge ps-badge-ai">EdTech · Full-Stack</span>
+              <span className="ps-badge ps-badge-ai">Vortexa 2025 · EdTech &amp; AI</span>
             </div>
             <h3 className="ps-title">Quizzer</h3>
 
             <div className="ps-section-block">
               <span className="ps-section-label">WHAT IT IS</span>
-              <p className="ps-tagline">An educational assessment generator that processes video content to produce interactive multiple-choice quizzes and summaries.</p>
+              <p className="ps-tagline">AI-Powered Video Summarizer &amp; Quiz Generator built during the Vortexa 2025 12-hour hackathon: a learning platform that converts video content into transcripts, automated summaries and interactive quizzes.</p>
             </div>
 
             <div className="ps-section-block">
-              <span className="ps-section-label">WHAT I BUILT</span>
+              <span className="ps-section-label">KEY CONTRIBUTIONS</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Built an automated media processing workflow using AssemblyAI REST API for video transcript extraction.</li>
-                <li><span className="ps-hi-dot">•</span> Developed server-side controllers in Node.js to generate structured assessment questions from extracted text.</li>
-                <li><span className="ps-hi-dot">•</span> Created interactive client-side quiz interfaces with state management for instant score calculation.</li>
-                <li><span className="ps-hi-dot">•</span> Implemented student progress tracking and assessment performance summaries.</li>
+                <li><span className="ps-hi-dot">•</span> Built during the Vortexa 2025 12-hour hackathon: a learning platform that converts video content into transcripts, automated summaries and interactive quizzes.</li>
+                <li><span className="ps-hi-dot">•</span> Implemented the AssemblyAI speech-to-text integration and the backend quiz-generation logic in Node.js and Express.js.</li>
+                <li><span className="ps-hi-dot">•</span> Developed REST API communication between frontend and server and designed the responsive Bootstrap and EJS interface.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">TECHNOLOGIES</span>
+              <span className="ps-tech-label">TECH STACK</span>
               <div className="ps-stack">
-                <span>React</span><span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>AssemblyAI API</span><span>Bootstrap</span>
+                <span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>EJS</span><span>Bootstrap</span><span>HTML</span><span>CSS</span><span>AssemblyAI</span>
               </div>
             </div>
 
@@ -545,29 +606,28 @@ export function Projects() {
           <div className="ps-content">
             <div className="ps-meta">
               <span className="ps-num">03</span>
-              <span className="ps-badge ps-badge-sih">SIH 2026 · Full-Stack & AI</span>
+              <span className="ps-badge ps-badge-sih">SIH 2026 · Full-Stack &amp; Microservices</span>
             </div>
             <h3 className="ps-title">SevaConnect</h3>
 
             <div className="ps-section-block">
               <span className="ps-section-label">WHAT IT IS</span>
-              <p className="ps-tagline">A cooperative-owned, independent-worker service marketplace engineered for blue-collar professionals with FairMatch allocation, AI-powered multi-factor provider ranking, emergency dispatch, welfare tracking, and demand forecasting.</p>
+              <p className="ps-tagline">AI Cooperative Service Marketplace architected for equitable distribution of service work among workers with FairMatch allocation, AI-powered multi-factor provider ranking, emergency dispatch, and demand forecasting.</p>
             </div>
 
             <div className="ps-section-block">
-              <span className="ps-section-label">WHAT I BUILT</span>
+              <span className="ps-section-label">KEY CONTRIBUTIONS</span>
               <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Architected a multi-tier cooperative marketplace spanning a React/Tailwind frontend, Node.js/Express backend, and Python FastAPI microservice.</li>
-                <li><span className="ps-hi-dot">•</span> Engineered FairMatch workforce allocation and automated emergency dispatch workflows to ensure equitable job distribution.</li>
-                <li><span className="ps-hi-dot">•</span> Developed Scikit-Learn Bayesian provider ranking, review sentiment classification, and dynamic demand forecasting models.</li>
-                <li><span className="ps-hi-dot">•</span> Built role-guarded portals for Customers, Workers, and Cooperative AI Hub coordinators with persistent Zustand state management.</li>
+                <li><span className="ps-hi-dot">•</span> Architected the multi-tier system (React frontend, Node.js/Express.js backend, MongoDB, FastAPI microservices) for a cooperative marketplace aimed at equitable distribution of service work among workers.</li>
+                <li><span className="ps-hi-dot">•</span> Engineered role-based portals for Customers, Workers and Cooperative Coordinators with persistent state management.</li>
+                <li><span className="ps-hi-dot">•</span> Platform capabilities include FairMatch workforce allocation, emergency dispatch workflows, AI-powered provider ranking and demand forecasting.</li>
               </ul>
             </div>
 
             <div className="ps-tech-row">
-              <span className="ps-tech-label">TECHNOLOGIES</span>
+              <span className="ps-tech-label">TECH STACK</span>
               <div className="ps-stack">
-                <span>React</span><span>Vite</span><span>Tailwind CSS</span><span>Zustand</span><span>Node.js</span><span>Express.js</span><span>Python FastAPI</span><span>MongoDB</span><span>Scikit-Learn</span>
+                <span>React</span><span>Tailwind CSS</span><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Python FastAPI (Microservices)</span>
               </div>
             </div>
 
@@ -587,62 +647,132 @@ export function Projects() {
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  )
+}
 
-        {/* Project 4: DustSense */}
-        <div className="project-showcase project-showcase-flip reveal" data-accent="gold">
-          <div className="ps-visual">
-            <div className="ps-mockup ps-mockup-iot">
-              <div className="iot-dashboard">
-                <div className="iot-header"><span className="iot-status-dot"/><span>DustSense · TELEMETRY ONLINE</span></div>
-                <div className="iot-reading">
-                  <div className="iot-metric"><span className="iot-val">247</span><span className="iot-unit">µg/m³ PM2.5</span></div>
-                  <div className="iot-bar-label">Air Quality Level</div>
-                  <div className="iot-bar-track">
-                    <div className="iot-bar-fill" style={{width:'62%'}}/>
-                  </div>
+/* ── ACHIEVEMENTS & HACKATHONS ── */
+export function Achievements() {
+  const achievements = [
+    {
+      title: 'Competitive Programming (DSA)',
+      badge: '250+ Problems Solved',
+      desc: 'Solved 250+ Data Structures and Algorithms problems on LeetCode and GeeksforGeeks.',
+      icon: <SiLeetcode color="#FFA116" />,
+      accent: 'gold',
+    },
+    {
+      title: 'Adobe 2026, Flipkart GRiD & GDG 2025',
+      badge: 'Round 2 Qualified',
+      desc: 'Qualified for Round 2 of Adobe 2026, Flipkart GRiD and GDG 2025 national engineering challenges.',
+      icon: <FiAward color="var(--cyan)" />,
+      accent: 'cyan',
+    },
+    {
+      title: 'Google Developer Groups (GDG) 2026',
+      badge: 'Final Round Qualified',
+      desc: 'Qualified for the Final Round of GDG 2026 after rigorous competitive rounds.',
+      icon: <FiTrendingUp color="var(--green)" />,
+      accent: 'green',
+    },
+    {
+      title: 'NPTEL Cloud Computing Certification',
+      badge: 'Elite + Silver Rank',
+      desc: 'NPTEL Cloud Computing Certification — Elite + Silver, demonstrating deep knowledge of cloud architecture and virtualization.',
+      icon: <FiCheckCircle color="#A855F7" />,
+      accent: 'violet',
+    },
+  ]
+
+  const hackathons = [
+    {
+      name: 'Vortexa (2025 & 2026)',
+      badge: '12-Hour Sprint',
+      desc: 'Built Quizzer during the Vortexa 2025 12-hour hackathon, converting video content into transcripts, summaries, and interactive quizzes.',
+      tag: 'EdTech & AI',
+    },
+    {
+      name: 'DevClash (2025 & 2026)',
+      badge: '24-Hour Hackathon',
+      desc: 'Engineered Briefly during the DevClash 2026 24-hour hackathon, turning meeting recordings into structured notes and action items.',
+      tag: 'Speech AI',
+    },
+    {
+      name: 'Smart India Hackathon (SIH)',
+      badge: 'SIH 2025 & 2026',
+      desc: 'Participated in Smart India Hackathon (SIH) 2025 and 2026, working on technology-driven solutions to real-world problems.',
+      tag: 'Societal Impact',
+    },
+    {
+      name: 'Kurukshetra 2026',
+      badge: 'National Hackathon',
+      desc: 'Participated in Kurukshetra 2026; built and delivered applications through collaborative teamwork, rapid prototyping, and time-bound hackathon development.',
+      tag: 'Team Collaboration',
+    },
+  ]
+
+  return (
+    <section className="section section-dark" id="achievements">
+      <div className="container">
+        <div className="section-header reveal">
+          <span className="section-eyebrow">Honors & Competitions</span>
+          <h2 className="section-title">Achievements & Hackathons</h2>
+        </div>
+
+        {/* Achievements Grid */}
+        <div className="achieve-block reveal">
+          <h3 className="achieve-block-title">
+            <FiAward size={20} color="var(--cyan)" />
+            Achievements &amp; Certifications
+          </h3>
+          <div className="achieve-grid">
+            {achievements.map((item, i) => (
+              <div
+                className="achieve-card"
+                key={item.title}
+                data-accent={item.accent}
+                style={{ '--d': `${i * 60}ms` } as React.CSSProperties}
+              >
+                <div className="achieve-card-header">
+                  <div className="achieve-icon-wrap">{item.icon}</div>
+                  <span className="achieve-badge">{item.badge}</span>
                 </div>
-                <div className="iot-chips">
-                  <span className="iot-chip"><span>●</span> ESP8266 Wi-Fi</span>
-                  <span className="iot-chip"><span>●</span> Optical Dust Sensor</span>
-                  <span className="iot-chip"><span>●</span> MQTT Protocol</span>
-                </div>
+                <h4 className="achieve-title">{item.title}</h4>
+                <p className="achieve-desc">{item.desc}</p>
               </div>
-            </div>
+            ))}
           </div>
-          <div className="ps-content">
-            <div className="ps-meta">
-              <span className="ps-num">04</span>
-              <span className="ps-badge ps-badge-iot">IoT · Hardware</span>
-            </div>
-            <h3 className="ps-title">DustSense</h3>
+        </div>
 
-            <div className="ps-section-block">
-              <span className="ps-section-label">WHAT IT IS</span>
-              <p className="ps-tagline">A real-time IoT air quality telemetry system streaming PM2.5 particulate concentration metrics to a web dashboard.</p>
-            </div>
-
-            <div className="ps-section-block">
-              <span className="ps-section-label">WHAT I BUILT</span>
-              <ul className="ps-highlights">
-                <li><span className="ps-hi-dot">•</span> Programmed ESP8266 microcontroller firmware in C++ to sample optical dust sensor readings.</li>
-                <li><span className="ps-hi-dot">•</span> Implemented lightweight MQTT publish-subscribe messaging for real-time sensor payload transmission over Wi-Fi.</li>
-                <li><span className="ps-hi-dot">•</span> Developed a backend service to parse incoming telemetry metrics and log historical air quality data.</li>
-                <li><span className="ps-hi-dot">•</span> Built a live monitoring web dashboard with dynamic status indicators for real-time environmental tracking.</li>
-              </ul>
-            </div>
-
-            <div className="ps-tech-row">
-              <span className="ps-tech-label">TECHNOLOGIES</span>
-              <div className="ps-stack">
-                <span>ESP8266</span><span>Arduino C++</span><span>MQTT</span><span>JavaScript</span><span>HTML/CSS</span><span>REST APIs</span>
+        {/* Hackathons Grid */}
+        <div className="achieve-block reveal" style={{ marginTop: '2.5rem' }}>
+          <h3 className="achieve-block-title">
+            <FiZap size={20} color="var(--green)" />
+            Hackathons &amp; Technical Participation
+          </h3>
+          <div className="hackathon-grid">
+            {hackathons.map((h, i) => (
+              <div
+                className="hackathon-card"
+                key={h.name}
+                style={{ '--d': `${i * 60}ms` } as React.CSSProperties}
+              >
+                <div className="hackathon-header">
+                  <span className="hackathon-name">{h.name}</span>
+                  <span className="hackathon-badge">{h.badge}</span>
+                </div>
+                <p className="hackathon-desc">{h.desc}</p>
+                <div className="hackathon-tag-wrap">
+                  <span className="hackathon-tag">{h.tag}</span>
+                  <span className="hackathon-tag hackathon-tag-sub">Rapid Prototyping</span>
+                </div>
               </div>
-            </div>
-
-            <div className="ps-actions">
-              <span className="ps-status-note">
-                <span className="iot-status-dot" /> Embedded Hardware & IoT Telemetry System (R&D Prototype)
-              </span>
-            </div>
+            ))}
+          </div>
+          <div className="hackathon-summary-banner reveal">
+            <FiCheck size={16} color="var(--cyan)" />
+            <span>Built and delivered applications through collaborative teamwork, rapid prototyping, and time-bound hackathon development.</span>
           </div>
         </div>
       </div>
@@ -975,7 +1105,7 @@ export function Contact() {
           <div className="site-footer-top">
             <div className="site-footer-brand">
               <h3 className="site-footer-name">Raj Bhokare</h3>
-              <p className="site-footer-role">Full-Stack Developer</p>
+              <p className="site-footer-role">Full Stack Developer | AI Application Developer</p>
             </div>
 
             <nav className="site-footer-nav" aria-label="Footer Navigation">
@@ -984,6 +1114,9 @@ export function Contact() {
               <a href="#skills">Skills</a>
               <a href="#programming">Programming</a>
               <a href="#projects">Projects</a>
+              <a href="#experience">Experience</a>
+              <a href="#education">Education</a>
+              <a href="#achievements">Achievements</a>
               <a href="#contact">Contact</a>
             </nav>
 

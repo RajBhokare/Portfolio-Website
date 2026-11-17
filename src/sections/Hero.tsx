@@ -6,7 +6,7 @@ import { MagneticButton } from '../components/MagneticButton/MagneticButton';
 import './Hero.css';
 
 export default function Hero() {
-  const technologies = ['React', 'JavaScript', 'Node.js', 'Express', 'MongoDB'];
+  const technologies = ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'FastAPI', 'MySQL'];
 
   return (
     <section className="hero" id="hero">
@@ -17,7 +17,7 @@ export default function Hero() {
           {/* 1. Eyebrow */}
           <div className="hero-eyebrow-tag fade-up" style={{ '--d': '0ms' } as React.CSSProperties}>
             <span className="badge-dot" />
-            <span>FULL STACK DEVELOPER</span>
+            <span>FULL STACK & AI APPLICATION DEVELOPER</span>
           </div>
 
           {/* 2. Main Heading */}
@@ -27,12 +27,12 @@ export default function Hero() {
 
           {/* 3. Value Proposition */}
           <h2 className="hero-value-prop fade-up" style={{ '--d': '160ms' } as React.CSSProperties}>
-            Building modern, responsive, and scalable web applications with clean architecture.
+            Full Stack Developer | AI Application Developer | Web Development Team Lead
           </h2>
 
           {/* 4. Supporting Paragraph */}
           <p className="hero-bio fade-up" style={{ '--d': '240ms' } as React.CSSProperties}>
-            Passionate about developing practical, high-performance web solutions with intuitive user experiences, clean architecture, and reliable APIs.
+            Third-Year Information Technology Engineering student specializing in full-stack development with React.js, Node.js, Express.js, MongoDB, and MySQL, plus Python FastAPI microservices. Web Development Team Lead at Binary Brains Club, DIT Pune.
           </p>
 
           {/* 5 & 6. Primary and Secondary CTAs */}
@@ -151,7 +151,7 @@ export default function Hero() {
               <div className="profile-card-footer">
                 <div className="footer-status">
                   <span className="caption-dot" />
-                  <span>Full-Stack Web Development</span>
+                  <span>Full-Stack &amp; AI Developer</span>
                 </div>
                 <div className="footer-location">
                   <span>Available for Hire</span>
